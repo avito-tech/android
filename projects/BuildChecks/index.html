@@ -1,0 +1,2174 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Avito Android infrastructure">
+      
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.4">
+    
+    
+      
+        <title>Build checks - Avito Android</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.bde7dde4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ef6f36e2.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+      
+        
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-157613383-1","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="preference" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#build-checks-gradle-plugin" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Avito Android" class="md-header__button md-logo" aria-label="Avito Android" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Avito Android
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Build checks
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/avito-tech/avito-android/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    avito-android
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        Infrastructure
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="./" class="md-tabs__link md-tabs__link--active">
+        Projects
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../ci/ImpactAnalysis/" class="md-tabs__link">
+        CI
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../test/FlakyAnnotation/" class="md-tabs__link">
+        Testing
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../test_framework/TestFramework/" class="md-tabs__link">
+        Test framework
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../test_runner/TestRunner/" class="md-tabs__link">
+        Test runner
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    
+
+  
+  
+  
+    
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../blog/2021/01/ui-impact-analysis-end/" class="md-tabs__link">
+        Blog
+      </a>
+    </li>
+  
+
+  
+
+  
+
+      
+    </ul>
+  </div>
+</nav>
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Avito Android" class="md-nav__button md-logo" aria-label="Avito Android" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Avito Android
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/avito-tech/avito-android/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    avito-android
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
+      
+      <label class="md-nav__link" for="__nav_1">
+        Infrastructure
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Infrastructure" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          Infrastructure
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Android in Avito
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/HowToStart/" class="md-nav__link">
+        How to start
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/GradlePlugins/" class="md-nav__link">
+        Gradle plugins
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/Documentation/" class="md-nav__link">
+        Documentation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/Logging/" class="md-nav__link">
+        Logging
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/Networking/" class="md-nav__link">
+        Networking
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/Testing/" class="md-nav__link">
+        Testing
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/Release/" class="md-nav__link">
+        Release
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/internal/RemoteCache/" class="md-nav__link">
+        Remote cache
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      <label class="md-nav__link" for="__nav_2">
+        Projects
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Projects" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Projects
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Build checks
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Build checks
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#getting-started" class="md-nav__link">
+    Getting started
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    Configuration
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#enable-single-check" class="md-nav__link">
+    Enable single check
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disable-single-check" class="md-nav__link">
+    Disable single check
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disable-all-checks" class="md-nav__link">
+    Disable all checks
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disable-plugin" class="md-nav__link">
+    Disable plugin
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#checks" class="md-nav__link">
+    Checks
+  </a>
+  
+    <nav class="md-nav" aria-label="Checks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#common-build-checks" class="md-nav__link">
+    Common build checks
+  </a>
+  
+    <nav class="md-nav" aria-label="Common build checks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#java-version" class="md-nav__link">
+    Java version
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#android-sdk-version" class="md-nav__link">
+    Android SDK version
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#macos-localhost-lookup" class="md-nav__link">
+    macOS localhost lookup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dynamic-dependency-version" class="md-nav__link">
+    Dynamic dependency version
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gradle-daemon-reusage" class="md-nav__link">
+    Gradle daemon reusage
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#module-types" class="md-nav__link">
+    Module types
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gradle-properties" class="md-nav__link">
+    Gradle properties
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#incremental-kapt" class="md-nav__link">
+    Incremental KAPT
+  </a>
+  
+    <nav class="md-nav" aria-label="Incremental KAPT">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#room" class="md-nav__link">
+    Room
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#android-application-checks" class="md-nav__link">
+    Android application checks
+  </a>
+  
+    <nav class="md-nav" aria-label="Android application checks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#unique-r-classes" class="md-nav__link">
+    Unique R classes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unique-application-resources" class="md-nav__link">
+    Unique application resources
+  </a>
+  
+    <nav class="md-nav" aria-label="Unique application resources">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ignoring-duplicates" class="md-nav__link">
+    Ignoring duplicates
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#known-issues" class="md-nav__link">
+    Known issues
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BuildProperties/" class="md-nav__link">
+        Build properties
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BuildTrace/" class="md-nav__link">
+        Build trace
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" type="checkbox" id="__nav_2_4" >
+      
+      <label class="md-nav__link" for="__nav_2_4">
+        Internal
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Internal" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_4">
+          <span class="md-nav__icon md-icon"></span>
+          Internal
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../internal/Internal/" class="md-nav__link">
+        Internal
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../internal/BuildMetrics/" class="md-nav__link">
+        Build metrics
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../internal/CriticalPath/" class="md-nav__link">
+        Critical path
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../internal/Signer/" class="md-nav__link">
+        Signer gradle plugin
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../internal/CiSteps/" class="md-nav__link">
+        CI steps plugin
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
+        CI
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="CI" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          CI
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ci/ImpactAnalysis/" class="md-nav__link">
+        Impact analysis
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ci/Containers/" class="md-nav__link">
+        Containers
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      <label class="md-nav__link" for="__nav_4">
+        Testing
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Testing" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Testing
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../test/FlakyAnnotation/" class="md-nav__link">
+        Flaky annotation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../test/Toast/" class="md-nav__link">
+        Toast
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      <label class="md-nav__link" for="__nav_5">
+        Test framework
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Test framework" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Test framework
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../test_framework/TestFramework/" class="md-nav__link">
+        Test framework
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../test_framework/Snackbar/" class="md-nav__link">
+        Snackbar
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../test_framework/ScreenChecks/" class="md-nav__link">
+        Screen checks
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../test_framework/Internals/" class="md-nav__link">
+        Internals
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      <label class="md-nav__link" for="__nav_6">
+        Test runner
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Test runner" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Test runner
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../test_runner/TestRunner/" class="md-nav__link">
+        Avito test runner
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../test_runner/Metrics/" class="md-nav__link">
+        Metrics
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../test_runner/SampleApp/" class="md-nav__link">
+        Sample app
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+      
+      <label class="md-nav__link" for="__nav_7">
+        Blog
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Blog" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          Blog
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_1" type="checkbox" id="__nav_7_1" >
+      
+      <label class="md-nav__link" for="__nav_7_1">
+        2021
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="2021" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_1">
+          <span class="md-nav__icon md-icon"></span>
+          2021
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_1_1" type="checkbox" id="__nav_7_1_1" >
+      
+      <label class="md-nav__link" for="__nav_7_1_1">
+        1
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="1" data-md-level="3">
+        <label class="md-nav__title" for="__nav_7_1_1">
+          <span class="md-nav__icon md-icon"></span>
+          1
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/2021/01/ui-impact-analysis-end/" class="md-nav__link">
+        Removal of ui tests impact analysis functionality
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_2" type="checkbox" id="__nav_7_2" >
+      
+      <label class="md-nav__link" for="__nav_7_2">
+        2020
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="2020" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_2">
+          <span class="md-nav__icon md-icon"></span>
+          2020
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_2_1" type="checkbox" id="__nav_7_2_1" >
+      
+      <label class="md-nav__link" for="__nav_7_2_1">
+        3
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="3" data-md-level="3">
+        <label class="md-nav__title" for="__nav_7_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          3
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/2020/03/testing-a-minimized-build/" class="md-nav__link">
+        Testing a minimized build
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_2_2" type="checkbox" id="__nav_7_2_2" >
+      
+      <label class="md-nav__link" for="__nav_7_2_2">
+        2
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="2" data-md-level="3">
+        <label class="md-nav__title" for="__nav_7_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          2
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/2020/02/lint-worker-api-workaround/" class="md-nav__link">
+        Lint Worker API workaround
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_3" type="checkbox" id="__nav_7_3" >
+      
+      <label class="md-nav__link" for="__nav_7_3">
+        2019
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="2019" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_3">
+          <span class="md-nav__icon md-icon"></span>
+          2019
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_3_1" type="checkbox" id="__nav_7_3_1" >
+      
+      <label class="md-nav__link" for="__nav_7_3_1">
+        12
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="12" data-md-level="3">
+        <label class="md-nav__title" for="__nav_7_3_1">
+          <span class="md-nav__icon md-icon"></span>
+          12
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/2019/12/open-source-introduction/" class="md-nav__link">
+        Open Source introduction
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/2019/12/open-source-introduction.ru/" class="md-nav__link">
+        Open source для CI/CD и тестовой инфраструктуры Авито для Android
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#getting-started" class="md-nav__link">
+    Getting started
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    Configuration
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#enable-single-check" class="md-nav__link">
+    Enable single check
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disable-single-check" class="md-nav__link">
+    Disable single check
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disable-all-checks" class="md-nav__link">
+    Disable all checks
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disable-plugin" class="md-nav__link">
+    Disable plugin
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#checks" class="md-nav__link">
+    Checks
+  </a>
+  
+    <nav class="md-nav" aria-label="Checks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#common-build-checks" class="md-nav__link">
+    Common build checks
+  </a>
+  
+    <nav class="md-nav" aria-label="Common build checks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#java-version" class="md-nav__link">
+    Java version
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#android-sdk-version" class="md-nav__link">
+    Android SDK version
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#macos-localhost-lookup" class="md-nav__link">
+    macOS localhost lookup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dynamic-dependency-version" class="md-nav__link">
+    Dynamic dependency version
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gradle-daemon-reusage" class="md-nav__link">
+    Gradle daemon reusage
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#module-types" class="md-nav__link">
+    Module types
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gradle-properties" class="md-nav__link">
+    Gradle properties
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#incremental-kapt" class="md-nav__link">
+    Incremental KAPT
+  </a>
+  
+    <nav class="md-nav" aria-label="Incremental KAPT">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#room" class="md-nav__link">
+    Room
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#android-application-checks" class="md-nav__link">
+    Android application checks
+  </a>
+  
+    <nav class="md-nav" aria-label="Android application checks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#unique-r-classes" class="md-nav__link">
+    Unique R classes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unique-application-resources" class="md-nav__link">
+    Unique application resources
+  </a>
+  
+    <nav class="md-nav" aria-label="Unique application resources">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ignoring-duplicates" class="md-nav__link">
+    Ignoring duplicates
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#known-issues" class="md-nav__link">
+    Known issues
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/avito-tech/avito-android/tree/develop/docs/content/projects/BuildChecks.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="build-checks-gradle-plugin">Build checks Gradle plugin<a class="headerlink" href="#build-checks-gradle-plugin" title="Permanent link">#</a></h1>
+<p>This plugin verifies <a href="#checks">common build problems</a> with environment and project configuration.</p>
+<h2 id="getting-started">Getting started<a class="headerlink" href="#getting-started" title="Permanent link">#</a></h2>
+<p>Apply the plugin in a root build script or in an Android application module:</p>
+<div class="highlight"><pre><span></span><code><span class="n">plugins</span> <span class="o">{</span>
+    <span class="n">id</span><span class="o">(</span><span class="s2">&quot;com.avito.android.build-checks&quot;</span><span class="o">)</span>
+<span class="o">}</span>
+</code></pre></div>
+<details class="note"><summary>Setup plugins</summary><p>In the <code>settings.gradle</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="n">pluginManagement</span> <span class="o">{</span>
+    <span class="n">repositories</span> <span class="o">{</span>
+        <span class="n">mavenCentral</span><span class="o">()</span>
+    <span class="o">}</span>
+    <span class="n">resolutionStrategy</span> <span class="o">{</span>
+        <span class="n">eachPlugin</span> <span class="o">{</span>
+            <span class="n">String</span> <span class="n">pluginId</span> <span class="o">=</span> <span class="n">requested</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">id</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">pluginId</span><span class="o">.</span><span class="na">startsWith</span><span class="o">(</span><span class="s2">&quot;com.avito.android&quot;</span><span class="o">))</span> <span class="o">{</span>
+                <span class="kt">def</span> <span class="n">artifact</span> <span class="o">=</span> <span class="n">pluginId</span><span class="o">.</span><span class="na">replace</span><span class="o">(</span><span class="s2">&quot;com.avito.android.&quot;</span><span class="o">,</span> <span class="s2">&quot;&quot;</span><span class="o">)</span>
+                <span class="n">useModule</span><span class="o">(</span><span class="s2">&quot;com.avito.android:$artifact:$avitoToolsVersion&quot;</span><span class="o">)</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<p><code>avitoToolsVersion</code> could be exact version, or property in project's <code>gradle.properties</code>.
+The latest version could be found on project's <a href="https://github.com/avito-tech/avito-android/releases">release page</a>.</p>
+</details>
+<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Kotlin</label><div class="tabbed-content">
+<p><code>build.gradle.kts</code></p>
+<div class="highlight"><pre><span></span><code><span class="n">buildChecks</span> <span class="p">{</span>
+    <span class="n">androidSdk</span> <span class="p">{</span>
+        <span class="n">compileSdkVersion</span> <span class="o">=</span> <span class="m">29</span>
+        <span class="n">revision</span> <span class="o">=</span> <span class="m">5</span>
+    <span class="p">}</span>
+    <span class="n">javaVersion</span> <span class="p">{</span>
+        <span class="n">version</span> <span class="o">=</span> <span class="n">JavaVersion</span><span class="p">.</span><span class="na">VERSION_1_8</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">Groovy</label><div class="tabbed-content">
+<p><code>build.gradle</code></p>
+<div class="highlight"><pre><span></span><code><span class="n">buildChecks</span> <span class="o">{</span>
+    <span class="n">androidSdk</span> <span class="o">{</span>
+        <span class="n">compileSdkVersion</span> <span class="o">=</span> <span class="mi">29</span>
+        <span class="n">revision</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="o">}</span>
+    <span class="n">javaVersion</span> <span class="o">{</span>
+        <span class="n">version</span> <span class="o">=</span> <span class="n">JavaVersion</span><span class="o">.</span><span class="na">VERSION_1_8</span>
+    <span class="o">}</span>
+    <span class="n">uniqueRClasses</span> <span class="o">{</span>
+        <span class="n">enabled</span> <span class="o">=</span> <span class="kc">false</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+</div>
+</div>
+<p>That's all for a configuration. Run it manually to verify that it works:</p>
+<div class="highlight"><pre><span></span><code>./gradlew checkBuildEnvironment
+</code></pre></div>
+<p>The plugin will run it automatically on every build.</p>
+<h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">#</a></h2>
+<h3 id="enable-single-check">Enable single check<a class="headerlink" href="#enable-single-check" title="Permanent link">#</a></h3>
+<div class="tabbed-set" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Kotlin</label><div class="tabbed-content">
+<p><code>build.gradle.kts</code></p>
+<div class="highlight"><pre><span></span><code><span class="n">buildChecks</span> <span class="p">{</span>
+    <span class="n">enableByDefault</span> <span class="o">=</span> <span class="kc">false</span>
+
+    <span class="n">androidSdk</span> <span class="p">{</span>
+        <span class="n">compileSdkVersion</span> <span class="o">=</span> <span class="m">29</span>
+        <span class="n">revision</span> <span class="o">=</span> <span class="m">5</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">Groovy</label><div class="tabbed-content">
+<p><code>build.gradle</code></p>
+<div class="highlight"><pre><span></span><code><span class="n">buildChecks</span> <span class="o">{</span>
+    <span class="n">enableByDefault</span> <span class="o">=</span> <span class="kc">false</span>
+
+    <span class="n">androidSdk</span> <span class="o">{</span>
+        <span class="n">compileSdkVersion</span> <span class="o">=</span> <span class="mi">29</span>
+        <span class="n">revision</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+</div>
+</div>
+<h3 id="disable-single-check">Disable single check<a class="headerlink" href="#disable-single-check" title="Permanent link">#</a></h3>
+<div class="tabbed-set" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">Kotlin</label><div class="tabbed-content">
+<p><code>build.gradle.kts</code></p>
+<div class="highlight"><pre><span></span><code><span class="n">buildChecks</span> <span class="p">{</span>
+    <span class="n">androidSdk</span> <span class="p">{</span>
+        <span class="n">enabled</span> <span class="o">=</span> <span class="kc">false</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+<input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><label for="__tabbed_3_2">Groovy</label><div class="tabbed-content">
+<p><code>build.gradle</code></p>
+<div class="highlight"><pre><span></span><code><span class="n">buildChecks</span> <span class="o">{</span>
+    <span class="n">androidSdk</span> <span class="o">{</span>
+        <span class="n">enabled</span> <span class="o">=</span> <span class="kc">false</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+</div>
+</div>
+<h3 id="disable-all-checks">Disable all checks<a class="headerlink" href="#disable-all-checks" title="Permanent link">#</a></h3>
+<div class="tabbed-set" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><label for="__tabbed_4_1">Kotlin</label><div class="tabbed-content">
+<p><code>build.gradle.kts</code></p>
+<div class="highlight"><pre><span></span><code><span class="n">buildChecks</span> <span class="p">{</span>
+    <span class="n">enableByDefault</span> <span class="o">=</span> <span class="kc">false</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+<input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><label for="__tabbed_4_2">Groovy</label><div class="tabbed-content">
+<p><code>build.gradle</code></p>
+<div class="highlight"><pre><span></span><code><span class="n">buildChecks</span> <span class="o">{</span>
+    <span class="n">enableByDefault</span> <span class="o">=</span> <span class="kc">false</span>
+<span class="o">}</span>
+</code></pre></div>
+</div>
+</div>
+<h3 id="disable-plugin">Disable plugin<a class="headerlink" href="#disable-plugin" title="Permanent link">#</a></h3>
+<p>To completely disable the plugin add a Gradle property:</p>
+<div class="highlight"><pre><span></span><code><span class="na">avito.build-checks.enabled</span><span class="o">=</span><span class="s">false</span>
+</code></pre></div>
+<h2 id="checks">Checks<a class="headerlink" href="#checks" title="Permanent link">#</a></h2>
+<h3 id="common-build-checks">Common build checks<a class="headerlink" href="#common-build-checks" title="Permanent link">#</a></h3>
+<p>These checks are available in a root project's buildscript.<br />
+See also <a href="#android-application-checks">Android application checks</a>.</p>
+<h4 id="java-version">Java version<a class="headerlink" href="#java-version" title="Permanent link">#</a></h4>
+<p>The Java version can influence the output of the Java compiler. It leads to
+Gradle <a href="https://guides.gradle.org/using-build-cache/#diagnosing_cache_miss">remote cache misses</a>
+due
+to <a href="https://docs.gradle.org/nightly/userguide/common_caching_problems.html#java_version_tracking">Java version tracking</a>.<br />
+This check forces the same major version for all builds.</p>
+<div class="tabbed-set" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><label for="__tabbed_5_1">Kotlin</label><div class="tabbed-content">
+<p><code>build.gradle.kts</code></p>
+<div class="highlight"><pre><span></span><code><span class="n">buildChecks</span> <span class="p">{</span>
+    <span class="n">javaVersion</span> <span class="p">{</span>
+        <span class="n">version</span> <span class="o">=</span> <span class="n">JavaVersion</span><span class="p">.</span><span class="na">VERSION_1_8</span>
+    <span class="p">}</span>   
+<span class="p">}</span>
+</code></pre></div>
+</div>
+<input id="__tabbed_5_2" name="__tabbed_5" type="radio" /><label for="__tabbed_5_2">Groovy</label><div class="tabbed-content">
+<p><code>build.gradle</code></p>
+<div class="highlight"><pre><span></span><code><span class="n">buildChecks</span> <span class="o">{</span>
+    <span class="n">javaVersion</span> <span class="o">{</span>
+        <span class="n">version</span> <span class="o">=</span> <span class="n">JavaVersion</span><span class="o">.</span><span class="na">VERSION_1_8</span>
+    <span class="o">}</span>   
+<span class="o">}</span>
+</code></pre></div>
+</div>
+</div>
+<h4 id="android-sdk-version">Android SDK version<a class="headerlink" href="#android-sdk-version" title="Permanent link">#</a></h4>
+<p>Android build tools uses android.jar (<code>$ANDROID_HOME/platforms/android-&lt;compileSdkVersion&gt;/android.jar</code>).<br />
+The version can be specified only without a revision (<a href="https://issuetracker.google.com/issues/117789774">#117789774</a>).
+Different revisions lead to Gradle remote cache misses. This check forces the same revision:</p>
+<div class="tabbed-set" data-tabs="6:2"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio" /><label for="__tabbed_6_1">Kotlin</label><div class="tabbed-content">
+<p><code>build.gradle.kts</code></p>
+<div class="highlight"><pre><span></span><code><span class="n">buildChecks</span> <span class="p">{</span>
+    <span class="n">androidSdk</span> <span class="p">{</span>
+        <span class="n">compileSdkVersion</span> <span class="o">=</span> <span class="m">29</span>
+        <span class="n">revision</span> <span class="o">=</span> <span class="m">5</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+<input id="__tabbed_6_2" name="__tabbed_6" type="radio" /><label for="__tabbed_6_2">Groovy</label><div class="tabbed-content">
+<p><code>build.gradle</code></p>
+<div class="highlight"><pre><span></span><code><span class="n">buildChecks</span> <span class="o">{</span>
+    <span class="n">androidSdk</span> <span class="o">{</span>
+        <span class="n">compileSdkVersion</span> <span class="o">=</span> <span class="mi">29</span>
+        <span class="n">revision</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+</div>
+</div>
+<h4 id="macos-localhost-lookup">macOS localhost lookup<a class="headerlink" href="#macos-localhost-lookup" title="Permanent link">#</a></h4>
+<p>On macOs <code>java.net.InetAddress#getLocalHost()</code> invocation can last up to 5 seconds instead of milliseconds
+(<a href="https://thoeni.io/post/macos-sierra-java/">thoeni.io/post/macos-sierra-java</a>). Gradle has
+a <a href="https://github.com/gradle/gradle/pull/11134">workaround</a> but it works only inside Gradle's code.</p>
+<p>To diagnose the problem manually use <a href="https://github.com/thoeni/inetTester">thoeni/inetTester</a>.</p>
+<p>To fix the problem use this workaround:</p>
+<ol>
+<li>Find your computer's name - <a href="https://support.apple.com/en-us/guide/mac-help/find-your-computers-name-and-network-address-mchlp1177/mac">Find your computer's name and network address</a></li>
+<li>Add it to <code>/etc/hosts</code> config:</li>
+</ol>
+<div class="highlight"><pre><span></span><code>127.0.0.1        localhost &lt;your_host_name&gt;.local
+::1              localhost &lt;your_host_name&gt;.local
+</code></pre></div>
+<ol>
+<li>Reboot the computer</li>
+<li>Check again by <a href="https://github.com/thoeni/inetTester">thoeni/inetTester</a></li>
+</ol>
+<p>This check automatically detects the issue:</p>
+<div class="tabbed-set" data-tabs="7:2"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio" /><label for="__tabbed_7_1">Kotlin</label><div class="tabbed-content">
+<p><code>build.gradle.kts</code></p>
+<div class="highlight"><pre><span></span><code><span class="n">buildChecks</span> <span class="p">{</span>
+    <span class="n">macOSLocalhost</span> <span class="p">{</span> <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+<input id="__tabbed_7_2" name="__tabbed_7" type="radio" /><label for="__tabbed_7_2">Groovy</label><div class="tabbed-content">
+<p><code>build.gradle</code></p>
+<div class="highlight"><pre><span></span><code><span class="n">buildChecks</span> <span class="o">{</span>
+    <span class="n">macOSLocalhost</span> <span class="o">{</span> <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+</div>
+</div>
+<h4 id="dynamic-dependency-version">Dynamic dependency version<a class="headerlink" href="#dynamic-dependency-version" title="Permanent link">#</a></h4>
+<p>Dynamic versions, such as "2.+", and snapshot versions force Gradle to check them on a remote server. It slows down
+a <a href="https://guides.gradle.org/performance/#minimize_dynamic_and_snapshot_versions">configuration time</a>
+and makes build <a href="https://reproducible-builds.org/">less reproducible</a>.</p>
+<p>This check forbids dynamic dependency versions.</p>
+<div class="tabbed-set" data-tabs="8:2"><input checked="checked" id="__tabbed_8_1" name="__tabbed_8" type="radio" /><label for="__tabbed_8_1">Kotlin</label><div class="tabbed-content">
+<p><code>build.gradle.kts</code></p>
+<div class="highlight"><pre><span></span><code><span class="n">buildChecks</span> <span class="p">{</span>
+    <span class="n">dynamicDependencies</span> <span class="p">{</span> <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+<input id="__tabbed_8_2" name="__tabbed_8" type="radio" /><label for="__tabbed_8_2">Groovy</label><div class="tabbed-content">
+<p><code>build.gradle</code></p>
+<div class="highlight"><pre><span></span><code><span class="n">buildChecks</span> <span class="o">{</span>
+    <span class="n">dynamicDependencies</span> <span class="o">{</span> <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+</div>
+</div>
+<h4 id="gradle-daemon-reusage">Gradle daemon reusage<a class="headerlink" href="#gradle-daemon-reusage" title="Permanent link">#</a></h4>
+<p>Gradle can run multiple daemons
+for <a href="https://docs.gradle.org/5.0/userguide/gradle_daemon.html#sec:why_is_there_more_than_one_daemon_process_on_my_machine">many reasons</a>
+.</p>
+<p>If you use <code>buildSrc</code> in the project with standalone Gradle wrapper, this check will verify common problems to reuse it.</p>
+<div class="tabbed-set" data-tabs="9:2"><input checked="checked" id="__tabbed_9_1" name="__tabbed_9" type="radio" /><label for="__tabbed_9_1">Kotlin</label><div class="tabbed-content">
+<p><code>build.gradle.kts</code></p>
+<div class="highlight"><pre><span></span><code><span class="n">buildChecks</span> <span class="p">{</span>
+    <span class="n">gradleDaemon</span> <span class="p">{</span> <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+<input id="__tabbed_9_2" name="__tabbed_9" type="radio" /><label for="__tabbed_9_2">Groovy</label><div class="tabbed-content">
+<p><code>build.gradle</code></p>
+<div class="highlight"><pre><span></span><code><span class="n">buildChecks</span> <span class="o">{</span>
+    <span class="n">gradleDaemon</span> <span class="o">{</span> <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+</div>
+</div>
+<h4 id="module-types">Module types<a class="headerlink" href="#module-types" title="Permanent link">#</a></h4>
+<p>This check force to
+apply <a href="https://github.com/avito-tech/avito-android/blob/develop/subprojects/gradle/module-types"><code>module-types</code></a> Gradle
+plugin in all modules. It prevents modules go to wrong configurations (android-test module as an app’s implementation
+dependency for example).</p>
+<div class="tabbed-set" data-tabs="10:2"><input checked="checked" id="__tabbed_10_1" name="__tabbed_10" type="radio" /><label for="__tabbed_10_1">Kotlin</label><div class="tabbed-content">
+<p><code>build.gradle.kts</code></p>
+<div class="highlight"><pre><span></span><code><span class="n">buildChecks</span> <span class="p">{</span>
+    <span class="n">moduleTypes</span> <span class="p">{</span> 
+        <span class="n">enabled</span> <span class="o">=</span> <span class="kc">true</span> <span class="c1">// disabled by default</span>
+    <span class="p">}</span> 
+<span class="p">}</span>
+</code></pre></div>
+</div>
+<input id="__tabbed_10_2" name="__tabbed_10" type="radio" /><label for="__tabbed_10_2">Groovy</label><div class="tabbed-content">
+<p><code>build.gradle</code></p>
+<div class="highlight"><pre><span></span><code><span class="n">buildChecks</span> <span class="o">{</span>
+    <span class="n">moduleTypes</span> <span class="o">{</span> 
+        <span class="n">enabled</span> <span class="o">=</span> <span class="kc">true</span> <span class="c1">// disabled by default</span>
+    <span class="o">}</span> 
+<span class="o">}</span>
+</code></pre></div>
+</div>
+</div>
+<h4 id="gradle-properties">Gradle properties<a class="headerlink" href="#gradle-properties" title="Permanent link">#</a></h4>
+<details class="note" open="open"><summary>Disclaimer</summary><p>The text below contains Avito specific details</p>
+</details>
+<p>This check detects if you
+override <a href="https://docs.gradle.org/current/userguide/build_environment.html#sec:project_properties">Gradle project property</a>
+by command-line. It sends mismatches to statsd. This information helps to see frequently changed propeties that can lead
+to remote cache misses.</p>
+<div class="tabbed-set" data-tabs="11:2"><input checked="checked" id="__tabbed_11_1" name="__tabbed_11" type="radio" /><label for="__tabbed_11_1">Kotlin</label><div class="tabbed-content">
+<p><code>build.gradle.kts</code></p>
+<div class="highlight"><pre><span></span><code><span class="n">buildChecks</span> <span class="p">{</span>
+    <span class="n">gradleProperties</span> <span class="p">{</span> 
+        <span class="n">enabled</span> <span class="o">=</span> <span class="kc">true</span> <span class="c1">// disabled by default</span>
+    <span class="p">}</span> 
+<span class="p">}</span>
+</code></pre></div>
+</div>
+<input id="__tabbed_11_2" name="__tabbed_11" type="radio" /><label for="__tabbed_11_2">Groovy</label><div class="tabbed-content">
+<p><code>build.gradle</code></p>
+<div class="highlight"><pre><span></span><code><span class="n">buildChecks</span> <span class="o">{</span>
+    <span class="n">gradleProperties</span> <span class="o">{</span> 
+        <span class="n">enabled</span> <span class="o">=</span> <span class="kc">true</span> <span class="c1">// disabled by default</span>
+    <span class="o">}</span> 
+<span class="o">}</span>
+</code></pre></div>
+</div>
+</div>
+<h4 id="incremental-kapt">Incremental KAPT<a class="headerlink" href="#incremental-kapt" title="Permanent link">#</a></h4>
+<p>This check verifies that all KAPT annotation processors support incremental annotation processing if it
+is <a href="https://kotlinlang.org/docs/reference/kapt.html#incremental-annotation-processing-since-1330">enabled</a> (<code>kapt.incremental.apt=true</code>)
+. Because if one of them does not support it then whole incremental annotation processing won't work at all.</p>
+<p>Supported processors:</p>
+<ul>
+<li><a href="https://developer.android.com/topic/libraries/architecture/room">Room</a></li>
+</ul>
+<p>Incremental KAPT check has three modes:</p>
+<ul>
+<li><code>"none"</code> -- check is disable</li>
+<li><code>"warning"</code> -- prints warning in build log (default behaviour)</li>
+<li><code>"fail"</code> -- fail whole build</li>
+</ul>
+<div class="tabbed-set" data-tabs="12:2"><input checked="checked" id="__tabbed_12_1" name="__tabbed_12" type="radio" /><label for="__tabbed_12_1">Kotlin</label><div class="tabbed-content">
+<p><code>build.gradle.kts</code></p>
+<div class="highlight"><pre><span></span><code><span class="n">buildChecks</span> <span class="p">{</span>
+    <span class="n">incrementalKapt</span> <span class="p">{</span>
+        <span class="n">mode</span> <span class="o">=</span> <span class="s">&quot;fail&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+<input id="__tabbed_12_2" name="__tabbed_12" type="radio" /><label for="__tabbed_12_2">Groovy</label><div class="tabbed-content">
+<p><code>build.gradle</code></p>
+<div class="highlight"><pre><span></span><code><span class="n">buildChecks</span> <span class="o">{</span>
+    <span class="n">incrementalKapt</span> <span class="o">{</span>
+        <span class="n">mode</span> <span class="o">=</span> <span class="s2">&quot;fail&quot;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+</div>
+</div>
+<h5 id="room">Room<a class="headerlink" href="#room" title="Permanent link">#</a></h5>
+<p>Room supports incremental annotation processing if all of the following conditions are met:</p>
+<ul>
+<li><a href="https://developer.android.com/jetpack/androidx/releases/room#compiler-options"><code>room.incremental</code></a> it set to <code>true</code>
+  or <code>com.avito.android.room-config</code> Gradle-plugin is applied</li>
+<li>You use Java 11 and higher or use JDK embedded in Android Studio 3.5.0-beta02 and higher. For more info about these
+  restrictions read the documentation for the method <code>methodParametersVisibleInClassFiles</code>
+  in <code>RoomProcessor</code> <a href="https://android.googlesource.com/platform/frameworks/support/+/refs/heads/androidx-master-dev/room/compiler/src/main/kotlin/androidx/room/RoomProcessor.kt">sources</a></li>
+</ul>
+<p>If you use IntelliJ IDEA or build a project from the command line you have to set up <code>JAVA_HOME</code> environment variable to 
+reference the path to embedded JDK in Android Studio. You can add to <code>~/.gradle/gradle.properties</code> line like this:</p>
+<div class="highlight"><pre><span></span><code><span class="na">org.gradle.java.home</span><span class="o">=</span><span class="s">/Applications/Android Studio.app/Contents/jre/jdk/Contents/Home</span>
+</code></pre></div>
+<p>This path can be retrieved from <strong>Project Structure &gt; SDK Location &gt; JDK location</strong> in 
+Android Studio.</p>
+<h3 id="android-application-checks">Android application checks<a class="headerlink" href="#android-application-checks" title="Permanent link">#</a></h3>
+<p>These checks are available in an Android application's buildscript.<br />
+Each application can have specific settings.</p>
+<h4 id="unique-r-classes">Unique R classes<a class="headerlink" href="#unique-r-classes" title="Permanent link">#</a></h4>
+<p>If two Android libraries use the same package, their R classes will be merged. While merging, it can unexpectedly override
+resources (<a href="https://issuetracker.google.com/issues/175316324">#175316324</a>). It happens even
+with <code>android.namespacedRClass</code>.</p>
+<p>To forbid merged R files use this check:</p>
+<div class="tabbed-set" data-tabs="13:2"><input checked="checked" id="__tabbed_13_1" name="__tabbed_13" type="radio" /><label for="__tabbed_13_1">Kotlin</label><div class="tabbed-content">
+<p><code>build.gradle.kts</code></p>
+<div class="highlight"><pre><span></span><code><span class="n">plugins</span> <span class="p">{</span>
+    <span class="n">id</span><span class="p">(</span><span class="s">&quot;com.avito.android.build-checks&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="n">buildChecks</span> <span class="p">{</span>
+    <span class="n">uniqueRClasses</span> <span class="p">{</span> <span class="p">}</span> <span class="c1">// enabled by default</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+<input id="__tabbed_13_2" name="__tabbed_13" type="radio" /><label for="__tabbed_13_2">Groovy</label><div class="tabbed-content">
+<p><code>build.gradle</code></p>
+<div class="highlight"><pre><span></span><code><span class="n">plugins</span> <span class="o">{</span>
+    <span class="n">id</span><span class="o">(</span><span class="s2">&quot;com.avito.android.build-checks&quot;</span><span class="o">)</span>
+<span class="o">}</span>
+
+<span class="n">buildChecks</span> <span class="o">{</span>
+    <span class="n">uniqueRClasses</span> <span class="o">{</span> <span class="o">}</span> <span class="c1">// enabled by default</span>
+<span class="o">}</span>
+</code></pre></div>
+</div>
+</div>
+<p>See also <code>android.uniquePackageNames</code> check. In AGP 4.1 it provides similar but less complete contract.</p>
+<p>You can suppress errors for a specific package:</p>
+<p><code>build.gradle.kts</code></p>
+<div class="highlight"><pre><span></span><code><span class="n">buildChecks</span> <span class="p">{</span>
+    <span class="n">uniqueRClasses</span> <span class="p">{</span>
+        <span class="n">allowedNonUniquePackageNames</span><span class="p">.</span><span class="na">addAll</span><span class="p">(</span><span class="n">listOf</span><span class="p">(</span>
+            <span class="s">&quot;androidx.test&quot;</span><span class="p">,</span> <span class="c1">// Default from ManifestMerger #151171905</span>
+            <span class="s">&quot;androidx.test.espresso&quot;</span><span class="p">,</span> <span class="c1">// Won&#39;t fix: https://issuetracker.google.com/issues/176002058</span>
+            <span class="s">&quot;androidx.navigation.ktx&quot;</span> <span class="c1">// Fixed in 2.2.1: https://developer.android.com/jetpack/androidx/releases/navigation#2.2.1</span>
+        <span class="p">))</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h4 id="unique-application-resources">Unique application resources<a class="headerlink" href="#unique-application-resources" title="Permanent link">#</a></h4>
+<p>From <a href="https://developer.android.com/studio/projects/android-library#Considerations">Android library - considerations</a>:</p>
+<pre><code>The build tools merge resources from a library module with those of a dependent app module. 
+If a given resource ID is defined in both modules, the resource from the app is used.
+
+If conflicts occur between multiple AAR libraries, then the resource from the library listed first in the dependencies list is used.
+</code></pre>
+<p><code>uniqueAppResources</code> ensures that resources in application are unique and won't be overridden implicitly.</p>
+<div class="tabbed-set" data-tabs="14:2"><input checked="checked" id="__tabbed_14_1" name="__tabbed_14" type="radio" /><label for="__tabbed_14_1">Kotlin</label><div class="tabbed-content">
+<p><code>build.gradle.kts</code></p>
+<p>Root module:</p>
+<div class="highlight"><pre><span></span><code><span class="n">plugins</span> <span class="p">{</span>
+    <span class="n">id</span><span class="p">(</span><span class="s">&quot;com.avito.android.impact&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Application module:</p>
+<div class="highlight"><pre><span></span><code><span class="n">plugins</span> <span class="p">{</span>
+    <span class="n">id</span><span class="p">(</span><span class="s">&quot;com.avito.android.build-checks&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="n">buildChecks</span> <span class="p">{</span>
+    <span class="n">uniqueAppResources</span> <span class="p">{}</span> <span class="c1">// disabled by default</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+<input id="__tabbed_14_2" name="__tabbed_14" type="radio" /><label for="__tabbed_14_2">Groovy</label><div class="tabbed-content">
+<p><code>build.gradle</code></p>
+<p>Root module:</p>
+<div class="highlight"><pre><span></span><code><span class="n">plugins</span> <span class="o">{</span>
+    <span class="n">id</span><span class="o">(</span><span class="s2">&quot;com.avito.android.impact&quot;</span><span class="o">)</span>
+<span class="o">}</span>
+</code></pre></div>
+<p>Application module:</p>
+<div class="highlight"><pre><span></span><code><span class="n">plugins</span> <span class="o">{</span>
+    <span class="n">id</span><span class="o">(</span><span class="s2">&quot;com.avito.android.build-checks&quot;</span><span class="o">)</span>
+<span class="o">}</span>
+
+<span class="n">buildChecks</span> <span class="o">{</span>
+    <span class="n">uniqueAppResources</span> <span class="o">{}</span> <span class="c1">// disabled by default</span>
+<span class="o">}</span>
+</code></pre></div>
+</div>
+</div>
+<p>To avoid resource conflicts, consider using a prefix (<code>android.resourcePrefix</code>) or other consistent naming scheme.</p>
+<h5 id="ignoring-duplicates">Ignoring duplicates<a class="headerlink" href="#ignoring-duplicates" title="Permanent link">#</a></h5>
+<div class="highlight"><pre><span></span><code><span class="n">buildChecks</span> <span class="p">{</span>
+    <span class="n">uniqueAppResources</span> <span class="p">{</span>
+        <span class="c1">// Resource types: string, dimen, bool, layout, drawable, ...</span>
+        <span class="n">ignoredResourceTypes</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">&quot;string&quot;</span><span class="p">)</span>
+        <span class="c1">// Specific resources</span>
+        <span class="n">ignoredResource</span><span class="p">(</span><span class="s">&quot;string&quot;</span><span class="p">,</span> <span class="s">&quot;title&quot;</span><span class="p">)</span>
+        <span class="n">ignoredResource</span><span class="p">(</span><span class="s">&quot;dimen&quot;</span><span class="p">,</span> <span class="s">&quot;max_height&quot;</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h5 id="known-issues">Known issues<a class="headerlink" href="#known-issues" title="Permanent link">#</a></h5>
+<ul>
+<li>Requires impact analysis that slows project configuration</li>
+<li>Disabled by default due to possible false positive cases. Usually, it requires to configure ignored resources.</li>
+<li>Don't compare values, only resource identifiers. Reported duplicates can have the same content.</li>
+<li>Detects only project modules without binary dependencies. 
+  Don't know how to deal with massive false positive duplicates for widely used libraries (androidx and similar ones). </li>
+<li>Some resource types are not supported because the issue is not confirmed for them. These are <code>id</code>, <code>attr</code>, <code>styleable</code>.</li>
+</ul>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../../contributing/internal/RemoteCache/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Remote cache
+            </div>
+          </div>
+        </a>
+      
+      
+        <a href="../BuildProperties/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Build properties
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+  <div class="md-footer-social">
+    
+      
+      
+        
+        
+      
+      <a href="https://twitter.com/avitotech" target="_blank" rel="noopener" title="twitter.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://t.me/avito_android_opensource" target="_blank" rel="noopener" title="t.me" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm121.8 169.9-40.7 191.8c-3 13.6-11.1 16.9-22.4 10.5l-62-45.7-29.9 28.8c-3.3 3.3-6.1 6.1-12.5 6.1l4.4-63.1 114.9-103.8c5-4.4-1.1-6.9-7.7-2.5l-142 89.4-61.2-19.1c-13.3-4.2-13.6-13.3 2.8-19.7l239.1-92.2c11.1-4 20.8 2.7 17.2 19.5z"/></svg>
+      </a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.4fa0e4ee.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.1d3bfcf1.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@8.9.3/dist/mermaid.min.js"></script>
+      
+    
+  </body>
+</html>

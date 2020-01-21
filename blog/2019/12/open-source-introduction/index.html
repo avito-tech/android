@@ -1,0 +1,1675 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Avito Android infrastructure">
+      
+      
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.4">
+    
+    
+      
+        <title>Open Source introduction - Avito Android</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.bde7dde4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ef6f36e2.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+      
+        
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-157613383-1","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="preference" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    <script>function __prefix(e){return new URL("../../../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#open-source-cicd-and-test-infrastructure-for-android" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="Avito Android" class="md-header__button md-logo" aria-label="Avito Android" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Avito Android
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Open Source introduction
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/avito-tech/avito-android/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    avito-android
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../.." class="md-tabs__link">
+        Infrastructure
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../projects/BuildChecks/" class="md-tabs__link">
+        Projects
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../ci/ImpactAnalysis/" class="md-tabs__link">
+        CI
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../test/FlakyAnnotation/" class="md-tabs__link">
+        Testing
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../test_framework/TestFramework/" class="md-tabs__link">
+        Test framework
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../test_runner/TestRunner/" class="md-tabs__link">
+        Test runner
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    
+
+  
+  
+  
+    
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../2021/01/ui-impact-analysis-end/" class="md-tabs__link md-tabs__link--active">
+        Blog
+      </a>
+    </li>
+  
+
+  
+
+  
+
+      
+    </ul>
+  </div>
+</nav>
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Avito Android" class="md-nav__button md-logo" aria-label="Avito Android" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Avito Android
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/avito-tech/avito-android/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    avito-android
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
+      
+      <label class="md-nav__link" for="__nav_1">
+        Infrastructure
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Infrastructure" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          Infrastructure
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        Android in Avito
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../contributing/HowToStart/" class="md-nav__link">
+        How to start
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../contributing/GradlePlugins/" class="md-nav__link">
+        Gradle plugins
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../contributing/Documentation/" class="md-nav__link">
+        Documentation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../contributing/Logging/" class="md-nav__link">
+        Logging
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../contributing/Networking/" class="md-nav__link">
+        Networking
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../contributing/Testing/" class="md-nav__link">
+        Testing
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../contributing/Release/" class="md-nav__link">
+        Release
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../contributing/internal/RemoteCache/" class="md-nav__link">
+        Remote cache
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      <label class="md-nav__link" for="__nav_2">
+        Projects
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Projects" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Projects
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../projects/BuildChecks/" class="md-nav__link">
+        Build checks
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../projects/BuildProperties/" class="md-nav__link">
+        Build properties
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../projects/BuildTrace/" class="md-nav__link">
+        Build trace
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" type="checkbox" id="__nav_2_4" >
+      
+      <label class="md-nav__link" for="__nav_2_4">
+        Internal
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Internal" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_4">
+          <span class="md-nav__icon md-icon"></span>
+          Internal
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../projects/internal/Internal/" class="md-nav__link">
+        Internal
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../projects/internal/BuildMetrics/" class="md-nav__link">
+        Build metrics
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../projects/internal/CriticalPath/" class="md-nav__link">
+        Critical path
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../projects/internal/Signer/" class="md-nav__link">
+        Signer gradle plugin
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../projects/internal/CiSteps/" class="md-nav__link">
+        CI steps plugin
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
+        CI
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="CI" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          CI
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../ci/ImpactAnalysis/" class="md-nav__link">
+        Impact analysis
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../ci/Containers/" class="md-nav__link">
+        Containers
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      <label class="md-nav__link" for="__nav_4">
+        Testing
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Testing" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Testing
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../test/FlakyAnnotation/" class="md-nav__link">
+        Flaky annotation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../test/Toast/" class="md-nav__link">
+        Toast
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      <label class="md-nav__link" for="__nav_5">
+        Test framework
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Test framework" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Test framework
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../test_framework/TestFramework/" class="md-nav__link">
+        Test framework
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../test_framework/Snackbar/" class="md-nav__link">
+        Snackbar
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../test_framework/ScreenChecks/" class="md-nav__link">
+        Screen checks
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../test_framework/Internals/" class="md-nav__link">
+        Internals
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      <label class="md-nav__link" for="__nav_6">
+        Test runner
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Test runner" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Test runner
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../test_runner/TestRunner/" class="md-nav__link">
+        Avito test runner
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../test_runner/Metrics/" class="md-nav__link">
+        Metrics
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../test_runner/SampleApp/" class="md-nav__link">
+        Sample app
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" checked>
+      
+      <label class="md-nav__link" for="__nav_7">
+        Blog
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Blog" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          Blog
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_1" type="checkbox" id="__nav_7_1" >
+      
+      <label class="md-nav__link" for="__nav_7_1">
+        2021
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="2021" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_1">
+          <span class="md-nav__icon md-icon"></span>
+          2021
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_1_1" type="checkbox" id="__nav_7_1_1" >
+      
+      <label class="md-nav__link" for="__nav_7_1_1">
+        1
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="1" data-md-level="3">
+        <label class="md-nav__title" for="__nav_7_1_1">
+          <span class="md-nav__icon md-icon"></span>
+          1
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../2021/01/ui-impact-analysis-end/" class="md-nav__link">
+        Removal of ui tests impact analysis functionality
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_2" type="checkbox" id="__nav_7_2" >
+      
+      <label class="md-nav__link" for="__nav_7_2">
+        2020
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="2020" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_2">
+          <span class="md-nav__icon md-icon"></span>
+          2020
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_2_1" type="checkbox" id="__nav_7_2_1" >
+      
+      <label class="md-nav__link" for="__nav_7_2_1">
+        3
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="3" data-md-level="3">
+        <label class="md-nav__title" for="__nav_7_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          3
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../2020/03/testing-a-minimized-build/" class="md-nav__link">
+        Testing a minimized build
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_2_2" type="checkbox" id="__nav_7_2_2" >
+      
+      <label class="md-nav__link" for="__nav_7_2_2">
+        2
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="2" data-md-level="3">
+        <label class="md-nav__title" for="__nav_7_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          2
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../2020/02/lint-worker-api-workaround/" class="md-nav__link">
+        Lint Worker API workaround
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_3" type="checkbox" id="__nav_7_3" checked>
+      
+      <label class="md-nav__link" for="__nav_7_3">
+        2019
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="2019" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_3">
+          <span class="md-nav__icon md-icon"></span>
+          2019
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_3_1" type="checkbox" id="__nav_7_3_1" checked>
+      
+      <label class="md-nav__link" for="__nav_7_3_1">
+        12
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="12" data-md-level="3">
+        <label class="md-nav__title" for="__nav_7_3_1">
+          <span class="md-nav__icon md-icon"></span>
+          12
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Open Source introduction
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Open Source introduction
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#who-we-are-and-what-we-do" class="md-nav__link">
+    Who we are and what we do
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-open-source" class="md-nav__link">
+    Why open source
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#get-feedback-and-make-the-code-easier-to-reuse" class="md-nav__link">
+    Get feedback and make the code easier to reuse
+  </a>
+  
+    <nav class="md-nav" aria-label="Get feedback and make the code easier to reuse">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#influence-the-industry-standards" class="md-nav__link">
+    Influence the industry standards
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#learn-by-teaching" class="md-nav__link">
+    Learn by teaching
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#influencing-third-party-libraries-and-fixing-their-problems-faster" class="md-nav__link">
+    Influencing third-party libraries and fixing their problems faster
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pr-and-personal-motivation" class="md-nav__link">
+    PR and personal motivation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whats-in-the-open-source" class="md-nav__link">
+    What’s in the open source
+  </a>
+  
+    <nav class="md-nav" aria-label="What’s in the open source">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#test-runner" class="md-nav__link">
+    Test runner
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#impact-analysis" class="md-nav__link">
+    Impact analysis
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-our-libraries-can-be-useful" class="md-nav__link">
+    How our libraries can be useful
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    Conclusion
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../open-source-introduction.ru/" class="md-nav__link">
+        Open source для CI/CD и тестовой инфраструктуры Авито для Android
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#who-we-are-and-what-we-do" class="md-nav__link">
+    Who we are and what we do
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-open-source" class="md-nav__link">
+    Why open source
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#get-feedback-and-make-the-code-easier-to-reuse" class="md-nav__link">
+    Get feedback and make the code easier to reuse
+  </a>
+  
+    <nav class="md-nav" aria-label="Get feedback and make the code easier to reuse">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#influence-the-industry-standards" class="md-nav__link">
+    Influence the industry standards
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#learn-by-teaching" class="md-nav__link">
+    Learn by teaching
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#influencing-third-party-libraries-and-fixing-their-problems-faster" class="md-nav__link">
+    Influencing third-party libraries and fixing their problems faster
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pr-and-personal-motivation" class="md-nav__link">
+    PR and personal motivation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whats-in-the-open-source" class="md-nav__link">
+    What’s in the open source
+  </a>
+  
+    <nav class="md-nav" aria-label="What’s in the open source">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#test-runner" class="md-nav__link">
+    Test runner
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#impact-analysis" class="md-nav__link">
+    Impact analysis
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-our-libraries-can-be-useful" class="md-nav__link">
+    How our libraries can be useful
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    Conclusion
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/avito-tech/avito-android/tree/develop/docs/content/blog/2019/12/open-source-introduction.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="open-source-cicd-and-test-infrastructure-for-android">Open source: CI/CD and test infrastructure for Android<a class="headerlink" href="#open-source-cicd-and-test-infrastructure-for-android" title="Permanent link">#</a></h1>
+<p>Avito.ru is the second biggest classified in the world. 
+We have moved our Android infrastructure into open source: Gradle plugins, emulators, and test libraries. 
+<a href="https://github.com/avito-tech/avito-android">Our code</a> will be useful in automating CI/CD and will also facilitate the coding and support of autotests. </p>
+<p>In this review, we will explain why we decided to move into open source, present the central libraries of the project, and suggest whom to contact with any questions. 
+We will analyze in detail the individual libraries, Gradle plugins, and our development approaches in future posts.</p>
+<p><img alt="ijhasr2dv95azaem9mgilu7e1kw" src="https://user-images.githubusercontent.com/1104540/80410956-0cf44200-88d4-11ea-879d-cd9b6acd29af.png" /></p>
+<h2 id="who-we-are-and-what-we-do">Who we are and what we do<a class="headerlink" href="#who-we-are-and-what-we-do" title="Permanent link">#</a></h2>
+<p>We are developing solutions for Android as part of the Speed platform team. There are four of us:</p>
+<p>Sergey Boishtyan<br />
+Senior engineer<br />
+<a href="https://twitter.com/sboishtyan">sboishtyan</a></p>
+<p><img alt="" src="https://user-images.githubusercontent.com/1104540/80411459-e8e53080-88d4-11ea-9751-1ed675da9f25.jpg" /></p>
+<p>Dima Voronin<br />
+Lead engineer<br />
+<a href="https://twitter.com/DmitriVoronin">DmitriVoronin</a></p>
+<p><img alt="" src="https://user-images.githubusercontent.com/1104540/80411540-074b2c00-88d5-11ea-8087-ddbab5d85dd3.jpg" /></p>
+<p>Eugene Krivobokov<br />
+Senior engineer<br />
+<a href="https://twitter.com/eugene_kr">eugene_kr</a></p>
+<p><img alt="" src="https://user-images.githubusercontent.com/1104540/80413105-9a856100-88d7-11ea-9e07-b5a5e48882cf.png" /></p>
+<p>Daniil Popov<br />
+Senior engineer<br />
+<a href="https://twitter.com/int02h">Int02h</a></p>
+<p><img alt="" src="https://user-images.githubusercontent.com/1104540/80411864-8d677280-88d5-11ea-8a91-4f40d3eec71d.jpg" /></p>
+<p>We are in charge of delivering changes in all Avito’s Android apps to users as fast as possible. Our area of responsibility covers:</p>
+<ul>
+<li>Local project activities: making sure that everything is quickly built and the IDE runs fast.</li>
+<li>CI pipeline: tests and all possible checks.</li>
+<li>CD: tools for release engineers. </li>
+</ul>
+<h2 id="why-open-source">Why open source<a class="headerlink" href="#why-open-source" title="Permanent link">#</a></h2>
+<p>We wanted not only to mirror the code in the open source repository on GitHub but also to learn something new and make a contribution to the software engineering community. 
+There were five key reasons to move the project into open source:</p>
+<ul>
+<li>Get feedback.</li>
+<li>Influence industry standards.</li>
+<li>Learn something new.</li>
+<li>Influence third-party libraries.</li>
+<li>Promote our personal brands.</li>
+</ul>
+<p>Let's discuss these one by one.</p>
+<h2 id="get-feedback-and-make-the-code-easier-to-reuse">Get feedback and make the code easier to reuse<a class="headerlink" href="#get-feedback-and-make-the-code-easier-to-reuse" title="Permanent link">#</a></h2>
+<p>We do the tooling for Avito’s engineers, and our users need all solutions to simply work. 
+We lack the outsider perspective of developers who work on similar problems. 
+We need them to point out issues in the internal implementation and the convenience of connecting to our project.</p>
+<p>We have already seen how moving the code to GitHub highlighted the problems of reuse. 
+When you understand that other companies can use your project, you start looking at the architecture differently. 
+Reusing code is not the ultimate target. But this external criterion says a lot about the quality of the architecture and its flexibility.</p>
+<h3 id="influence-the-industry-standards">Influence the industry standards<a class="headerlink" href="#influence-the-industry-standards" title="Permanent link">#</a></h3>
+<p>We have been developing infrastructure for mobile apps since 2017 and regularly make talks at local developer conferences and meetups.</p>
+<p>We always wanted to share the code in addition to our words and allow others to reuse it. 
+Indeed, many Android developers face similar challenges:</p>
+<ul>
+<li>How to write effective autotests.</li>
+<li>How to run these in pull requests.</li>
+<li>How to maintain infrastructure cost-effectively.</li>
+</ul>
+<p>There are no generally accepted, universal solutions for these tasks — each company solves them in its way. 
+We share our best practices so that developers of new projects do not have to collect bit by bit information on testing mobile apps and building CI/CD. 
+We want to offer ready-made solutions for routine problems instead of having to invent the wheel. 
+And even if nobody uses the project code in its original form, developers will be able to see our approaches and improve their libraries.</p>
+<h3 id="learn-by-teaching">Learn by teaching<a class="headerlink" href="#learn-by-teaching" title="Permanent link">#</a></h3>
+<p>Just moving the code into open source is not enough. 
+Practices, approaches, methods of troubleshooting, and making decisions — this is what is essential. 
+Sharing these, we verify whether our ideas and ready-made solutions work outside of Avito.</p>
+<h3 id="influencing-third-party-libraries-and-fixing-their-problems-faster">Influencing third-party libraries and fixing their problems faster<a class="headerlink" href="#influencing-third-party-libraries-and-fixing-their-problems-faster" title="Permanent link">#</a></h3>
+<p>Imagine you are facing a problem in Android or a library and cannot find a workaround. 
+You need help from the community or the code’s authors. 
+You asked a question on Stack Overflow, filed a bug report in Google IssueTracker, described everything in detail, but the problem won’t reproduce. 
+You are asked to share a test case. All this takes extra time.</p>
+<p>Open source helps you create a reproducible example faster. 
+We have a test app, which uses part of the infrastructure. Its main function is dogfooding, i.e. making sure as early 
+as possible using a simple and isolated case that everything works. 
+But this same app makes it easier to demonstrate bugs. When we show a reproducible example in a third-party library, 
+it becomes easier for its developer to understand what is going on. This increases the chances that the developers will fix the issue. </p>
+<p>The popularity of an open source project also increases the likelihood that you will be paid attention to. 
+When an issue in a library has many stars and users, this increases the pressure, and the issue becomes more difficult to ignore. 
+Achieving this without open source is more challenging — the app has to be super popular, or one should make oneself known.</p>
+<h3 id="pr-and-personal-motivation">PR and personal motivation<a class="headerlink" href="#pr-and-personal-motivation" title="Permanent link">#</a></h3>
+<p>Last but not least, is personal benefit. Everybody benefits when their daily work gains publicity. 
+Avito grabs public attention by offering a useful product, and we promote our personal brands as engineers and develop additional motivation for working. 
+We no longer need to use our free time to work on our own projects or commits in third-party open source libraries. </p>
+<h2 id="whats-in-the-open-source">What’s in the open source<a class="headerlink" href="#whats-in-the-open-source" title="Permanent link">#</a></h2>
+<p>We have made available <a href="https://github.com/avito-tech/avito-android">in the GitHub repository</a> almost all of our Android and CI/CD testing infrastructure. 
+To make it easier for other developers to navigate the project, we grouped all its modules by function:</p>
+<ul>
+<li>Gradle plugins. </li>
+<li>Libraries for Android testing modules. </li>
+<li>Emulators.</li>
+</ul>
+<p>Let’s discuss some of the most important libraries.</p>
+<h3 id="test-runner">Test runner<a class="headerlink" href="#test-runner" title="Permanent link">#</a></h3>
+<p>This is a Gradle plugin to run instrumentation tests. The closest analog
+is <a href="https://github.com/Malinskiy/marathon">Marathon</a>, but our plugin runs only under Android.</p>
+<p><a href="../../../../test_runner/TestRunner/">Test runner:</a></p>
+<ul>
+<li>Specifies which tests to run. Filtering by annotations, by packages, by the results of the last run is supported.</li>
+<li>Specifies which emulators to run tests on. Backs these up to Kubernetes or connects to local emulators.</li>
+<li>Sets test restart conditions.</li>
+<li>Sends a final report with the test run results.</li>
+</ul>
+<p>The results are stored in custom TMS (test management system), which is not open source. 
+We are working on the possibility of connecting to a different implementation.</p>
+<p><img alt="" src="https://habrastorage.org/webt/1s/pt/62/1spt626ixunfqut3ya9ubxti_us.png" /></p>
+<h3 id="impact-analysis">Impact analysis<a class="headerlink" href="#impact-analysis" title="Permanent link">#</a></h3>
+<p>We have about 1,600 instrumentation tests and 10K unit tests. We would like to run all the tests for any code change,
+but this is not possible — such a test run would take too much time.</p>
+<p>A simple solution is to manually subdivide the tests into subsets, for example, smoke tests, fast, slow tests, and run
+only one set at a time. But with this approach, there is always a risk of missing an error, because it is not clear
+which set of tests is optimal. An ideal solution would be to understand which minimum test set can verify all changes.
+This is known as <a href="https://martinfowler.com/articles/rise-test-impact-analysis.html">test impact analysis</a>.</p>
+<p>We wrote <a href="../../../../ci/ImpactAnalysis/">a Gradle plugin</a>, which searches for changes in modules, parses tests, and
+determines which ones to run.</p>
+<p><img alt="" src="https://habrastorage.org/webt/ox/s3/8i/oxs38itwej7tehznhbslvjpmsi0.png" /></p>
+<p>For more details of the main modules and approaches,
+see the project documentation(deleted). It is still incomplete, and not everything
+is translated. We want to make the documentation easier to understand, and need your help. Tell us what to improve and
+correct in the documentation in <a href="https://t-do.ru/avito_android_opensource_en">our Telegram chat</a>.</p>
+<h2 id="how-our-libraries-can-be-useful">How our libraries can be useful<a class="headerlink" href="#how-our-libraries-can-be-useful" title="Permanent link">#</a></h2>
+<p>Since there are many components in our project, its applications depend on your needs. 
+If you are working on a similar problem or just want to understand the technology better — feel free to contact us 
+in GitHub or our <a href="https://t-do.ru/avito_android_opensource_en">Telegram chat</a>. 
+We will share what we know, try to help, and show relevant examples.</p>
+<p>You can ask anything:
+- How do we handle unstable tests?
+- Why so much code? It makes no sense.
+- Why is all the code in Gradle plugins and not in python scripts?</p>
+<p>If you want to use a specific module, you can try it in <a href="https://github.com/avito-tech/avito-android/tree/develop/samples/test-app">the test app</a>. 
+Currently, it shows an example of using our test runner.</p>
+<p>Unfortunately, we still have few examples of reuse in other projects, so integration may reveal yet unknown limitations. Let us know if this happens, and we we will see what to fix.</p>
+<h2 id="conclusion">Conclusion<a class="headerlink" href="#conclusion" title="Permanent link">#</a></h2>
+<p>In our upcoming posts, we plan to talk about:</p>
+<ul>
+<li>Our test runner.</li>
+<li>Test anatomy — what happens from the moment of clicking “Run” in the IDE up to the test completion moment.</li>
+<li>How we deal with the instability of tests and infrastructure.</li>
+<li>Our approaches to writing infrastructure.</li>
+<li>How we reduced the release time from month to week.</li>
+</ul>
+<p>We want to discuss some more general topics, too:</p>
+<ul>
+<li>How to start writing tests.</li>
+<li>Fundamentals of testing for beginners — common approaches and technologies.</li>
+</ul>
+<p>Comment to let us know what you would like to read about. So we will know which topic to cover first.</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../../../2020/02/lint-worker-api-workaround/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Lint Worker API workaround
+            </div>
+          </div>
+        </a>
+      
+      
+        <a href="../open-source-introduction.ru/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Open source для CI/CD и тестовой инфраструктуры Авито для Android
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+  <div class="md-footer-social">
+    
+      
+      
+        
+        
+      
+      <a href="https://twitter.com/avitotech" target="_blank" rel="noopener" title="twitter.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://t.me/avito_android_opensource" target="_blank" rel="noopener" title="t.me" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm121.8 169.9-40.7 191.8c-3 13.6-11.1 16.9-22.4 10.5l-62-45.7-29.9 28.8c-3.3 3.3-6.1 6.1-12.5 6.1l4.4-63.1 114.9-103.8c5-4.4-1.1-6.9-7.7-2.5l-142 89.4-61.2-19.1c-13.3-4.2-13.6-13.3 2.8-19.7l239.1-92.2c11.1-4 20.8 2.7 17.2 19.5z"/></svg>
+      </a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../../..", "features": ["navigation.tabs"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../../../assets/javascripts/workers/search.4fa0e4ee.min.js", "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.1d3bfcf1.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@8.9.3/dist/mermaid.min.js"></script>
+      
+    
+  </body>
+</html>

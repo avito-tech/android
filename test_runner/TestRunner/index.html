@@ -1,0 +1,2274 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Avito Android infrastructure">
+      
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.4">
+    
+    
+      
+        <title>Avito test runner - Avito Android</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.bde7dde4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ef6f36e2.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+      
+        
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-157613383-1","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="preference" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#avito-test-runner" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Avito Android" class="md-header__button md-logo" aria-label="Avito Android" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Avito Android
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Avito test runner
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/avito-tech/avito-android/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    avito-android
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        Infrastructure
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../projects/BuildChecks/" class="md-tabs__link">
+        Projects
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../ci/ImpactAnalysis/" class="md-tabs__link">
+        CI
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../test/FlakyAnnotation/" class="md-tabs__link">
+        Testing
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../test_framework/TestFramework/" class="md-tabs__link">
+        Test framework
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="./" class="md-tabs__link md-tabs__link--active">
+        Test runner
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    
+
+  
+  
+  
+    
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../blog/2021/01/ui-impact-analysis-end/" class="md-tabs__link">
+        Blog
+      </a>
+    </li>
+  
+
+  
+
+  
+
+      
+    </ul>
+  </div>
+</nav>
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Avito Android" class="md-nav__button md-logo" aria-label="Avito Android" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Avito Android
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/avito-tech/avito-android/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    avito-android
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
+      
+      <label class="md-nav__link" for="__nav_1">
+        Infrastructure
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Infrastructure" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          Infrastructure
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Android in Avito
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/HowToStart/" class="md-nav__link">
+        How to start
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/GradlePlugins/" class="md-nav__link">
+        Gradle plugins
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/Documentation/" class="md-nav__link">
+        Documentation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/Logging/" class="md-nav__link">
+        Logging
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/Networking/" class="md-nav__link">
+        Networking
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/Testing/" class="md-nav__link">
+        Testing
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/Release/" class="md-nav__link">
+        Release
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/internal/RemoteCache/" class="md-nav__link">
+        Remote cache
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      <label class="md-nav__link" for="__nav_2">
+        Projects
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Projects" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Projects
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../projects/BuildChecks/" class="md-nav__link">
+        Build checks
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../projects/BuildProperties/" class="md-nav__link">
+        Build properties
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../projects/BuildTrace/" class="md-nav__link">
+        Build trace
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" type="checkbox" id="__nav_2_4" >
+      
+      <label class="md-nav__link" for="__nav_2_4">
+        Internal
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Internal" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_4">
+          <span class="md-nav__icon md-icon"></span>
+          Internal
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../projects/internal/Internal/" class="md-nav__link">
+        Internal
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../projects/internal/BuildMetrics/" class="md-nav__link">
+        Build metrics
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../projects/internal/CriticalPath/" class="md-nav__link">
+        Critical path
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../projects/internal/Signer/" class="md-nav__link">
+        Signer gradle plugin
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../projects/internal/CiSteps/" class="md-nav__link">
+        CI steps plugin
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
+        CI
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="CI" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          CI
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ci/ImpactAnalysis/" class="md-nav__link">
+        Impact analysis
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ci/Containers/" class="md-nav__link">
+        Containers
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      <label class="md-nav__link" for="__nav_4">
+        Testing
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Testing" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Testing
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../test/FlakyAnnotation/" class="md-nav__link">
+        Flaky annotation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../test/Toast/" class="md-nav__link">
+        Toast
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      <label class="md-nav__link" for="__nav_5">
+        Test framework
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Test framework" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Test framework
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../test_framework/TestFramework/" class="md-nav__link">
+        Test framework
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../test_framework/Snackbar/" class="md-nav__link">
+        Snackbar
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../test_framework/ScreenChecks/" class="md-nav__link">
+        Screen checks
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../test_framework/Internals/" class="md-nav__link">
+        Internals
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" checked>
+      
+      <label class="md-nav__link" for="__nav_6">
+        Test runner
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Test runner" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Test runner
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Avito test runner
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Avito test runner
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#getting-started" class="md-nav__link">
+    Getting started
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    Examples
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#filtering-tests-for-execution" class="md-nav__link">
+    Filtering tests for execution
+  </a>
+  
+    <nav class="md-nav" aria-label="Filtering tests for execution">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#filter-tests-by-annotations" class="md-nav__link">
+    Filter tests by annotations
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filter-flaky-tests" class="md-nav__link">
+    Filter flaky tests
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filter-tests-by-prefix-or-name" class="md-nav__link">
+    Filter tests by prefix or name
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filter-tests-by-statuses-from-previous-run-on-the-same-commit" class="md-nav__link">
+    Filter tests by statuses from previous run on the same commit
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filter-tests-by-statuses-from-report-by-id" class="md-nav__link">
+    Filter tests by statuses from report by id
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apply-a-filter-without-changing-buildgradlekts-or-buildgradle" class="md-nav__link">
+    Apply a filter without changing build.gradle.kts or build.gradle
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#customize-a-filter-without-changing-buildgradlekts-or-buildgradle" class="md-nav__link">
+    Customize a filter without changing build.gradle.kts or build.gradle
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#find-out-how-filters-were-applied" class="md-nav__link">
+    Find out how filters were applied
+  </a>
+  
+    <nav class="md-nav" aria-label="Find out how filters were applied">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#find-out-what-filter-config-was" class="md-nav__link">
+    Find out what filter config was
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#find-out-what-filters-applied" class="md-nav__link">
+    Find out what filters applied
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#find-out-what-tests-were-filtered" class="md-nav__link">
+    Find out what tests were filtered
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#choosing-target-for-tests-execution" class="md-nav__link">
+    Choosing target for tests execution
+  </a>
+  
+    <nav class="md-nav" aria-label="Choosing target for tests execution">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#run-tests-on-kubernetes-target-from-a-local-machine" class="md-nav__link">
+    Run tests on kubernetes target from a local machine
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-tests-on-local-emulator-target" class="md-nav__link">
+    Run tests on local emulator target
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run-test-on-apk-was-built-before" class="md-nav__link">
+    Run test on APK was built before
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run-tests-on-google-cloud-platform" class="md-nav__link">
+    Run tests on Google Cloud Platform
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Metrics/" class="md-nav__link">
+        Metrics
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SampleApp/" class="md-nav__link">
+        Sample app
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+      
+      <label class="md-nav__link" for="__nav_7">
+        Blog
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Blog" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          Blog
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_1" type="checkbox" id="__nav_7_1" >
+      
+      <label class="md-nav__link" for="__nav_7_1">
+        2021
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="2021" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_1">
+          <span class="md-nav__icon md-icon"></span>
+          2021
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_1_1" type="checkbox" id="__nav_7_1_1" >
+      
+      <label class="md-nav__link" for="__nav_7_1_1">
+        1
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="1" data-md-level="3">
+        <label class="md-nav__title" for="__nav_7_1_1">
+          <span class="md-nav__icon md-icon"></span>
+          1
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/2021/01/ui-impact-analysis-end/" class="md-nav__link">
+        Removal of ui tests impact analysis functionality
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_2" type="checkbox" id="__nav_7_2" >
+      
+      <label class="md-nav__link" for="__nav_7_2">
+        2020
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="2020" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_2">
+          <span class="md-nav__icon md-icon"></span>
+          2020
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_2_1" type="checkbox" id="__nav_7_2_1" >
+      
+      <label class="md-nav__link" for="__nav_7_2_1">
+        3
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="3" data-md-level="3">
+        <label class="md-nav__title" for="__nav_7_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          3
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/2020/03/testing-a-minimized-build/" class="md-nav__link">
+        Testing a minimized build
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_2_2" type="checkbox" id="__nav_7_2_2" >
+      
+      <label class="md-nav__link" for="__nav_7_2_2">
+        2
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="2" data-md-level="3">
+        <label class="md-nav__title" for="__nav_7_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          2
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/2020/02/lint-worker-api-workaround/" class="md-nav__link">
+        Lint Worker API workaround
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_3" type="checkbox" id="__nav_7_3" >
+      
+      <label class="md-nav__link" for="__nav_7_3">
+        2019
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="2019" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_3">
+          <span class="md-nav__icon md-icon"></span>
+          2019
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_3_1" type="checkbox" id="__nav_7_3_1" >
+      
+      <label class="md-nav__link" for="__nav_7_3_1">
+        12
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="12" data-md-level="3">
+        <label class="md-nav__title" for="__nav_7_3_1">
+          <span class="md-nav__icon md-icon"></span>
+          12
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/2019/12/open-source-introduction/" class="md-nav__link">
+        Open Source introduction
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/2019/12/open-source-introduction.ru/" class="md-nav__link">
+        Open source для CI/CD и тестовой инфраструктуры Авито для Android
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#getting-started" class="md-nav__link">
+    Getting started
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    Examples
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#filtering-tests-for-execution" class="md-nav__link">
+    Filtering tests for execution
+  </a>
+  
+    <nav class="md-nav" aria-label="Filtering tests for execution">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#filter-tests-by-annotations" class="md-nav__link">
+    Filter tests by annotations
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filter-flaky-tests" class="md-nav__link">
+    Filter flaky tests
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filter-tests-by-prefix-or-name" class="md-nav__link">
+    Filter tests by prefix or name
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filter-tests-by-statuses-from-previous-run-on-the-same-commit" class="md-nav__link">
+    Filter tests by statuses from previous run on the same commit
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filter-tests-by-statuses-from-report-by-id" class="md-nav__link">
+    Filter tests by statuses from report by id
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apply-a-filter-without-changing-buildgradlekts-or-buildgradle" class="md-nav__link">
+    Apply a filter without changing build.gradle.kts or build.gradle
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#customize-a-filter-without-changing-buildgradlekts-or-buildgradle" class="md-nav__link">
+    Customize a filter without changing build.gradle.kts or build.gradle
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#find-out-how-filters-were-applied" class="md-nav__link">
+    Find out how filters were applied
+  </a>
+  
+    <nav class="md-nav" aria-label="Find out how filters were applied">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#find-out-what-filter-config-was" class="md-nav__link">
+    Find out what filter config was
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#find-out-what-filters-applied" class="md-nav__link">
+    Find out what filters applied
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#find-out-what-tests-were-filtered" class="md-nav__link">
+    Find out what tests were filtered
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#choosing-target-for-tests-execution" class="md-nav__link">
+    Choosing target for tests execution
+  </a>
+  
+    <nav class="md-nav" aria-label="Choosing target for tests execution">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#run-tests-on-kubernetes-target-from-a-local-machine" class="md-nav__link">
+    Run tests on kubernetes target from a local machine
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-tests-on-local-emulator-target" class="md-nav__link">
+    Run tests on local emulator target
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run-test-on-apk-was-built-before" class="md-nav__link">
+    Run test on APK was built before
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run-tests-on-google-cloud-platform" class="md-nav__link">
+    Run tests on Google Cloud Platform
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/avito-tech/avito-android/tree/develop/docs/content/test_runner/TestRunner.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="avito-test-runner">Avito test runner<a class="headerlink" href="#avito-test-runner" title="Permanent link">#</a></h1>
+<p>This is the Gradle plugin to run Android instrumentation tests.</p>
+<p>It can do the following:</p>
+<ul>
+<li>Filter tests by annotations, by packages, by previous runs.</li>
+<li>Run tests in parallel. It orchestrates emulators in Kubernetes or uses local emulators.</li>
+<li>Rerun failed tests to deal with flakiness</li>
+<li>Save tests result in a report.<br />
+  It uses an internal TMS (test management system). We are working on support other formats.</li>
+</ul>
+<h2 id="getting-started">Getting started<a class="headerlink" href="#getting-started" title="Permanent link">#</a></h2>
+<ol>
+<li>Apply the instrumentation-tests Gradle plugin:  </li>
+</ol>
+<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Kotlin</label><div class="tabbed-content">
+<p>Add to your <code>build.gradle.kts</code></p>
+<div class="highlight"><pre><span></span><code><span class="n">plugins</span> <span class="p">{</span>
+    <span class="n">id</span><span class="p">(</span><span class="s">&quot;com.android.application&quot;</span><span class="p">)</span>
+    <span class="n">id</span><span class="p">(</span><span class="s">&quot;com.avito.android.instrumentation-tests&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">Groovy</label><div class="tabbed-content">
+<p>Add to your <code>build.gradle</code></p>
+<div class="highlight"><pre><span></span><code><span class="n">plugins</span> <span class="o">{</span>
+    <span class="n">id</span><span class="o">(</span><span class="s2">&quot;com.android.application&quot;</span><span class="o">)</span>
+    <span class="n">id</span><span class="o">(</span><span class="s2">&quot;com.avito.android.instrumentation-tests&quot;</span><span class="o">)</span>
+<span class="o">}</span>
+</code></pre></div>
+</div>
+</div>
+<ol>
+<li>Add common plugin configuration</li>
+</ol>
+<div class="tabbed-set" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Kotlin</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="k">import</span> <span class="nn">com.avito.instrumentation.reservation.request.Device.LocalEmulator</span>
+
+<span class="n">extensions</span><span class="p">.</span><span class="na">getByType</span><span class="o">&lt;</span><span class="n">GradleInstrumentationPluginConfiguration</span><span class="o">&gt;</span><span class="p">().</span><span class="na">apply</span> <span class="p">{</span>
+    <span class="c1">// they are required for Avito app. We will make them optional in future.</span>
+    <span class="n">sentryDsn</span> <span class="o">=</span> <span class="s">&quot;http://stub-project@stub-host/0&quot;</span>
+
+    <span class="n">testReport</span> <span class="p">{</span>
+
+        <span class="c1">// optional avito reporting</span>
+        <span class="n">reportViewer</span> <span class="p">{</span>
+            <span class="n">reportApiUrl</span> <span class="o">=</span> <span class="s">&quot;http://stub&quot;</span>
+            <span class="n">reportViewerUrl</span> <span class="o">=</span> <span class="s">&quot;http://stub&quot;</span>
+            <span class="n">fileStorageUrl</span> <span class="o">=</span> <span class="s">&quot;http://stub&quot;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="n">configurationsContainer</span><span class="p">.</span><span class="na">register</span><span class="p">(</span><span class="s">&quot;local&quot;</span><span class="p">)</span> <span class="p">{</span>
+
+        <span class="n">targetsContainer</span><span class="p">.</span><span class="na">register</span><span class="p">(</span><span class="s">&quot;api28&quot;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">deviceName</span> <span class="o">=</span> <span class="s">&quot;API28&quot;</span>
+
+            <span class="n">scheduling</span> <span class="o">=</span> <span class="n">SchedulingConfiguration</span><span class="p">().</span><span class="na">apply</span> <span class="p">{</span>
+                <span class="n">quota</span> <span class="o">=</span> <span class="n">QuotaConfiguration</span><span class="p">().</span><span class="na">apply</span> <span class="p">{</span>
+                    <span class="n">retryCount</span> <span class="o">=</span> <span class="m">1</span>
+                    <span class="n">minimumSuccessCount</span> <span class="o">=</span> <span class="m">1</span>
+                <span class="p">}</span>
+
+                <span class="n">reservation</span> <span class="o">=</span> <span class="n">TestsBasedDevicesReservationConfiguration</span><span class="p">().</span><span class="na">apply</span> <span class="p">{</span>
+                    <span class="n">device</span> <span class="o">=</span> <span class="n">LocalEmulator</span><span class="p">.</span><span class="na">device</span><span class="p">(</span><span class="m">28</span><span class="p">,</span> <span class="s">&quot;Android_SDK_built_for_x86_64&quot;</span><span class="p">)</span>
+                    <span class="n">maximum</span> <span class="o">=</span> <span class="m">1</span>
+                    <span class="n">minimum</span> <span class="o">=</span> <span class="m">1</span>
+                    <span class="n">testsPerEmulator</span> <span class="o">=</span> <span class="m">1</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">Groovy</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">com.avito.instrumentation.reservation.request.Device.LocalEmulator</span>
+
+<span class="n">instrumentation</span> <span class="o">{</span>
+    <span class="c1">// they are required for Avito app. We will make them optional in future.</span>
+    <span class="n">sentryDsn</span> <span class="o">=</span> <span class="s2">&quot;http://stub-project@stub-host/0&quot;</span>
+
+    <span class="n">testReport</span> <span class="o">{</span>
+
+        <span class="c1">// optional avito reporting</span>
+        <span class="n">reportViewer</span> <span class="o">{</span>
+            <span class="n">reportApiUrl</span> <span class="o">=</span> <span class="s2">&quot;http://stub&quot;</span>
+            <span class="n">reportViewerUrl</span> <span class="o">=</span> <span class="s2">&quot;http://stub&quot;</span>
+            <span class="n">fileStorageUrl</span> <span class="o">=</span> <span class="s2">&quot;http://stub&quot;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    
+    <span class="n">configurations</span> <span class="o">{</span>
+        <span class="n">local</span> <span class="o">{</span>
+            <span class="n">targets</span> <span class="o">{</span>
+                <span class="n">api28</span> <span class="o">{</span>
+                    <span class="n">deviceName</span> <span class="o">=</span> <span class="s2">&quot;API28&quot;</span>
+                    <span class="n">scheduling</span> <span class="o">{</span>
+                        <span class="n">quota</span> <span class="o">{</span>
+                            <span class="n">retryCount</span> <span class="o">=</span> <span class="mi">1</span>
+                            <span class="n">minimumSuccessCount</span> <span class="o">=</span> <span class="mi">1</span>
+                        <span class="o">}</span>
+
+                        <span class="n">testsCountBasedReservation</span> <span class="o">{</span>
+                            <span class="n">device</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LocalEmulator</span><span class="o">(</span><span class="s2">&quot;28&quot;</span><span class="o">,</span> <span class="mi">28</span><span class="o">,</span> <span class="s2">&quot;Android_SDK_built_for_x86_64&quot;</span><span class="o">)</span>
+                            <span class="n">maximum</span> <span class="o">=</span> <span class="mi">1</span>
+                            <span class="n">testsPerEmulator</span> <span class="o">=</span> <span class="mi">1</span>
+                        <span class="o">}</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>   
+            <span class="o">}</span>       
+        <span class="o">}</span>   
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+</div>
+</div>
+<ol>
+<li>Run tests via Gradle task</li>
+</ol>
+<div class="highlight"><pre><span></span><code>./gradlew :&lt;projectPath&gt;:instrumentation&lt;ConfigurationName&gt;         
+</code></pre></div>
+<p>In our case:</p>
+<div class="highlight"><pre><span></span><code>./gradlew :&lt;projectPath&gt;:instrumentationLocal 
+</code></pre></div>
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">#</a></h2>
+<p>Check out a configuration to run in <code>GradleInstrumentationPluginConfiguration</code> in the <a href="https://github.com/avito-tech/avito-android/blob/develop/samples/test-app/build.gradle.kts#L114">test app</a></p>
+<h2 id="filtering-tests-for-execution">Filtering tests for execution<a class="headerlink" href="#filtering-tests-for-execution" title="Permanent link">#</a></h2>
+<ol>
+<li><a href="#getting-started">You must apply a plugin</a></li>
+<li>Create filter</li>
+</ol>
+<div class="tabbed-set" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">Kotlin</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="n">extensions</span><span class="p">.</span><span class="na">getByType</span><span class="o">&lt;</span><span class="n">GradleInstrumentationPluginConfiguration</span><span class="o">&gt;</span><span class="p">().</span><span class="na">apply</span> <span class="p">{</span>
+    <span class="n">filters</span><span class="p">.</span><span class="na">register</span><span class="p">(</span><span class="s">&quot;filterName&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">fromSource</span><span class="p">.</span><span class="na">includeByAnnotations</span><span class="p">(</span><span class="n">annotations</span><span class="p">)</span>
+        <span class="n">fromSource</span><span class="p">.</span><span class="na">excludeByAnnotations</span><span class="p">(</span><span class="n">annotations</span><span class="p">)</span>
+        <span class="n">fromSource</span><span class="p">.</span><span class="na">includeByPrefixes</span><span class="p">(</span><span class="n">prefixes</span><span class="p">)</span>
+        <span class="n">fromSource</span><span class="p">.</span><span class="na">excludeByPrefixes</span><span class="p">(</span><span class="n">prefixes</span><span class="p">)</span>
+        
+        <span class="c1">// it is internal for Avito. It uses run history from our test-report system.</span>
+        <span class="n">fromRunHistory</span><span class="p">.</span><span class="na">excludePreviousStatuses</span><span class="p">(</span><span class="n">statuses</span><span class="p">)</span>
+        <span class="n">fromRunHistory</span><span class="p">.</span><span class="na">excludePreviousStatuses</span><span class="p">(</span><span class="n">statuses</span><span class="p">)</span>
+        <span class="n">fromRunHistory</span><span class="p">.</span><span class="na">report</span><span class="p">(</span><span class="s">&quot;reportId&quot;</span><span class="p">)</span> <span class="p">{</span> <span class="n">reportStatuses</span> <span class="o">-&gt;</span>
+            <span class="n">reportStatuses</span><span class="p">.</span><span class="na">include</span><span class="p">(</span><span class="n">statuses</span><span class="p">)</span>
+            <span class="n">reportStatuses</span><span class="p">.</span><span class="na">exclude</span><span class="p">(</span><span class="n">statuses</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+<input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><label for="__tabbed_3_2">Groovy</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">com.avito.instrumentation.reservation.request.Device.LocalEmulator</span>
+
+<span class="n">instrumentation</span> <span class="o">{</span>
+    <span class="n">filters</span> <span class="o">{</span>
+        <span class="n">filterName</span> <span class="o">{</span>
+            <span class="n">fromSource</span><span class="o">.</span><span class="na">includeByAnnotations</span><span class="o">(</span><span class="n">annotations</span><span class="o">)</span>
+            <span class="n">fromSource</span><span class="o">.</span><span class="na">excludeByAnnotations</span><span class="o">(</span><span class="n">annotations</span><span class="o">)</span>
+            <span class="n">fromSource</span><span class="o">.</span><span class="na">includeByPrefixes</span><span class="o">(</span><span class="n">prefixes</span><span class="o">)</span>
+            <span class="n">fromSource</span><span class="o">.</span><span class="na">excludeByPrefixes</span><span class="o">(</span><span class="n">prefixes</span><span class="o">)</span>
+            
+            <span class="c1">// it is internal for Avito. It uses run history from our test-report system.</span>
+            <span class="n">fromRunHistory</span><span class="o">.</span><span class="na">excludePreviousStatuses</span><span class="o">(</span><span class="n">statuses</span><span class="o">)</span>
+            <span class="n">fromRunHistory</span><span class="o">.</span><span class="na">excludePreviousStatuses</span><span class="o">(</span><span class="n">statuses</span><span class="o">)</span>
+            <span class="n">fromRunHistory</span><span class="o">.</span><span class="na">report</span><span class="o">(</span><span class="s2">&quot;reportId&quot;</span><span class="o">)</span> <span class="o">{</span> <span class="n">reportStatuses</span> <span class="o">-&gt;</span>
+                <span class="n">reportStatuses</span><span class="o">.</span><span class="na">include</span><span class="o">(</span><span class="n">statuses</span><span class="o">)</span>
+                <span class="n">reportStatuses</span><span class="o">.</span><span class="na">exclude</span><span class="o">(</span><span class="n">statuses</span><span class="o">)</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>   
+<span class="o">}</span>
+</code></pre></div>
+</div>
+</div>
+<ol>
+<li>Add filter to configuration</li>
+</ol>
+<div class="tabbed-set" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><label for="__tabbed_4_1">Kotlin</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="n">extensions</span><span class="p">.</span><span class="na">getByType</span><span class="o">&lt;</span><span class="n">GradleInstrumentationPluginConfiguration</span><span class="o">&gt;</span><span class="p">().</span><span class="na">apply</span> <span class="p">{</span>
+    <span class="n">configurationsContainer</span><span class="p">.</span><span class="na">register</span><span class="p">(</span><span class="s">&quot;local&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">filter</span> <span class="o">=</span> <span class="s">&quot;filterName&quot;</span>
+        <span class="c1">// else...   </span>
+    <span class="p">}</span>    
+<span class="p">}</span>
+</code></pre></div>
+</div>
+<input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><label for="__tabbed_4_2">Groovy</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="n">instrumentation</span> <span class="o">{</span>
+    <span class="n">configurations</span> <span class="o">{</span>
+        <span class="n">local</span> <span class="o">{</span>
+            <span class="n">filter</span> <span class="o">=</span> <span class="n">filterName</span>
+            <span class="c1">// else...       </span>
+        <span class="o">}</span>   
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+</div>
+</div>
+<h3 id="filter-tests-by-annotations">Filter tests by annotations<a class="headerlink" href="#filter-tests-by-annotations" title="Permanent link">#</a></h3>
+<div class="tabbed-set" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><label for="__tabbed_5_1">Kotlin</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="n">extensions</span><span class="p">.</span><span class="na">getByType</span><span class="o">&lt;</span><span class="n">GradleInstrumentationPluginConfiguration</span><span class="o">&gt;</span><span class="p">().</span><span class="na">apply</span> <span class="p">{</span>
+    <span class="n">filters</span><span class="p">.</span><span class="na">register</span><span class="p">(</span><span class="s">&quot;filterName&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">val</span> <span class="nv">yourFullyQualifiedAnnotationName</span> <span class="o">=</span> <span class="s">&quot;package.AnnotationClassName&quot;</span>
+        
+        <span class="kd">val</span> <span class="nv">annotations</span> <span class="o">=</span> <span class="n">setOf</span><span class="p">(</span><span class="n">youFullyQualifiedAnnotationName</span><span class="p">)</span>
+        <span class="c1">// will include only tests with at least one annotation</span>
+        <span class="n">fromSource</span><span class="p">.</span><span class="na">includeByAnnotations</span><span class="p">(</span><span class="n">annotations</span><span class="p">)</span>
+        <span class="c1">// will exclude all tests with at least one annotation</span>
+        <span class="n">fromSource</span><span class="p">.</span><span class="na">excludeByAnnotations</span><span class="p">(</span><span class="n">annotations</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+<input id="__tabbed_5_2" name="__tabbed_5" type="radio" /><label for="__tabbed_5_2">Groovy</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="n">instrumentation</span> <span class="o">{</span>
+    <span class="n">filters</span> <span class="o">{</span>
+        <span class="n">filterName</span> <span class="o">{</span>
+            <span class="kt">def</span> <span class="n">yourFullyQualifiedAnnotationName</span> <span class="o">=</span> <span class="s2">&quot;package.AnnotationClassName&quot;</span>
+                    
+            <span class="kt">def</span> <span class="n">annotations</span> <span class="o">=</span> <span class="o">[</span><span class="n">youFullyQualifiedAnnotationName</span><span class="o">]</span> <span class="k">as</span> <span class="n">Set</span>
+            <span class="c1">// will include only tests with at least one annotation</span>
+            <span class="n">fromSource</span><span class="o">.</span><span class="na">includeByAnnotations</span><span class="o">(</span><span class="n">annotations</span><span class="o">)</span>
+            <span class="c1">// will exclude all tests with at least one annotation</span>
+            <span class="n">fromSource</span><span class="o">.</span><span class="na">excludeByAnnotations</span><span class="o">(</span><span class="n">annotations</span><span class="o">)</span>       
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+</div>
+</div>
+<h3 id="filter-flaky-tests">Filter flaky tests<a class="headerlink" href="#filter-flaky-tests" title="Permanent link">#</a></h3>
+<div class="tabbed-set" data-tabs="6:2"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio" /><label for="__tabbed_6_1">Kotlin</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="n">extensions</span><span class="p">.</span><span class="na">getByType</span><span class="o">&lt;</span><span class="n">GradleInstrumentationPluginConfiguration</span><span class="o">&gt;</span><span class="p">().</span><span class="na">apply</span> <span class="p">{</span>
+    <span class="n">filters</span><span class="p">.</span><span class="na">register</span><span class="p">(</span><span class="s">&quot;filterName&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">fromSource</span><span class="p">.</span><span class="na">excludeFlaky</span> <span class="o">=</span> <span class="kc">true</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+<input id="__tabbed_6_2" name="__tabbed_6" type="radio" /><label for="__tabbed_6_2">Groovy</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="n">instrumentation</span> <span class="o">{</span>
+    <span class="n">filters</span> <span class="o">{</span>
+        <span class="n">filterName</span> <span class="o">{</span>
+            <span class="n">fromSource</span><span class="o">.</span><span class="na">excludeFlaky</span> <span class="o">=</span> <span class="kc">true</span>       
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+</div>
+</div>
+<h3 id="filter-tests-by-prefix-or-name">Filter tests by prefix or name<a class="headerlink" href="#filter-tests-by-prefix-or-name" title="Permanent link">#</a></h3>
+<div class="tabbed-set" data-tabs="7:2"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio" /><label for="__tabbed_7_1">Kotlin</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="n">extensions</span><span class="p">.</span><span class="na">getByType</span><span class="o">&lt;</span><span class="n">GradleInstrumentationPluginConfiguration</span><span class="o">&gt;</span><span class="p">().</span><span class="na">apply</span> <span class="p">{</span>
+    <span class="n">filters</span><span class="p">.</span><span class="na">register</span><span class="p">(</span><span class="s">&quot;filterName&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">val</span> <span class="nv">packageTestFilter</span> <span class="o">=</span> <span class="s">&quot;testPackage&quot;</span>
+        <span class="kd">val</span> <span class="nv">classTestFilter</span> <span class="o">=</span> <span class="s">&quot;testPackage.testClass&quot;</span>
+        <span class="kd">val</span> <span class="nv">fullyQualifiedTestFilter</span> <span class="o">=</span> <span class="s">&quot;testPackage.testClass.testMetod&quot;</span>
+        <span class="kd">val</span> <span class="nv">prefixes</span> <span class="o">=</span> <span class="n">setOf</span><span class="p">(</span><span class="n">packageTestFilter</span><span class="p">,</span> <span class="n">classTestFilter</span><span class="p">,</span> <span class="n">fullyQualifiedTestFilter</span><span class="p">)</span>
+        <span class="c1">// will include only tests from package, class and concrete test</span>
+        <span class="n">fromSource</span><span class="p">.</span><span class="na">includeByPrefixes</span><span class="p">(</span><span class="n">prefixes</span><span class="p">)</span>
+        
+        <span class="c1">// will exclude all tests from package, class and concrete test</span>
+        <span class="n">fromSource</span><span class="p">.</span><span class="na">excludeByPrefixes</span><span class="p">(</span><span class="n">prefixes</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+<input id="__tabbed_7_2" name="__tabbed_7" type="radio" /><label for="__tabbed_7_2">Groovy</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="n">instrumentation</span> <span class="o">{</span>
+    <span class="n">filters</span> <span class="o">{</span>
+        <span class="n">filterName</span> <span class="o">{</span>
+            <span class="kt">def</span> <span class="n">packageTestFilter</span> <span class="o">=</span> <span class="s2">&quot;testPackage&quot;</span>
+            <span class="kt">def</span> <span class="n">classTestFilter</span> <span class="o">=</span> <span class="s2">&quot;testPackage.testClass&quot;</span>
+            <span class="kt">def</span> <span class="n">fullyQualifiedTestFilter</span> <span class="o">=</span> <span class="s2">&quot;testPackage.testClass.testMetod&quot;</span>
+            <span class="kt">def</span> <span class="n">prefixes</span> <span class="o">=</span> <span class="o">[</span><span class="n">packageTestFilter</span><span class="o">,</span> <span class="n">classTestFilter</span><span class="o">,</span> <span class="n">fullyQualifiedTestFilter</span><span class="o">]</span> <span class="k">as</span> <span class="n">Set</span>
+            <span class="c1">// will include only tests from package, class and concrete test</span>
+            <span class="n">fromSource</span><span class="o">.</span><span class="na">includeByPrefixes</span><span class="o">(</span><span class="n">prefixes</span><span class="o">)</span>
+            
+            <span class="c1">// will exclude all tests from package, class and concrete test</span>
+            <span class="n">fromSource</span><span class="o">.</span><span class="na">excludeByPrefixes</span><span class="o">(</span><span class="n">prefixes</span><span class="o">)</span>
+        <span class="o">}</span>
+    <span class="o">}</span>   
+<span class="o">}</span>
+</code></pre></div>
+</div>
+</div>
+<h3 id="filter-tests-by-statuses-from-previous-run-on-the-same-commit">Filter tests by statuses from previous run on the same commit<a class="headerlink" href="#filter-tests-by-statuses-from-previous-run-on-the-same-commit" title="Permanent link">#</a></h3>
+<div class="tabbed-set" data-tabs="8:2"><input checked="checked" id="__tabbed_8_1" name="__tabbed_8" type="radio" /><label for="__tabbed_8_1">Kotlin</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="k">import</span> <span class="nn">com.avito.instrumentation.configuration.InstrumentationFilter.FromRunHistory.RunStatus</span>
+
+<span class="n">extensions</span><span class="p">.</span><span class="na">getByType</span><span class="o">&lt;</span><span class="n">GradleInstrumentationPluginConfiguration</span><span class="o">&gt;</span><span class="p">().</span><span class="na">apply</span> <span class="p">{</span>
+    <span class="n">filters</span><span class="p">.</span><span class="na">register</span><span class="p">(</span><span class="s">&quot;filterName&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">val</span> <span class="nv">statuses</span> <span class="o">=</span> <span class="n">setOf</span><span class="p">(</span><span class="n">RunStatus</span><span class="p">.</span><span class="na">Success</span><span class="p">)</span>        
+        <span class="c1">// will run only Success previously Succeed tests</span>
+        <span class="n">fromRunHistory</span><span class="p">.</span><span class="na">includePreviousStatuses</span><span class="p">(</span><span class="n">statuses</span><span class="p">)</span>
+        <span class="c1">// will run all tests except previously Succeed</span>
+        <span class="n">fromRunHistory</span><span class="p">.</span><span class="na">excludePreviousStatuses</span><span class="p">(</span><span class="n">statuses</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+<input id="__tabbed_8_2" name="__tabbed_8" type="radio" /><label for="__tabbed_8_2">Groovy</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">com.avito.instrumentation.configuration.InstrumentationFilter.FromRunHistory.RunStatus</span>
+
+<span class="n">instrumentation</span> <span class="o">{</span>
+    <span class="n">filters</span> <span class="o">{</span>
+        <span class="n">filterName</span> <span class="o">{</span>
+            <span class="kt">def</span> <span class="n">statuses</span> <span class="o">=</span> <span class="o">[</span><span class="n">RunStatus</span><span class="o">.</span><span class="na">Success</span><span class="o">]</span> <span class="k">as</span> <span class="n">Set</span>   
+            <span class="c1">// will run only Success previously Succeed tests</span>
+            <span class="n">fromRunHistory</span><span class="o">.</span><span class="na">includePreviousStatuses</span><span class="o">(</span><span class="n">statuses</span><span class="o">)</span>
+            <span class="c1">// will run all tests except previously Succeed</span>
+            <span class="n">fromRunHistory</span><span class="o">.</span><span class="na">excludePreviousStatuses</span><span class="o">(</span><span class="n">statuses</span><span class="o">)</span>
+        <span class="o">}</span>
+    <span class="o">}</span>   
+<span class="o">}</span>
+</code></pre></div>
+</div>
+</div>
+<h3 id="filter-tests-by-statuses-from-report-by-id">Filter tests by statuses from report by id<a class="headerlink" href="#filter-tests-by-statuses-from-report-by-id" title="Permanent link">#</a></h3>
+<div class="tabbed-set" data-tabs="9:2"><input checked="checked" id="__tabbed_9_1" name="__tabbed_9" type="radio" /><label for="__tabbed_9_1">Kotlin</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="k">import</span> <span class="nn">com.avito.instrumentation.configuration.InstrumentationFilter.FromRunHistory.RunStatus</span>
+
+<span class="n">extensions</span><span class="p">.</span><span class="na">getByType</span><span class="o">&lt;</span><span class="n">GradleInstrumentationPluginConfiguration</span><span class="o">&gt;</span><span class="p">().</span><span class="na">apply</span> <span class="p">{</span>
+    <span class="n">filters</span><span class="p">.</span><span class="na">register</span><span class="p">(</span><span class="s">&quot;filterName&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// report-viewer report id</span>
+        <span class="kd">val</span> <span class="nv">reportId</span> <span class="o">=</span> <span class="s">&quot;id&quot;</span>
+        <span class="kd">val</span> <span class="nv">statuses</span> <span class="o">=</span> <span class="n">setOf</span><span class="p">(</span><span class="n">RunStatus</span><span class="p">.</span><span class="na">Failed</span><span class="p">)</span>
+        
+        <span class="n">fromRunHistory</span><span class="p">.</span><span class="na">report</span><span class="p">(</span><span class="n">reportId</span><span class="p">)</span> <span class="p">{</span> <span class="n">reportStatuses</span> <span class="o">-&gt;</span>
+            <span class="c1">// will run only Failed tests from report </span>
+            <span class="n">reportStatuses</span><span class="p">.</span><span class="na">include</span><span class="p">(</span><span class="n">statuses</span><span class="p">)</span>
+            <span class="c1">// will run all tests except Failed tests from report</span>
+            <span class="n">reportStatuses</span><span class="p">.</span><span class="na">exclude</span><span class="p">(</span><span class="n">statuses</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+<input id="__tabbed_9_2" name="__tabbed_9" type="radio" /><label for="__tabbed_9_2">Groovy</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">com.avito.instrumentation.configuration.InstrumentationFilter.FromRunHistory.RunStatus</span>
+
+<span class="n">instrumentation</span> <span class="o">{</span>
+    <span class="n">filters</span> <span class="o">{</span>
+        <span class="n">filterName</span> <span class="o">{</span>
+            <span class="c1">// report-viewer report id</span>
+            <span class="kt">def</span> <span class="n">reportId</span> <span class="o">=</span> <span class="s2">&quot;id&quot;</span>
+            <span class="kt">def</span> <span class="n">statuses</span> <span class="o">=</span> <span class="o">[</span><span class="n">RunStatus</span><span class="o">.</span><span class="na">Failed</span><span class="o">]</span> <span class="k">as</span> <span class="n">Set</span>  
+            <span class="n">fromRunHistory</span><span class="o">.</span><span class="na">report</span><span class="o">(</span><span class="n">reportId</span><span class="o">)</span> <span class="o">{</span> <span class="n">reportStatuses</span> <span class="o">-&gt;</span>
+                <span class="c1">// will run only Failed tests from report </span>
+                <span class="n">reportStatuses</span><span class="o">.</span><span class="na">include</span><span class="o">(</span><span class="n">statuses</span><span class="o">)</span>
+                <span class="c1">// will run all tests except Failed tests from report</span>
+                <span class="n">reportStatuses</span><span class="o">.</span><span class="na">exclude</span><span class="o">(</span><span class="n">statuses</span><span class="o">)</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>   
+<span class="o">}</span>
+</code></pre></div>
+</div>
+</div>
+<h3 id="apply-a-filter-without-changing-buildgradlekts-or-buildgradle">Apply a filter without changing <code>build.gradle.kts</code> or <code>build.gradle</code><a class="headerlink" href="#apply-a-filter-without-changing-buildgradlekts-or-buildgradle" title="Permanent link">#</a></h3>
+<ol>
+<li>Add custom Gradle property for filter name to gradle.properties file</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="na">filterName</span><span class="o">=</span><span class="s">&quot;default&quot;</span>
+</code></pre></div>
+<ol>
+<li>Use the property to configure plugin</li>
+</ol>
+<div class="tabbed-set" data-tabs="10:2"><input checked="checked" id="__tabbed_10_1" name="__tabbed_10" type="radio" /><label for="__tabbed_10_1">Kotlin</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="k">import</span> <span class="nn">com.avito.kotlin.dsl.getOptionalStringProperty</span>
+
+<span class="c1">// read property</span>
+<span class="kd">val</span> <span class="nv">filterName</span><span class="p">:</span> <span class="kt">String?</span> <span class="k">by</span> <span class="n">project</span>
+<span class="c1">// or</span>
+<span class="kd">val</span> <span class="nv">filterName</span> <span class="o">=</span> <span class="n">project</span><span class="p">.</span><span class="na">getOptionalStringProperty</span><span class="p">(</span><span class="s">&quot;filterName&quot;</span><span class="p">,</span> <span class="s">&quot;default&quot;</span><span class="p">)</span>
+
+<span class="n">extensions</span><span class="p">.</span><span class="na">getByType</span><span class="o">&lt;</span><span class="n">GradleInstrumentationPluginConfiguration</span><span class="o">&gt;</span><span class="p">().</span><span class="na">apply</span> <span class="p">{</span>
+    <span class="n">configurationsContainer</span><span class="p">.</span><span class="na">register</span><span class="p">(</span><span class="s">&quot;local&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">filter</span> <span class="o">=</span> <span class="n">filterName</span>
+        <span class="c1">// else...   </span>
+    <span class="p">}</span>    
+<span class="p">}</span>
+</code></pre></div>
+</div>
+<input id="__tabbed_10_2" name="__tabbed_10" type="radio" /><label for="__tabbed_10_2">Groovy</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">static</span> <span class="n">com</span><span class="o">.</span><span class="na">avito</span><span class="o">.</span><span class="na">kotlin</span><span class="o">.</span><span class="na">dsl</span><span class="o">.</span><span class="na">ProjectExtensionsKt</span><span class="o">.</span><span class="na">getOptionalStringProperty</span>
+
+<span class="c1">// read property</span>
+<span class="kt">def</span> <span class="n">filterName</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="na">hasProperty</span><span class="o">(</span><span class="s2">&quot;filterName&quot;</span><span class="o">)</span> <span class="o">?</span> <span class="n">project</span><span class="o">[</span><span class="s2">&quot;filterName&quot;</span><span class="o">]</span> <span class="o">:</span> <span class="s2">&quot;default&quot;</span>
+<span class="c1">// or</span>
+<span class="kt">def</span> <span class="n">filterName</span> <span class="o">=</span> <span class="n">getOptionalStringProperty</span><span class="o">(</span><span class="n">project</span><span class="o">,</span> <span class="s2">&quot;filterName&quot;</span><span class="o">,</span> <span class="s2">&quot;default&quot;</span><span class="o">)</span>
+
+<span class="n">instrumentation</span> <span class="o">{</span>
+    <span class="n">configurations</span> <span class="o">{</span>
+        <span class="n">local</span> <span class="o">{</span>
+            <span class="n">filter</span> <span class="o">=</span> <span class="n">filterName</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+</div>
+</div>
+<ol>
+<li>Add <code>property</code> to CLI command if you want to override <code>filterName</code></li>
+</ol>
+<div class="highlight"><pre><span></span><code>./gradlew instrumentationLocal -PfilterName<span class="o">=</span>&lt;any name of defined filter&gt;
+</code></pre></div>
+<h3 id="customize-a-filter-without-changing-buildgradlekts-or-buildgradle">Customize a filter without changing <code>build.gradle.kts</code> or <code>build.gradle</code><a class="headerlink" href="#customize-a-filter-without-changing-buildgradlekts-or-buildgradle" title="Permanent link">#</a></h3>
+<p>You can customize everything by adding custom properties to CLI command e.g.</p>
+<ol>
+<li>Define <a href="#filter-tests-by-annotations">filter including tests by annotation</a></li>
+<li>Add logic to check presence of Gradle property.</li>
+</ol>
+<div class="tabbed-set" data-tabs="11:2"><input checked="checked" id="__tabbed_11_1" name="__tabbed_11" type="radio" /><label for="__tabbed_11_1">Kotlin</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="kd">val</span> <span class="nv">includedAnnotation</span><span class="p">:</span> <span class="kt">String?</span> <span class="k">by</span> <span class="n">project</span>
+<span class="c1">// or</span>
+<span class="kd">val</span> <span class="nv">includedAnnotation</span> <span class="o">=</span> <span class="n">project</span><span class="p">.</span><span class="na">getOptionalStringProperty</span><span class="p">(</span><span class="s">&quot;includedAnnotation&quot;</span><span class="p">)</span>
+ 
+<span class="n">extensions</span><span class="p">.</span><span class="na">getByType</span><span class="o">&lt;</span><span class="n">GradleInstrumentationPluginConfiguration</span><span class="o">&gt;</span><span class="p">().</span><span class="na">apply</span> <span class="p">{</span>
+    <span class="n">filters</span><span class="p">.</span><span class="na">register</span><span class="p">(</span><span class="s">&quot;filterName&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">val</span> <span class="nv">annotation</span> <span class="o">=</span> <span class="k">if</span><span class="p">(</span><span class="n">includedAnnotation</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">){</span>
+            <span class="n">includedAnnotation</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="s">&quot;package.AnnotationClassName&quot;</span>
+        <span class="p">}</span>
+        
+        <span class="kd">val</span> <span class="nv">annotations</span> <span class="o">=</span> <span class="n">setOf</span><span class="p">(</span><span class="n">annotation</span><span class="p">)</span>
+        <span class="n">fromSource</span><span class="p">.</span><span class="na">includeByAnnotations</span><span class="p">(</span><span class="n">annotations</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+<input id="__tabbed_11_2" name="__tabbed_11" type="radio" /><label for="__tabbed_11_2">Groovy</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">static</span> <span class="n">com</span><span class="o">.</span><span class="na">avito</span><span class="o">.</span><span class="na">kotlin</span><span class="o">.</span><span class="na">dsl</span><span class="o">.</span><span class="na">ProjectExtensionsKt</span><span class="o">.</span><span class="na">getOptionalStringProperty</span>
+
+<span class="c1">// read property</span>
+<span class="kt">def</span> <span class="n">includedAnnotation</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="na">hasProperty</span><span class="o">(</span><span class="s2">&quot;includedAnnotation&quot;</span><span class="o">)</span> <span class="o">?</span> <span class="n">project</span><span class="o">[</span><span class="s2">&quot;includedAnnotation&quot;</span><span class="o">]</span> <span class="o">:</span> <span class="kc">null</span>
+<span class="c1">// or</span>
+<span class="kt">def</span> <span class="n">includedAnnotation</span> <span class="o">=</span> <span class="n">getOptionalStringProperty</span><span class="o">(</span><span class="n">project</span><span class="o">,</span> <span class="s2">&quot;includedAnnotation&quot;</span><span class="o">)</span>
+
+<span class="n">instrumentation</span> <span class="o">{</span>
+    <span class="n">filters</span> <span class="o">{</span>
+        <span class="n">filterName</span> <span class="o">{</span>
+            <span class="kt">def</span> <span class="n">annotation</span> <span class="o">=</span> <span class="n">includedAnnotation</span> <span class="o">?:</span> <span class="s2">&quot;package.AnnotationClassName&quot;</span>
+            <span class="kt">def</span> <span class="n">annotations</span> <span class="o">=</span> <span class="o">[</span><span class="n">annotation</span><span class="o">]</span> <span class="k">as</span> <span class="n">Set</span>
+            <span class="n">fromSource</span><span class="o">.</span><span class="na">includeByAnnotations</span><span class="o">(</span><span class="n">annotations</span><span class="o">)</span>
+        <span class="o">}</span>
+    <span class="o">}</span>   
+<span class="o">}</span>
+</code></pre></div>
+</div>
+</div>
+<ol>
+<li>Run Gradle task with property <code>includedAnnotation</code> to override filter</li>
+</ol>
+<div class="highlight"><pre><span></span><code>./gradlew instrumentationLocal -PincludedAnnotation<span class="o">=</span><span class="s2">&quot;package.AnotherAnnotationClassName&quot;</span> 
+</code></pre></div>
+<h2 id="find-out-how-filters-were-applied">Find out how filters were applied<a class="headerlink" href="#find-out-how-filters-were-applied" title="Permanent link">#</a></h2>
+<p>If build finishes successfully It will produce files with debug information
+Files will be located at:<br />
+<code>&lt;Project root folder&gt;/outputs/&lt;subproject name&gt;/instrumentation/&lt;instrumentation task name&gt;/filter</code></p>
+<h3 id="find-out-what-filter-config-was">Find out what filter config was<a class="headerlink" href="#find-out-what-filter-config-was" title="Permanent link">#</a></h3>
+<p>Look at file <code>filter-config.json</code></p>
+<h3 id="find-out-what-filters-applied">Find out what filters applied<a class="headerlink" href="#find-out-what-filters-applied" title="Permanent link">#</a></h3>
+<p>Look at file <code>filters-applied.json</code></p>
+<h3 id="find-out-what-tests-were-filtered">Find out what tests were filtered<a class="headerlink" href="#find-out-what-tests-were-filtered" title="Permanent link">#</a></h3>
+<p>Look at file <code>filters-excludes.json</code><br />
+- You may find filtered tests grouped by filter names declared in <code>filters-applied.json</code>
+- You may find a filtered test by name</p>
+<h2 id="choosing-target-for-tests-execution">Choosing target for tests execution<a class="headerlink" href="#choosing-target-for-tests-execution" title="Permanent link">#</a></h2>
+<h3 id="run-tests-on-kubernetes-target-from-a-local-machine">Run tests on kubernetes target from a local machine<a class="headerlink" href="#run-tests-on-kubernetes-target-from-a-local-machine" title="Permanent link">#</a></h3>
+<details class="note" open="open"><summary>Disclaimer</summary><p>The text below contains Avito specific details</p>
+</details>
+<ol>
+<li>Get access to kubernetes cloud: <a href="http://links.k.avito.ru/Kubectl">internal doc</a></li>
+<li><a href="http://links.k.avito.ru/androidEmulatorServiceDesk">Request</a> <code>exec</code> access to <code>android-emulator</code> namespace in <code>beta</code> cluster</li>
+<li>Setup a context on <code>beta</code>, <code>android-emulator</code> with your user access.<br />
+More about kubernetes context: <a href="https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/#define-clusters-users-and-contexts">Official docs</a></li>
+<li>Add a configuration with target on kubernetes</li>
+</ol>
+<div class="tabbed-set" data-tabs="12:2"><input checked="checked" id="__tabbed_12_1" name="__tabbed_12" type="radio" /><label for="__tabbed_12_1">Kotlin</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="k">import</span> <span class="nn">com.avito.instrumentation.reservation.request.Device.Emulator.Emulator28</span>
+
+<span class="n">configurationsContainer</span><span class="p">.</span><span class="na">register</span><span class="p">(</span><span class="s">&quot;k8s&quot;</span><span class="p">)</span> <span class="p">{</span>                    
+
+            <span class="n">targetsContainer</span><span class="p">.</span><span class="na">register</span><span class="p">(</span><span class="s">&quot;api28&quot;</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">deviceName</span> <span class="o">=</span> <span class="s">&quot;API28&quot;</span>
+
+                <span class="n">scheduling</span> <span class="o">=</span> <span class="n">SchedulingConfiguration</span><span class="p">().</span><span class="na">apply</span> <span class="p">{</span>
+                    <span class="n">quota</span> <span class="o">=</span> <span class="n">QuotaConfiguration</span><span class="p">().</span><span class="na">apply</span> <span class="p">{</span>
+                        <span class="n">retryCount</span> <span class="o">=</span> <span class="m">1</span>
+                        <span class="n">minimumSuccessCount</span> <span class="o">=</span> <span class="m">1</span>
+                    <span class="p">}</span>
+
+                    <span class="n">reservation</span> <span class="o">=</span> <span class="n">TestsBasedDevicesReservationConfiguration</span><span class="p">().</span><span class="na">apply</span> <span class="p">{</span>
+                        <span class="n">device</span> <span class="o">=</span> <span class="n">Emulator28</span>
+                        <span class="n">maximum</span> <span class="o">=</span> <span class="m">1</span>
+                        <span class="n">minimum</span> <span class="o">=</span> <span class="m">1</span>
+                        <span class="n">testsPerEmulator</span> <span class="o">=</span> <span class="m">1</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+</code></pre></div>
+</div>
+<input id="__tabbed_12_2" name="__tabbed_12" type="radio" /><label for="__tabbed_12_2">Groovy</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">static</span> <span class="n">com</span><span class="o">.</span><span class="na">avito</span><span class="o">.</span><span class="na">instrumentation</span><span class="o">.</span><span class="na">reservation</span><span class="o">.</span><span class="na">request</span><span class="o">.</span><span class="na">Device</span><span class="o">.</span><span class="na">Emulator</span><span class="o">.</span><span class="na">Emulator28</span>
+
+<span class="n">instrumentation</span> <span class="o">{</span>
+    <span class="n">configurations</span> <span class="o">{</span>
+        <span class="n">k8s</span> <span class="o">{</span>
+            <span class="n">targets</span> <span class="o">{</span>
+                <span class="n">api28</span> <span class="o">{</span>
+                    <span class="n">deviceName</span> <span class="o">=</span> <span class="s2">&quot;API28&quot;</span>
+                    <span class="n">scheduling</span> <span class="o">{</span>
+                        <span class="n">quota</span> <span class="o">{</span>
+                            <span class="n">retryCount</span> <span class="o">=</span> <span class="mi">1</span>
+                            <span class="n">minimumSuccessCount</span> <span class="o">=</span> <span class="mi">1</span>
+                        <span class="o">}</span>
+
+                        <span class="n">testsCountBasedReservation</span> <span class="o">{</span>
+                            <span class="n">device</span> <span class="o">=</span> <span class="n">Emulator28</span><span class="o">.</span><span class="na">INSTANCE</span>
+                            <span class="n">maximum</span> <span class="o">=</span> <span class="mi">1</span>
+                            <span class="n">minimum</span> <span class="o">=</span> <span class="mi">1</span>
+                            <span class="n">testsPerEmulator</span> <span class="o">=</span> <span class="mi">1</span>
+                        <span class="o">}</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>   
+            <span class="o">}</span>       
+        <span class="o">}</span>   
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+</div>
+</div>
+<ol>
+<li>Run tests with extra parameters specified.</li>
+</ol>
+<div class="highlight"><pre><span></span><code>./gradlew :samples:test-app:instrumentation&lt;configuration name&gt; 
+    -PkubernetesContext<span class="o">=</span>&lt;your context&gt; // <span class="k">for</span> Avito probably <span class="s1">&#39;beta&#39;</span>
+</code></pre></div>
+<p>We will looking for <code>.kube/config</code> in your $HOME</p>
+<h3 id="run-tests-on-local-emulator-target">Run tests on local emulator target<a class="headerlink" href="#run-tests-on-local-emulator-target" title="Permanent link">#</a></h3>
+<ol>
+<li>Add a configuration with target on local emulator</li>
+</ol>
+<div class="tabbed-set" data-tabs="13:2"><input checked="checked" id="__tabbed_13_1" name="__tabbed_13" type="radio" /><label for="__tabbed_13_1">Kotlin</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="k">import</span> <span class="nn">com.avito.instrumentation.reservation.request.Device.LocalEmulator</span>
+
+<span class="n">extensions</span><span class="p">.</span><span class="na">getByType</span><span class="o">&lt;</span><span class="n">GradleInstrumentationPluginConfiguration</span><span class="o">&gt;</span><span class="p">().</span><span class="na">apply</span> <span class="p">{</span>
+<span class="n">configurationsContainer</span><span class="p">.</span><span class="na">register</span><span class="p">(</span><span class="s">&quot;local&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">targetsContainer</span><span class="p">.</span><span class="na">register</span><span class="p">(</span><span class="s">&quot;api28&quot;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">deviceName</span> <span class="o">=</span> <span class="s">&quot;API28&quot;</span>
+
+            <span class="n">scheduling</span> <span class="o">=</span> <span class="n">SchedulingConfiguration</span><span class="p">().</span><span class="na">apply</span> <span class="p">{</span>
+                <span class="n">quota</span> <span class="o">=</span> <span class="n">QuotaConfiguration</span><span class="p">().</span><span class="na">apply</span> <span class="p">{</span>
+                    <span class="n">retryCount</span> <span class="o">=</span> <span class="m">1</span>
+                    <span class="n">minimumSuccessCount</span> <span class="o">=</span> <span class="m">1</span>
+                <span class="p">}</span>
+
+                <span class="n">reservation</span> <span class="o">=</span> <span class="n">TestsBasedDevicesReservationConfiguration</span><span class="p">().</span><span class="na">apply</span> <span class="p">{</span>
+                    <span class="n">device</span> <span class="o">=</span> <span class="n">LocalEmulator</span><span class="p">.</span><span class="na">device</span><span class="p">(</span><span class="m">28</span><span class="p">,</span> <span class="s">&quot;Android_SDK_built_for_x86_64&quot;</span><span class="p">)</span>
+                    <span class="n">maximum</span> <span class="o">=</span> <span class="m">1</span>
+                    <span class="n">testsPerEmulator</span> <span class="o">=</span> <span class="m">1</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+<input id="__tabbed_13_2" name="__tabbed_13" type="radio" /><label for="__tabbed_13_2">Groovy</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">com.avito.instrumentation.reservation.request.Device.LocalEmulator</span>
+
+<span class="n">instrumentation</span> <span class="o">{</span>
+    <span class="n">configurations</span> <span class="o">{</span>
+        <span class="n">local</span> <span class="o">{</span>
+            <span class="n">targets</span> <span class="o">{</span>
+                <span class="n">api28</span> <span class="o">{</span>
+                    <span class="n">deviceName</span> <span class="o">=</span> <span class="s2">&quot;API28&quot;</span>
+                    <span class="n">scheduling</span> <span class="o">{</span>
+                        <span class="n">quota</span> <span class="o">{</span>
+                            <span class="n">retryCount</span> <span class="o">=</span> <span class="mi">1</span>
+                            <span class="n">minimumSuccessCount</span> <span class="o">=</span> <span class="mi">1</span>
+                        <span class="o">}</span>
+
+                        <span class="n">testsCountBasedReservation</span> <span class="o">{</span>
+                            <span class="n">device</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LocalEmulator</span><span class="o">(</span><span class="s2">&quot;28&quot;</span><span class="o">,</span> <span class="mi">28</span><span class="o">,</span> <span class="s2">&quot;Android_SDK_built_for_x86_64&quot;</span><span class="o">)</span>
+                            <span class="n">maximum</span> <span class="o">=</span> <span class="mi">1</span>
+                            <span class="n">testsPerEmulator</span> <span class="o">=</span> <span class="mi">1</span>
+                        <span class="o">}</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>   
+            <span class="o">}</span>       
+        <span class="o">}</span>   
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+</div>
+</div>
+<ol>
+<li>Run an emulator with 28 API</li>
+<li>Run Gradle CLI command</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="sb">`</span>./gradlew :&lt;project gradle path&gt;:instrumentation&lt;configuration name&gt;<span class="sb">`</span>, e.g.
+<span class="sb">`</span>./gradlew :samples:test-app:instrumentationLocal<span class="sb">`</span> 
+</code></pre></div>
+<h2 id="run-test-on-apk-was-built-before">Run test on APK was built before<a class="headerlink" href="#run-test-on-apk-was-built-before" title="Permanent link">#</a></h2>
+<p>Plugin builds APKs on his own by default.<br />
+If for any reason you have to build APK externally, you can pass files manually:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// optional</span>
+<span class="n">applicationApk</span> <span class="o">=</span> <span class="s">&quot;/path/to/app.apk&quot;</span>
+<span class="c1">// optional</span>
+<span class="n">testApplicationApk</span> <span class="o">=</span> <span class="s">&quot;/path/to/test-app-debug-androidTest.apk&quot;</span>
+</code></pre></div>
+<h2 id="run-tests-on-google-cloud-platform">Run tests on Google Cloud Platform<a class="headerlink" href="#run-tests-on-google-cloud-platform" title="Permanent link">#</a></h2>
+<p>Work in progress</p>
+<ol>
+<li>Create and configure Kubernetes cluster TODO<ol>
+<li>Create a node pool. Node must contain CPU that supports KVM <a href="https://cloud.google.com/compute/docs/instances/enable-nested-virtualization-vm-instances#gcloud">https://cloud.google.com/compute/docs/instances/enable-nested-virtualization-vm-instances#gcloud</a></li>
+</ol>
+</li>
+<li>Add configuration for your cluster to ./kube/config</li>
+<li>Providing credentials to the application <a href="https://cloud.google.com/docs/authentication/production#providing_credentials_to_your_application">https://cloud.google.com/docs/authentication/production#providing_credentials_to_your_application</a> TODO<ol>
+<li>Run on local machine TODO<ol>
+<li>Run locally <code>gcloud auth application-default login</code> one time will be enough </li>
+<li>Run <code>./gradlew &lt;instrumentationTaskName&gt; -PkubernetesContext=&lt;context from ./kube/config&gt;</code></li>
+</ol>
+</li>
+<li>Run on CI</li>
+</ol>
+</li>
+<li>Customize deployment TODO<ol>
+<li>Custom POD image</li>
+<li>Customize POD cpu and ram</li>
+<li>Custom namespace</li>
+</ol>
+</li>
+</ol>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../../test_framework/Internals/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Internals
+            </div>
+          </div>
+        </a>
+      
+      
+        <a href="../Metrics/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Metrics
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+  <div class="md-footer-social">
+    
+      
+      
+        
+        
+      
+      <a href="https://twitter.com/avitotech" target="_blank" rel="noopener" title="twitter.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://t.me/avito_android_opensource" target="_blank" rel="noopener" title="t.me" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm121.8 169.9-40.7 191.8c-3 13.6-11.1 16.9-22.4 10.5l-62-45.7-29.9 28.8c-3.3 3.3-6.1 6.1-12.5 6.1l4.4-63.1 114.9-103.8c5-4.4-1.1-6.9-7.7-2.5l-142 89.4-61.2-19.1c-13.3-4.2-13.6-13.3 2.8-19.7l239.1-92.2c11.1-4 20.8 2.7 17.2 19.5z"/></svg>
+      </a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.4fa0e4ee.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.1d3bfcf1.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@8.9.3/dist/mermaid.min.js"></script>
+      
+    
+  </body>
+</html>
