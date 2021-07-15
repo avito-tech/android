@@ -17,7 +17,7 @@ dependencies {
     // todo implementation, waitForAssertion used in app
     api(projects.common.waiter)
 
-    implementation(libs.hamcrestLib)
+    implementation(libs.bundles.hamcrest)
     implementation(libs.junit)
     implementation(libs.freeReflection)
     implementation(projects.androidTest.instrumentation)
