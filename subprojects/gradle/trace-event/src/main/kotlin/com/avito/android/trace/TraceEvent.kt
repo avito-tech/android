@@ -52,6 +52,10 @@ public interface TraceEvent {
         public const val COLOR_GREY: String = "grey"
         public const val COLOR_WHITE: String = "white"
         public const val COLOR_YELLOW: String = "yellow"
+        public const val COLOR_BLUE: String = "rail_response"
+        public const val COLOR_LIGHT_GREEN: String = "rail_load"
+        public const val COLOR_LIGHT_RED: String = "rail_animation"
+        public const val COLOR_ORANGE: String = "rail_idle"
     }
 }
 

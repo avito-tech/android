@@ -9,4 +9,6 @@ dependencies {
 
     implementation(projects.gradle.traceEvent)
     implementation(projects.testRunner.runnerApi)
+
+    testFixturesApi(testFixtures(projects.testRunner.runnerApi))
 }
