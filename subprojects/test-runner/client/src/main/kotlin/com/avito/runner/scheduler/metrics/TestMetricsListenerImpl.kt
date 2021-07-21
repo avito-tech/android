@@ -2,7 +2,7 @@ package com.avito.runner.scheduler.metrics
 
 import com.avito.logger.LoggerFactory
 import com.avito.logger.create
-import com.avito.runner.scheduler.metrics.model.DeviceKey
+import com.avito.runner.model.DeviceId
 import com.avito.runner.scheduler.metrics.model.DeviceTimestamps
 import com.avito.runner.scheduler.metrics.model.TestKey
 import com.avito.runner.scheduler.metrics.model.TestTimestamps
@@ -25,7 +25,7 @@ internal class TestMetricsListenerImpl(
 
     private val logger = loggerFactory.create<TestSuiteListener>()
 
-    private val deviceTimestamps = ConcurrentHashMap<DeviceKey, DeviceTimestamps>()
+    private val deviceTimestamps = ConcurrentHashMap<DeviceId, DeviceTimestamps>()
 
     private var testSuiteStartedTime: Long = 0
 
@@ -34,14 +34,14 @@ internal class TestMetricsListenerImpl(
     }
 
     override suspend fun onDeviceCreated(device: Device, state: State) {
-        deviceTimestamps[device.key()] = DeviceTimestamps.Started(
+        deviceTimestamps[device.toId()] = DeviceTimestamps.Started(
             created = timeProvider.nowInMillis(),
             testTimestamps = mutableMapOf(),
         )
     }
 
     override suspend fun onIntentionReceived(device: Device, intention: Intention) {
-        deviceTimestamps.compute(device.key()) { _: DeviceKey, oldValue: DeviceTimestamps? ->
+        deviceTimestamps.compute(device.toId()) { _: DeviceId, oldValue: DeviceTimestamps? ->
             if (oldValue == null) {
                 logger.warn("Fail to set timestamp value, previous required values not found, this shouldn't happen")
                 null
@@ -61,7 +61,7 @@ internal class TestMetricsListenerImpl(
     }
 
     override suspend fun onTestStarted(device: Device, intention: Intention) {
-        deviceTimestamps.compute(device.key()) { _: DeviceKey, oldValue: DeviceTimestamps? ->
+        deviceTimestamps.compute(device.toId()) { _: DeviceId, oldValue: DeviceTimestamps? ->
             if (oldValue == null) {
                 logger.warn("Fail to set timestamp value, previous required values not found, this shouldn't happen")
                 null
@@ -83,7 +83,7 @@ internal class TestMetricsListenerImpl(
     }
 
     override suspend fun onTestCompleted(device: Device, intention: Intention, result: DeviceTestCaseRun) {
-        deviceTimestamps.compute(device.key()) { _: DeviceKey, oldValue: DeviceTimestamps? ->
+        deviceTimestamps.compute(device.toId()) { _: DeviceId, oldValue: DeviceTimestamps? ->
             if (oldValue == null) {
                 logger.warn("Fail to set timestamp value, previous required values not found, this shouldn't happen")
                 null
@@ -113,7 +113,7 @@ internal class TestMetricsListenerImpl(
     }
 
     override suspend fun onFinished(device: Device) {
-        deviceTimestamps.compute(device.key()) { _: DeviceKey, oldValue: DeviceTimestamps? ->
+        deviceTimestamps.compute(device.toId()) { _: DeviceId, oldValue: DeviceTimestamps? ->
             if (oldValue == null) {
                 logger.warn("Fail to set timestamp value, previous required values not found, this shouldn't happen")
                 null
@@ -160,7 +160,7 @@ internal class TestMetricsListenerImpl(
         }
     }
 
-    private fun Device.key() = DeviceKey(coordinate.serial.value)
+    private fun Device.toId() = DeviceId(coordinate.serial.value)
 
     private fun Intention.testKey() = TestKey(action.test, action.executionNumber)
 

@@ -23,6 +23,7 @@ internal class DeviceWorkerPoolImpl(
     private val outputDirectory: File,
     private val testListener: TestListener,
     private val deviceListener: DeviceListener,
+    private val newDeviceListener: com.avito.runner.listener.DeviceListener,
     private val timeProvider: TimeProvider,
     private val deviceWorkersDispatcher: Dispatchers,
     private val state: DeviceWorkerPoolState,
@@ -53,6 +54,7 @@ internal class DeviceWorkerPoolImpl(
                                     deviceListener
                                 )
                             ),
+                            newDeviceListener = newDeviceListener,
                             timeProvider = timeProvider,
                             dispatchers = deviceWorkersDispatcher
                         ).run()

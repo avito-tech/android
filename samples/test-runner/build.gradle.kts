@@ -78,7 +78,7 @@ instrumentation {
 
                             testsCountBasedReservation {
                                 device = emulator29
-                                maximum = 1
+                                maximum = 10
                                 minimum = 1
                                 testsPerEmulator = 1
                             }

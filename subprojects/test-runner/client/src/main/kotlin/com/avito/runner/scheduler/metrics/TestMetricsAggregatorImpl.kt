@@ -2,14 +2,14 @@ package com.avito.runner.scheduler.metrics
 
 import com.avito.android.Result
 import com.avito.math.median
-import com.avito.runner.scheduler.metrics.model.DeviceKey
+import com.avito.runner.model.DeviceId
 import com.avito.runner.scheduler.metrics.model.DeviceTimestamps
 import com.avito.runner.scheduler.metrics.model.TestTimestamps
 
 internal data class TestMetricsAggregatorImpl(
     private val testSuiteStartedTime: Long,
     private val testSuiteEndedTime: Long,
-    private val deviceTimestamps: Map<DeviceKey, DeviceTimestamps>
+    private val deviceTimestamps: Map<DeviceId, DeviceTimestamps>
 ) : TestMetricsAggregator {
 
     private val testTimestamps = deviceTimestamps.flatMap { it.value.testTimestamps.values }

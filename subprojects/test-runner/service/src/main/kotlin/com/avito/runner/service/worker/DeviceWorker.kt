@@ -3,6 +3,7 @@ package com.avito.runner.service.worker
 import com.avito.android.Result
 import com.avito.coroutines.extensions.Dispatchers
 import com.avito.report.TestArtifactsProviderFactory
+import com.avito.runner.model.DeviceId
 import com.avito.runner.model.TestCaseRun
 import com.avito.runner.model.TestCaseRun.Result.Failed
 import com.avito.runner.service.IntentionsRouter
@@ -28,6 +29,7 @@ internal class DeviceWorker(
     private val outputDirectory: File,
     private val testListener: TestListener,
     private val deviceListener: DeviceListener,
+    private val newDeviceListener: com.avito.runner.listener.DeviceListener,
     private val timeProvider: TimeProvider,
     dispatchers: Dispatchers
 ) {
@@ -54,12 +56,14 @@ internal class DeviceWorker(
             }
 
             deviceListener.onDeviceCreated(device, state)
+            newDeviceListener.onDeviceCreated(DeviceId(device.coordinate.serial.value))
 
             try {
 
                 for (intention in intentionsRouter.observeIntentions(state)) {
 
                     deviceListener.onIntentionReceived(device, intention)
+                    newDeviceListener.onIntentionReceived(DeviceId(device.coordinate.serial.value))
 
                     when (val status = device.deviceStatus()) {
 

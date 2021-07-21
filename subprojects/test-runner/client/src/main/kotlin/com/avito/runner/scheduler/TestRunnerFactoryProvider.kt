@@ -12,6 +12,8 @@ import com.avito.runner.scheduler.metrics.TestMetricsSender
 import com.avito.runner.scheduler.runner.TestRunnerExecutionState
 import com.avito.runner.scheduler.runner.model.TestRunRequestFactory
 import com.avito.runner.service.worker.device.adb.listener.RunnerMetricsConfig
+import com.avito.runner.trace.TraceReporter
+import com.avito.runner.trace.TraceReporterFactory
 import com.avito.time.TimeProvider
 import java.io.File
 import java.nio.file.Files
@@ -59,6 +61,11 @@ public class TestRunnerFactoryProvider(
         ).apply { mkdirs() }
     }
 
+    private val traceReporter: TraceReporter = TraceReporterFactory.create(
+        timeProvider = timeProvider,
+        outputDirectory = testRunnerOutputDir
+    )
+
     internal fun provide(): TestRunnerFactory {
         return TestRunnerFactoryImpl(
             testRunnerOutputDir = testRunnerOutputDir,
@@ -66,6 +73,7 @@ public class TestRunnerFactoryProvider(
             loggerFactory = loggerFactory,
             testSuiteListener = testMetricsSender,
             deviceListener = testMetricsSender,
+            traceReporter = traceReporter,
             devicesProviderFactory = devicesProviderFactory,
             testRunnerRequestFactory = testRunRequestFactory(),
             executionState = testRunnerExecutionState,
