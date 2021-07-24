@@ -34,6 +34,9 @@ object Screen {
     val identicalCellsRecycler: IdenticalCellsRecyclerScreen
         get() = IdenticalCellsRecyclerScreen()
 
+    val keyboardScreen: KeyboardScreen
+        get() = KeyboardScreen()
+
     val buttonsOverRecycler: ButtonsOverRecyclerScreen
         get() = ButtonsOverRecyclerScreen()
 

@@ -1,13 +1,14 @@
 package com.avito.android.test.page_object
 
 import android.app.Activity
-import android.graphics.Rect
-import android.view.View
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.action.ViewActions
 import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.uiautomator.UiDevice
+import com.avito.android.util.waitForAssertion
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.`is`
+import java.io.IOException
 
 class KeyboardElement : PageObject() {
 
@@ -26,98 +27,68 @@ class KeyboardElement : PageObject() {
         }
     }
 
-    /**
-     * WARNING: we can't check keyboard status after rotating screen using programmatically way.
-     * For this case, we can't detect keyboard open status and always returns false for
-     * isDisplayed method and true for isNotDisplayed method.
-     *
-     * https://issuetracker.google.com/u/1/issues/68137674
-     */
     class CheckLibrary {
 
-        fun isDisplayed(activity: Activity) {
-            // FIXME(MBS-1301)
-            Thread.sleep(1000)
-            checkDisplayed(activity, true)
-        }
+        /**
+         * For backward compatibility
+         */
+        fun isDisplayed(@Suppress("UNUSED_PARAMETER") activity: Activity?) = isDisplayed()
 
-        fun isNotDisplayed(activity: Activity) {
-            // FIXME(MBS-1301)
-            Thread.sleep(1000)
-            checkDisplayed(activity, false)
-        }
+        /**
+         * For backward compatibility
+         */
+        fun isNotDisplayed(@Suppress("UNUSED_PARAMETER") activity: Activity?) = isNotDisplayed()
 
-        private fun checkDisplayed(activity: Activity, isOpen: Boolean) {
-            var threshold = 0
-            var activityEffectiveHeight = 0
-
-            InstrumentationRegistry.getInstrumentation().runOnMainSync {
-                val content = activity.findViewById<View>(android.R.id.content)
-
-                val activityHeight = content.rootView.height
-                val minimalKeyboardHeight = activityHeight * KEYBOARD_MINIMUM_HEIGHT_PERCENTAGE
-
-                // If mAttachInfo is null we can't check keyboard position.
-                // https://issuetracker.google.com/u/1/issues/68137674
-                View::class.java.getDeclaredField("mAttachInfo").apply {
-                    isAccessible = true
-
-                    if (get(content) == null) {
-                        throw RuntimeException(
-                            "Can't check keyboard position. Because View::mAttachInfo is null." +
-                                " Did you rotate screen in test before this check?"
-                        )
-                    }
-                }
-
-                activityEffectiveHeight = Rect()
-                    .apply { content.getWindowVisibleDisplayFrame(this) }
-                    .height()
-
-                threshold = (activityHeight - minimalKeyboardHeight).toInt()
+        fun isDisplayed() {
+            waitForAssertion {
+                checkDisplayed(true)
             }
+        }
 
-            assertThat(
-                generateErrorMessage(
-                    displayed = isOpen,
-                    activityEffectiveHeight = activityEffectiveHeight,
-                    threshold = threshold
-                ),
-                activityEffectiveHeight <= threshold,
-                `is`(isOpen)
-            )
+        fun isNotDisplayed() {
+            waitForAssertion {
+                checkDisplayed(false)
+            }
+        }
+
+        private fun checkDisplayed(expected: Boolean) {
+            val output: String
+            try {
+                output = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
+                    .executeShellCommand(KEYBOARD_STATE_CHECK_CMD)
+                    .split("\n")
+                    .first { it.contains(KEYBOARD_STATE_FLAG) }
+            } catch (e: IOException) {
+                throw RuntimeException("An error occurred while executing '$KEYBOARD_STATE_CHECK_CMD'", e)
+            }
+            val actual = output.contains(KEYBOARD_STATE_FLAG_OPENED)
+            assertThat(generateErrorMessage(expected, actual, output), actual, `is`(expected))
         }
 
         private fun generateErrorMessage(
-            displayed: Boolean,
-            activityEffectiveHeight: Int,
-            threshold: Int
+            expected: Boolean,
+            actual: Boolean,
+            cmdOutput: String
         ): String {
-            val getStatusMessage: (isDisplayed: Boolean, withSizes: Boolean) -> String =
-                { isDisplayed, withSizes ->
-                    val status = if (isDisplayed) {
-                        "is displayed"
-                    } else {
-                        "is not displayed"
-                    }
-                    val sizes =
-                        " actualEffectiveHeight: $activityEffectiveHeight " +
-                            "thresholdEffectiveHeight: $threshold"
 
-                    "(keyboard $status on the screen.${if (withSizes) sizes else ""})"
+            val message: (isDisplayed: Boolean) -> String = { isDisplayed ->
+                when (isDisplayed) {
+                    true -> "is displayed"
+                    false -> "is not displayed"
                 }
+            }
 
-            val doesNotMatch = "doesn't match the selected view."
-            val expected = "Expected:"
-
-            return "${getStatusMessage(!displayed, true)} $doesNotMatch" +
-                " $expected ${getStatusMessage(displayed, false)}"
+            return buildString {
+                append("Keyboard ${message(actual)} on the screen. ")
+                append("Expected: ${message(expected)}. ")
+                append("Cmd output is:\n\"$cmdOutput\"")
+            }
         }
 
         companion object {
-            // not a bad name for private const
-            @Suppress("VariableMaxLength")
-            private const val KEYBOARD_MINIMUM_HEIGHT_PERCENTAGE = .30f
+            private const val KEYBOARD_STATE_CHECK_CMD = "dumpsys input_method | grep mInputShown"
+            private const val KEYBOARD_STATE_FLAG = "mInputShown"
+            private const val KEYBOARD_STATE_FLAG_OPENED = "mInputShown=true"
         }
     }
 }

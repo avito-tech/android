@@ -25,6 +25,7 @@
         <activity android:name=".BitmapActivity" />
         <activity android:name=".TextElementActivity" />
         <activity android:name=".RecyclerAsLayoutActivity" />
+        <activity android:name=".KeyboardActivity" />
         <activity android:name=".LongRecyclerActivity" />
         <activity android:name=".RecyclerInRecyclerActivity" />
         <activity android:name=".TabLayoutActivity" />
