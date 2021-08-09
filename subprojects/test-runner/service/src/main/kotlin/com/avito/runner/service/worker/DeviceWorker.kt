@@ -4,6 +4,7 @@ import com.avito.android.Result
 import com.avito.coroutines.extensions.Dispatchers
 import com.avito.report.ApplicationDirProviderFactory
 import com.avito.report.TestArtifactsProviderFactory
+import com.avito.runner.model.DeviceId
 import com.avito.runner.model.TestCaseRun
 import com.avito.runner.model.TestCaseRun.Result.Failed
 import com.avito.runner.service.IntentionsRouter
@@ -29,6 +30,7 @@ internal class DeviceWorker(
     private val outputDirectory: File,
     private val testListener: TestListener,
     private val deviceListener: DeviceListener,
+    private val newDeviceListener: com.avito.runner.listener.DeviceListener,
     private val timeProvider: TimeProvider,
     dispatchers: Dispatchers
 ) {
@@ -40,9 +42,12 @@ internal class DeviceWorker(
     suspend fun run() = with(CoroutineScope(coroutineContext)) {
         launch(dispatcher + CoroutineName("device-worker")) {
 
+            newDeviceListener.onCreate(device.toId())
+
             var state: State = when (val status = device.deviceStatus()) {
 
                 is Device.DeviceStatus.Freeze -> {
+                    newDeviceListener.onDie(device.toId())
                     deviceListener.onDeviceDied(
                         device = device,
                         message = "DeviceWorker died. Device status is `Freeze`",
@@ -51,7 +56,10 @@ internal class DeviceWorker(
                     return@launch
                 }
 
-                is Device.DeviceStatus.Alive -> device.state()
+                is Device.DeviceStatus.Alive -> {
+                    newDeviceListener.onReady(device.toId())
+                    device.state()
+                }
             }
 
             deviceListener.onDeviceCreated(device, state)
@@ -61,10 +69,12 @@ internal class DeviceWorker(
                 for (intention in intentionsRouter.observeIntentions(state)) {
 
                     deviceListener.onIntentionReceived(device, intention)
+                    newDeviceListener.onPrepareStateStart(device.toId())
 
                     when (val status = device.deviceStatus()) {
 
                         is Device.DeviceStatus.Freeze -> {
+                            newDeviceListener.onPrepareStateFail(device.toId())
                             onDeviceDieWhenPrepareState(intention, status.reason)
                             return@launch
                         }
@@ -73,12 +83,15 @@ internal class DeviceWorker(
                             currentState = state,
                             intendedState = intention.state
                         ).onFailure { reason ->
+                            newDeviceListener.onPrepareStateFail(device.toId())
                             onDeviceDieWhenPrepareState(intention, reason)
                             return@launch
                         }.onSuccess { newState ->
                             state = newState
                             deviceListener.onStatePrepared(device, newState)
                             deviceListener.onTestStarted(device, intention)
+                            newDeviceListener.onPrepareStateSuccess(device.toId())
+                            newDeviceListener.onTestStarted(device.toId(), intention.action.test)
                             executeAction(action = intention.action)
                                 .onSuccess { result ->
                                     deviceListener.onTestCompleted(
@@ -86,8 +99,10 @@ internal class DeviceWorker(
                                         intention = intention,
                                         result = result
                                     )
+                                    newDeviceListener.onTestFinished(device.toId(), result.testCaseRun)
                                 }.onFailure { failure ->
                                     onDeviceDieWhenExecutingTest(intention, failure)
+                                    newDeviceListener.onTestActionFailure(device.toId(), intention.action.test)
                                     return@launch
                                 }
                         }
@@ -242,4 +257,6 @@ internal class DeviceWorker(
                 State.Layer.Model(model = model)
             )
         )
+
+    private fun Device.toId(): DeviceId = DeviceId(coordinate.serial.value)
 }

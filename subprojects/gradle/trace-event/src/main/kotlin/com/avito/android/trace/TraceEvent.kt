@@ -52,6 +52,10 @@ public interface TraceEvent {
         public const val COLOR_GREY: String = "grey"
         public const val COLOR_WHITE: String = "white"
         public const val COLOR_YELLOW: String = "yellow"
+        public const val COLOR_BLUE: String = "rail_response"
+        public const val COLOR_LIGHT_GREEN: String = "rail_load"
+        public const val COLOR_LIGHT_RED: String = "rail_animation"
+        public const val COLOR_ORANGE: String = "rail_idle"
     }
 }
 
@@ -69,9 +73,9 @@ public data class DurationEvent(
     @SerializedName("args") override val args: Map<String, Any>? = null
 ) : TraceEvent {
 
-    internal companion object {
-        const val PHASE_BEGIN = 'B'
-        const val PHASE_END = 'E'
+    public companion object {
+        public const val PHASE_BEGIN: Char = 'B'
+        public const val PHASE_END: Char = 'E'
     }
 }
 

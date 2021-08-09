@@ -31,6 +31,7 @@ dependencies {
 
     testImplementation(testFixtures(projects.logger.logger))
     testImplementation(testFixtures(projects.common.time))
+    testImplementation(testFixtures(projects.testRunner.runnerApi))
     testImplementation(projects.common.files)
     testImplementation(projects.common.truthExtensions)
     testImplementation(projects.common.resources)

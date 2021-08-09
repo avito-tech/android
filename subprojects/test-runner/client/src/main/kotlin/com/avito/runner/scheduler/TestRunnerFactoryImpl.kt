@@ -37,6 +37,7 @@ internal class TestRunnerFactoryImpl(
     private val loggerFactory: LoggerFactory,
     private val testSuiteListener: TestSuiteListener,
     private val deviceListener: DeviceListener,
+    private val traceReporter: com.avito.runner.trace.TraceReporter,
     private val devicesProviderFactory: DevicesProviderFactory,
     private val testRunnerRequestFactory: TestRunRequestFactory,
     private val executionState: TestRunnerExecutionState,
@@ -78,6 +79,7 @@ internal class TestRunnerFactoryImpl(
                     )
                 )
             ),
+            traceReporter = traceReporter,
             testSuiteListener = testSuiteListener,
             testRunRequestFactory = testRunnerRequestFactory,
             targets = targets
@@ -118,6 +120,7 @@ internal class TestRunnerFactoryImpl(
             timeProvider = timeProvider,
             loggerFactory = loggerFactory,
             deviceListener = deviceListener,
+            newDeviceListener = traceReporter,
             intentions = executionState.intentions,
             intentionResults = executionState.intentionResults,
             deviceSignals = executionState.deviceSignals,

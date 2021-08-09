@@ -28,6 +28,7 @@ dependencies {
     implementation(projects.testRunner.instrumentationTestsDexLoader)
     implementation(projects.testRunner.reportProcessor)
     implementation(projects.testRunner.runnerApi)
+    implementation(projects.testRunner.traceReport)
     implementation(projects.testRunner.testAnnotations)
     implementation(projects.testRunner.testReportArtifacts)
     implementation(libs.coroutinesCore)
@@ -46,6 +47,8 @@ dependencies {
     testImplementation(testFixtures(projects.testRunner.report))
     testImplementation(testFixtures(projects.testRunner.reportViewer))
     testImplementation(testFixtures(projects.testRunner.service))
+    testImplementation(testFixtures(projects.testRunner.runnerApi))
+    testImplementation(testFixtures(projects.testRunner.traceReport))
 
     testFixturesImplementation(testFixtures(projects.common.time))
     testFixturesImplementation(testFixtures(projects.logger.logger))

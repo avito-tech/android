@@ -322,6 +322,7 @@ internal class DeviceWorkerTest {
                 DeviceLogListener(StubLogger("${device.coordinate}"))
             )
         ),
+        newDeviceListener = com.avito.runner.listener.StubDeviceListener(),
         timeProvider = StubTimeProvider(),
         dispatchers = TestDispatcher
     )

@@ -15,6 +15,7 @@ import com.avito.runner.scheduler.runner.model.TestRunResult
 import com.avito.runner.scheduler.runner.model.TestRunnerResult
 import com.avito.runner.scheduler.runner.scheduler.TestExecutionScheduler
 import com.avito.runner.service.DeviceWorkerPool
+import com.avito.runner.trace.TraceReporter
 import com.avito.test.model.DeviceName
 import com.avito.test.model.TestCase
 import com.avito.time.millisecondsToHumanReadableTime
@@ -26,6 +27,7 @@ internal class TestRunnerImpl(
     private val state: TestRunnerExecutionState,
     private val summaryReportMaker: SummaryReportMaker,
     private val reporter: Reporter,
+    private val traceReporter: TraceReporter,
     private val testSuiteListener: TestSuiteListener,
     private val devicesProvider: DevicesProvider,
     private val testRunRequestFactory: TestRunRequestFactory,
@@ -98,6 +100,7 @@ internal class TestRunnerImpl(
                 logger.critical("Test run end with error", e)
                 Result.Failure(e)
             } finally {
+                traceReporter.report()
                 deviceWorkerPool.stop()
                 state.cancel()
                 devicesProvider.releaseDevices()

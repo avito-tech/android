@@ -1,10 +1,10 @@
 package com.avito.runner.scheduler.metrics
 
-import com.avito.runner.scheduler.metrics.model.DeviceKey
+import com.avito.runner.model.DeviceId
+import com.avito.runner.model.toDeviceId
 import com.avito.runner.scheduler.metrics.model.DeviceTimestamps
 import com.avito.runner.scheduler.metrics.model.TestTimestamps
 import com.avito.runner.scheduler.metrics.model.createStubInstance
-import com.avito.runner.scheduler.metrics.model.toDeviceKey
 import com.avito.runner.scheduler.metrics.model.toTestKey
 import com.google.common.truth.Truth.assertThat
 import org.junit.jupiter.api.Test
@@ -16,7 +16,7 @@ internal class TestMetricsAggregatorTest {
         val aggregator = createTestMetricsAggregator(
             testSuiteStartedTime = 10,
             deviceTimestamps = mapOf(
-                "12345".toDeviceKey() to DeviceTimestamps.createStubInstance(
+                "12345".toDeviceId() to DeviceTimestamps.createStubInstance(
                     testTimestamps = mutableMapOf(
                         "test1".toTestKey() to TestTimestamps.Finished(onDevice = 10, startTime = 25, finishTime = 30),
                         "test2".toTestKey() to TestTimestamps.Finished(onDevice = 10, startTime = 25, finishTime = 30),
@@ -35,7 +35,7 @@ internal class TestMetricsAggregatorTest {
         val aggregator = createTestMetricsAggregator(
             testSuiteEndedTime = 50,
             deviceTimestamps = mapOf(
-                "12345".toDeviceKey() to DeviceTimestamps.createStubInstance(
+                "12345".toDeviceId() to DeviceTimestamps.createStubInstance(
                     testTimestamps = mutableMapOf(
                         "test1".toTestKey() to TestTimestamps.Finished(onDevice = 10, startTime = 20, finishTime = 25),
                         "test2".toTestKey() to TestTimestamps.Finished(onDevice = 10, startTime = 30, finishTime = 35),
@@ -53,7 +53,7 @@ internal class TestMetricsAggregatorTest {
     fun `suite time - is diff between first test start and last test finish`() {
         val aggregator = createTestMetricsAggregator(
             deviceTimestamps = mapOf(
-                "12345".toDeviceKey() to DeviceTimestamps.createStubInstance(
+                "12345".toDeviceId() to DeviceTimestamps.createStubInstance(
                     testTimestamps = mutableMapOf(
                         "test1".toTestKey() to TestTimestamps.Finished(onDevice = 10, startTime = 10, finishTime = 20),
                         "test2".toTestKey() to TestTimestamps.Finished(onDevice = 10, startTime = 15, finishTime = 45),
@@ -86,7 +86,7 @@ internal class TestMetricsAggregatorTest {
         val aggregator = createTestMetricsAggregator(
             testSuiteStartedTime = 5,
             deviceTimestamps = mapOf(
-                "12345".toDeviceKey() to DeviceTimestamps.createStubInstance(
+                "12345".toDeviceId() to DeviceTimestamps.createStubInstance(
                     testTimestamps = mutableMapOf(
                         "test1".toTestKey() to TestTimestamps.Finished(onDevice = 10, startTime = 40, finishTime = 50),
                         "test2".toTestKey() to TestTimestamps.Finished(onDevice = 15, startTime = 40, finishTime = 50),
@@ -106,7 +106,7 @@ internal class TestMetricsAggregatorTest {
     fun `median install time - is median value for all tests between device claim and test start`() {
         val aggregator = createTestMetricsAggregator(
             deviceTimestamps = mapOf(
-                "12345".toDeviceKey() to DeviceTimestamps.createStubInstance(
+                "12345".toDeviceId() to DeviceTimestamps.createStubInstance(
                     testTimestamps = mutableMapOf(
                         "test1".toTestKey() to TestTimestamps.Finished(onDevice = 10, startTime = 13, finishTime = 15),
                         "test2".toTestKey() to TestTimestamps.Finished(onDevice = 15, startTime = 16, finishTime = 18),
@@ -126,7 +126,7 @@ internal class TestMetricsAggregatorTest {
     fun `median device utilization - is median value for all valuable work to total work`() {
         val aggregator = createTestMetricsAggregator(
             deviceTimestamps = mapOf(
-                "12345".toDeviceKey() to DeviceTimestamps.createStubInstance(
+                "12345".toDeviceId() to DeviceTimestamps.createStubInstance(
                     created = 0,
                     testTimestamps = mutableMapOf(
                         "test1".toTestKey() to TestTimestamps.Finished(onDevice = 10, startTime = 10, finishTime = 15),
@@ -146,7 +146,7 @@ internal class TestMetricsAggregatorTest {
     private fun createTestMetricsAggregator(
         testSuiteStartedTime: Long = 0,
         testSuiteEndedTime: Long = 0,
-        deviceTimestamps: Map<DeviceKey, DeviceTimestamps> = emptyMap()
+        deviceTimestamps: Map<DeviceId, DeviceTimestamps> = emptyMap()
     ): TestMetricsAggregator {
         return TestMetricsAggregatorImpl(
             testSuiteStartedTime = testSuiteStartedTime,

@@ -202,6 +202,7 @@ internal class DeviceWorkerPoolTest {
         loggerFactory = loggerFactory,
         testListener = NoOpTestListener,
         deviceListener = StubDeviceListener(),
+        newDeviceListener = com.avito.runner.listener.StubDeviceListener(),
         deviceWorkersDispatcher = TestDispatcher,
         timeProvider = StubTimeProvider(),
         state = DeviceWorkerPoolState(

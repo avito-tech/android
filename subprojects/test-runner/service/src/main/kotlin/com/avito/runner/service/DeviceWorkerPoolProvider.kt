@@ -17,6 +17,7 @@ public class DeviceWorkerPoolProvider(
     private val timeProvider: TimeProvider,
     private val loggerFactory: LoggerFactory,
     private val deviceListener: DeviceListener,
+    private val newDeviceListener: com.avito.runner.listener.DeviceListener,
     private val testListener: TestListener,
     private val intentions: Channel<Intention>,
     private val intentionResults: Channel<IntentionResult>,
@@ -33,6 +34,7 @@ public class DeviceWorkerPoolProvider(
             loggerFactory = loggerFactory,
             testListener = testListener,
             deviceListener = deviceListener,
+            newDeviceListener = newDeviceListener,
             state = DeviceWorkerPoolState(
                 devices = devices,
                 intentions = intentions,
