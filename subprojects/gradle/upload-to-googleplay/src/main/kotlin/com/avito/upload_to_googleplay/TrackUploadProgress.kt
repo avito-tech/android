@@ -15,7 +15,7 @@ internal fun <T> AndroidPublisherRequest<T>.trackUploadProgress(
                 MediaHttpUploader.UploadState.INITIATION_STARTED ->
                     println("Starting $thing upload")
                 MediaHttpUploader.UploadState.MEDIA_IN_PROGRESS ->
-                    println("Uploading $thing: ${it.progress.fromZeroToOnePercent().toInt()}% complete")
+                    println("Uploading $thing: ${it.progress.fromZeroToOnePercent().roundToInt()}% complete")
                 MediaHttpUploader.UploadState.MEDIA_COMPLETE ->
                     println("${thing.capitalize()} upload complete")
             }

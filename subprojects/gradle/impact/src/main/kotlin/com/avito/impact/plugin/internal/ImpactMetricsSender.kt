@@ -53,7 +53,7 @@ internal class ImpactMetricsSender(
     ) {
         val metric = GaugeLongMetric(
             name = SeriesName.create("impact", "modules", configurationType.name.toLowerCase(Locale.US), "modified"),
-            gauge = modified.size.percentOf(projects.size).toLong()
+            gauge = modified.size.percentOf(projects.size).roundToLong()
         )
         metricTracker.track(metric)
     }
@@ -68,7 +68,7 @@ internal class ImpactMetricsSender(
 
         val metric = GaugeLongMetric(
             name = SeriesName.create("impact", "apps", configurationType.name.toLowerCase(Locale.US), "modified"),
-            gauge = modifiedApps.percentOf(apps).toLong()
+            gauge = modifiedApps.percentOf(apps).roundToLong()
         )
         metricTracker.track(metric)
     }

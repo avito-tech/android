@@ -35,5 +35,9 @@ internal class RelativeMetrics(
      * Y -> X: 100% (includes 1 out of 1)
      */
     val commonDependenciesRatio: Percent
-        get() = commonDependencies.size.percentOf(baselineDependencies.size)
+        get() = if (baselineDependencies.isEmpty()) {
+            Percent.ZERO
+        } else {
+            commonDependencies.size.percentOf(baselineDependencies.size)
+        }
 }

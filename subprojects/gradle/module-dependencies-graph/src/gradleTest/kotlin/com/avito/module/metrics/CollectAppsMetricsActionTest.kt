@@ -30,10 +30,10 @@ internal class CollectAppsMetricsActionTest {
         val relativeMetrics = collectMetrics(root).relative
 
         val aToB = relativeMetrics.getOrNull(Path.path(":app-a"), Path.path(":app-b"))
-        assertThat(aToB!!.commonDependenciesRatio.toInt()).isEqualTo(0)
+        assertThat(aToB!!.commonDependenciesRatio.roundToInt()).isEqualTo(0)
 
         val bToA = relativeMetrics.getOrNull(Path.path(":app-b"), Path.path(":app-a"))
-        assertThat(bToA!!.commonDependenciesRatio.toInt()).isEqualTo(0)
+        assertThat(bToA!!.commonDependenciesRatio.roundToInt()).isEqualTo(0)
     }
 
     @Test
@@ -51,10 +51,10 @@ internal class CollectAppsMetricsActionTest {
         val relativeMetrics = collectMetrics(root).relative
 
         val aToB = relativeMetrics.getOrNull(Path.path(":app-a"), Path.path(":app-b"))
-        assertThat(aToB!!.commonDependenciesRatio.toInt()).isEqualTo(100)
+        assertThat(aToB!!.commonDependenciesRatio.roundToInt()).isEqualTo(100)
 
         val bToA = relativeMetrics.getOrNull(Path.path(":app-b"), Path.path(":app-a"))
-        assertThat(bToA!!.commonDependenciesRatio.toInt()).isEqualTo(100)
+        assertThat(bToA!!.commonDependenciesRatio.roundToInt()).isEqualTo(100)
     }
 
     @Test
@@ -83,10 +83,10 @@ internal class CollectAppsMetricsActionTest {
         val relativeMetrics = collectMetrics(root).relative
 
         val aToB = relativeMetrics.getOrNull(Path.path(":app-a"), Path.path(":app-b"))
-        assertThat(aToB!!.commonDependenciesRatio.toInt()).isEqualTo(40)
+        assertThat(aToB!!.commonDependenciesRatio.roundToInt()).isEqualTo(40)
 
         val bToA = relativeMetrics.getOrNull(Path.path(":app-b"), Path.path(":app-a"))
-        assertThat(bToA!!.commonDependenciesRatio.toInt()).isEqualTo(66)
+        assertThat(bToA!!.commonDependenciesRatio.roundToInt()).isEqualTo(66)
     }
 
     private fun collectMetrics(root: Project): AppsHealthData {
