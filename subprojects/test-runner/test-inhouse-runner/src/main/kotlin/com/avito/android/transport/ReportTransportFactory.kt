@@ -6,6 +6,7 @@ import com.avito.android.test.report.transport.Transport
 import com.avito.filestorage.RemoteStorage
 import com.avito.http.HttpClientProvider
 import com.avito.logger.LoggerFactory
+import com.avito.logger.create
 import com.avito.report.TestArtifactsProvider
 import com.avito.report.serialize.ReportSerializer
 import com.avito.reportviewer.ReportsApiFactory
@@ -22,6 +23,8 @@ class ReportTransportFactory(
     testArtifactsProvider: TestArtifactsProvider
 ) {
 
+    private val logger = loggerFactory.create<ReportTransportFactory>()
+
     private val externalStorageTransport = ExternalStorageTransport(
         timeProvider = timeProvider,
         loggerFactory = loggerFactory,
@@ -33,6 +36,8 @@ class ReportTransportFactory(
         testRunCoordinates: ReportCoordinates,
         reportDestination: ReportDestination
     ): Transport {
+
+        logger.info("reportDestination=$reportDestination")
 
         val uploadFromDevice = AvitoRemoteStorageTransport(remoteStorage, timeProvider)
 

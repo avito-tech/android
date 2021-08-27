@@ -120,8 +120,8 @@ fun parseEnvironment(
 }
 
 internal fun parseReportDestination(argumentsProvider: ArgsProvider): ReportDestination {
-    val buildId = argumentsProvider.getMandatoryArgument("teamcityBuildId").toInt()
-    return if (buildId == TestRunEnvironment.LOCAL_STUDIO_RUN_ID) {
+    val deviceName = argumentsProvider.getMandatoryArgument("deviceName")
+    return if (deviceName.equals("local", ignoreCase = true)) {
         val isReportEnabled = argumentsProvider.getOptionalArgument("avito.report.enabled")?.toBoolean() ?: false
         if (isReportEnabled) {
             ReportDestination.Backend(
