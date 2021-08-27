@@ -80,7 +80,7 @@ public abstract class CollectAppsMetricsTask @Inject constructor(
                     data.getOrNull(baseline, compared)
                 }
                 .joinToString(separator = ";", postfix = "\n") { metrics ->
-                    metrics?.commonDependenciesRatio?.toInt().toString()
+                    metrics?.commonDependenciesRatio?.roundToInt().toString()
                 }
             file.appendText("$compared;$values")
         }

@@ -27,7 +27,6 @@ internal class SlackSummaryComposerTest {
 
         val message = compose(crossDeviceSuite)
 
-        assertThat(message).isInstanceOf<Result.Success<*>>()
         assertThat(message.getOrThrow()).contains("Ручные тесты: 2")
     }
 

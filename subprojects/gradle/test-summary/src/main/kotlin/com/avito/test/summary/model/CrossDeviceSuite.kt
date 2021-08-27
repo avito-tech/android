@@ -1,6 +1,7 @@
 package com.avito.test.summary.model
 
 import com.avito.math.Percent
+import com.avito.math.fromZeroToOnePercent
 import com.avito.math.percentOf
 import com.avito.report.model.Team
 import com.avito.reportviewer.model.team
@@ -25,25 +26,34 @@ public data class CrossDeviceSuite(val crossDeviceRuns: List<CrossDeviceRunTest>
     val lostOnSomeDevicesCount: Int
         get() = consistentData.count { it.status is CrossDeviceStatus.LostOnSomeDevices }
 
-    val percentLostOnSomeDevicesOfAutomated: Percent
-        get() = lostOnSomeDevicesCount.percentOf(automatedCount)
-
-    val inconsistentCount: Int
-        get() = crossDeviceRuns.count { it.status is CrossDeviceStatus.Inconsistent }
-
-    val percentSuccessOfAutomated: Percent = success.percentOf(automatedCount)
-
-    val percentSkippedOnAllDevicesOfAutomated: Percent = skippedOnAllDevicesCount.percentOf(automatedCount)
-
     val failedOnAllDevicesCount: Int
         get() = consistentData.count { it.status is CrossDeviceStatus.FailedOnAllDevices }
-
-    val percentFailedOnAllDevicesOfAutomated: Percent = failedOnAllDevicesCount.percentOf(automatedCount)
 
     val failedOnSomeDevicesCount: Int
         get() = consistentData.count { it.status is CrossDeviceStatus.FailedOnSomeDevices }
 
-    val percentFailedOnSomeDevicesOfAutomated: Percent = failedOnSomeDevicesCount.percentOf(automatedCount)
+    val percentLostOnSomeDevicesOfAutomated: Percent
+    val percentSuccessOfAutomated: Percent
+    val percentSkippedOnAllDevicesOfAutomated: Percent
+    val percentFailedOnAllDevicesOfAutomated: Percent
+    val percentFailedOnSomeDevicesOfAutomated: Percent
+
+    init {
+        if (automatedCount == 0) {
+            val zeroPercents = 0F.fromZeroToOnePercent()
+            percentSuccessOfAutomated = zeroPercents
+            percentSkippedOnAllDevicesOfAutomated = zeroPercents
+            percentFailedOnAllDevicesOfAutomated = zeroPercents
+            percentFailedOnSomeDevicesOfAutomated = zeroPercents
+            percentLostOnSomeDevicesOfAutomated = zeroPercents
+        } else {
+            percentSuccessOfAutomated = success.percentOf(automatedCount)
+            percentSkippedOnAllDevicesOfAutomated = skippedOnAllDevicesCount.percentOf(automatedCount)
+            percentFailedOnAllDevicesOfAutomated = failedOnAllDevicesCount.percentOf(automatedCount)
+            percentFailedOnSomeDevicesOfAutomated = failedOnSomeDevicesCount.percentOf(automatedCount)
+            percentLostOnSomeDevicesOfAutomated = lostOnSomeDevicesCount.percentOf(automatedCount)
+        }
+    }
 
     public fun filterTeam(team: Team): CrossDeviceSuite =
         CrossDeviceSuite(crossDeviceRuns.filter { it.name.team == team })
