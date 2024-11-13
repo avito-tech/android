@@ -17,6 +17,7 @@ import org.gradle.api.services.BuildService
 import org.gradle.api.services.BuildServiceParameters
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import java.util.concurrent.TimeUnit
 
 internal abstract class RetrofitBuilderService : BuildService<RetrofitBuilderService.Params> {
 
@@ -36,6 +37,7 @@ internal abstract class RetrofitBuilderService : BuildService<RetrofitBuilderSer
             .setLevel(HttpLoggingInterceptor.Level.BASIC)
 
         val okHttpClient = predefinedOkHttpBuilder
+            .readTimeout(2, TimeUnit.MINUTES)
             .addInterceptor(loggingInterceptor)
             .build()
 
