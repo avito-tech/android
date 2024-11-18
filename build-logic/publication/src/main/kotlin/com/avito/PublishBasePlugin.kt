@@ -21,9 +21,8 @@ class PublishBasePlugin : Plugin<Project> {
                                 "Collection of infrastructure libraries and gradle plugins of Avito Android project"
                             )
                             url.set("https://github.com/avito-tech/avito-android")
-
-                            scm {
-                                url.set("https://github.com/avito-tech/avito-android")
+                            scm { scm ->
+                                scm.url.set("https://github.com/avito-tech/avito-android")
                             }
                             licenses {
                                 it.license { license ->

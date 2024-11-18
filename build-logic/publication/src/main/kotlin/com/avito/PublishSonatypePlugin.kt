@@ -17,9 +17,7 @@ class PublishSonatypePlugin : Plugin<Project> {
             plugins.apply("signing")
 
             val ossrhUsername: Provider<String> = providers.gradleProperty("avito.ossrh.user")
-
             val ossrhPassword: Provider<String> = providers.gradleProperty("avito.ossrh.password")
-
             val ossrhStagingProfileId: Provider<String> = providers.gradleProperty("avito.ossrh.stagingProfileId")
 
             val sonatypeRepoName = "SonatypeReleases"
@@ -49,8 +47,18 @@ class PublishSonatypePlugin : Plugin<Project> {
                 }
             }
 
-            tasks.withType(PublishToMavenRepository::class.java).configureEach {
-                it.apply {
+            signing {
+                it.sign(publishing.publications)
+
+                val signingKeyId = providers.gradleProperty("avito.pgp.keyid").orNull
+                val signingKey = providers.gradleProperty("avito.pgp.key").orNull
+                val signingPassword = providers.gradleProperty("avito.pgp.password").orNull
+
+                it.useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
+            }
+
+            tasks.withType(PublishToMavenRepository::class.java).configureEach { publishTask ->
+                publishTask.apply {
                     // https://docs.gradle.org/current/userguide/publishing_customization.html#sec:configuring_publishing_tasks
                     if (name.contains(sonatypeRepoName)) {
                         doFirst {
@@ -60,6 +68,7 @@ class PublishSonatypePlugin : Plugin<Project> {
                             repository = repository.apply { setUrl(repositoryUrl) }
                         }
                         dependsOn(createStagingRepositoryTask)
+                        dependsOn(tasks.withType(Sign::class.java))
                     }
                 }
             }
@@ -79,18 +88,8 @@ class PublishSonatypePlugin : Plugin<Project> {
                 }
             }
 
-            signing {
-                it.sign(publishing.publications)
-
-                val signingKeyId = providers.gradleProperty("avito.pgp.keyid").orNull
-                val signingKey = providers.gradleProperty("avito.pgp.key").orNull
-                val signingPassword = providers.gradleProperty("avito.pgp.password").orNull
-
-                it.useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
-            }
-
-            tasks.withType(Sign::class.java).configureEach {
-                it.onlyIf {
+            tasks.withType(Sign::class.java).configureEach { signTask ->
+                signTask.onlyIf {
                     gradle.taskGraph.hasTask(publishTask.get())
                 }
             }
