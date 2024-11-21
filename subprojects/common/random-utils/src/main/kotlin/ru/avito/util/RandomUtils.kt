@@ -70,13 +70,7 @@ public fun randomUrlString(): String {
     return "https://example.com/" + randomString()
 }
 
-public fun randomStringList(capacity: Int = randomInt(DEFAULT_MAX_INT)): List<String> {
-    val list = ArrayList<String>(capacity)
-    for (i in 0 until capacity) {
-        list.add(randomString())
-    }
-    return list
-}
+public fun randomStringList(capacity: Int = randomInt(DEFAULT_MAX_INT)) = List(capacity) { randomString() }
 
 public fun randomLongArray(): LongArray {
     val array = LongArray(randomInt(DEFAULT_MAX_INT))
