@@ -7,7 +7,7 @@ public sealed class Characters(internal val chars: List<Char>) {
         private val alphabeticUppercase = ('A'..'Z').toList()
         private val alphabetic = alphabeticLowercase + alphabeticUppercase
         private val digits = ('0'..'9').toList()
-        private val punctuations = listOf('.', ',', '!', '?', ';', ':', '-', '(', ')', '"').toList()
+        private val punctuations = listOf('.', ',', '!', '?', ';', ':', '-', '(', ')', '"')
         private val specials = listOf('@', '#', '$', '%', '^', '&', '*', '{', '}', '[', ']', '/', '\\', '|')
     }
 
