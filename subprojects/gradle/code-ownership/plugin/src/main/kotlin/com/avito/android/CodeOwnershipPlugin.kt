@@ -69,6 +69,9 @@ public class CodeOwnershipPlugin : Plugin<Project> {
             moduleDir.set(codeOwnershipExtension.ownersDir)
             avitoOwnersClient.set(codeOwnershipExtension.avitoOwnersClient)
             bitbucketCodeOwnershipFile.set(project.layout.projectDirectory.dir(".bitbucket").file("CODEOWNERS"))
+            bitbucketCodeOwnershipExclusionsFile.set(
+                project.layout.projectDirectory.dir(".bitbucket").file("CodeOwnersExclusions.csv")
+            )
         }
     }
 

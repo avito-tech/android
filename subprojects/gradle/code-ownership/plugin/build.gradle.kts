@@ -11,6 +11,7 @@ dependencies {
     api(project(":subprojects:gradle:code-ownership:extensions"))
 
     implementation(libs.jacksonDataformat.toml)
+    implementation(libs.jacksonDataformat.csv)
     implementation(libs.retrofitConverterGson)
     implementation(libs.kotlinPoet)
     implementation(project(":subprojects:gradle:pre-build"))

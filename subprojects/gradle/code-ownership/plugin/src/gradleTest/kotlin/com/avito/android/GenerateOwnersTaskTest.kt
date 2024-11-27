@@ -19,6 +19,9 @@ internal class GenerateOwnersTaskTest {
     @Test
     internal fun `generate Owners file - file created and filled with data`(@TempDir projectDir: File) {
         projectDir.dir("common/code-owners/src/main/kotlin/com/avito/android/ownership").file("Owners.kt")
+        projectDir.dir(".bitbucket").file("CodeOwnersExclusions.csv").also {
+            it.writeText(CODE_OWNERS_EXCLUSIONS_FILE_TEXT)
+        }
         TestProjectGenerator(
             name = "rootapp",
             plugins = plugins {
@@ -99,6 +102,9 @@ internal class GenerateOwnersTaskTest {
     internal fun `generate CODEOWNERS file - file created and filled with data`(@TempDir projectDir: File) {
         projectDir.dir("common/code-owners/src/main/kotlin/com/avito/android/ownership").file("Owners.kt")
         projectDir.dir(".bitbucket").file("CODEOWNERS")
+        projectDir.dir(".bitbucket").file("CodeOwnersExclusions.csv").also {
+            it.writeText(CODE_OWNERS_EXCLUSIONS_FILE_TEXT)
+        }
         TestProjectGenerator(
             name = "rootapp",
             plugins = plugins {
@@ -199,6 +205,10 @@ internal class GenerateOwnersTaskTest {
     )
 
     private companion object {
+
+        private val CODE_OWNERS_EXCLUSIONS_FILE_TEXT = """
+            module,ownerIds
+        """.trimIndent()
 
         private val CODE_OWNERS_FILE_TEXT = """
             /app/ mobarch1@avito.ru mobarch2@avito.ru speed1@avito.ru speed2@avito.ru

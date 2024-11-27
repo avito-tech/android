@@ -10,6 +10,8 @@ import com.avito.android.model.network.AvitoOwnersClient
 import com.avito.android.model.network.OwnerType
 import com.avito.android.utils.cyrillicToLatinAlphabet
 import com.avito.utils.ProcessRunner
+import com.fasterxml.jackson.dataformat.csv.CsvMapper
+import com.fasterxml.jackson.dataformat.csv.CsvParser
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.CodeBlock
 import com.squareup.kotlinpoet.FileSpec
@@ -28,6 +30,7 @@ import org.gradle.api.provider.Property
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputDirectory
+import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.Internal
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.PathSensitive
@@ -52,6 +55,10 @@ internal abstract class GenerateOwnersTask : DefaultTask() {
 
     @get:OutputFile
     internal abstract val bitbucketCodeOwnershipFile: RegularFileProperty
+
+    @get:InputFile
+    @get:PathSensitive(PathSensitivity.RELATIVE)
+    internal abstract val bitbucketCodeOwnershipExclusionsFile: RegularFileProperty
 
     @TaskAction
     fun generate() {
@@ -90,9 +97,16 @@ internal abstract class GenerateOwnersTask : DefaultTask() {
     }
 
     private fun generateCodeOwnershipFile(remoteOwners: List<AvitoOwner>) {
+        val exclusions = getBitbucketOwnersExclusions()
         val moduleToEmailPairs = modulePathToOwners.get().map { mapEntry ->
             val modulePath = mapEntry.key.replace(":", "/")
-            val moduleOwners = mapEntry.value.filterIsInstance<AvitoCodeOwner>()
+            val moduleOwners = mapEntry.value
+                .filterIsInstance<AvitoCodeOwner>()
+                .filter {
+                    !exclusions.getOrDefault(modulePath.trim('/'), emptyList())
+                        .contains(it.type.id)
+                }
+
             val emails = moduleOwners.flatMap { localOwner ->
                 findRemoteOwnerByIdRecursive(localOwner.type.id, remoteOwners)?.let { remoteOwner ->
                     (remoteOwner.children + remoteOwner).flatMap { it.people }.map { it.email }
@@ -103,6 +117,33 @@ internal abstract class GenerateOwnersTask : DefaultTask() {
             modulePath to emails
         }
         writeIntoCodeOwnersFile(moduleToEmailPairs)
+    }
+
+    private fun getBitbucketOwnersExclusions(): Map<String, List<String>> {
+        val exclusionsFile = bitbucketCodeOwnershipExclusionsFile.get().asFile
+        return if (exclusionsFile.exists()) {
+            val csvLines = exclusionsFile.readCsvLines()
+            validateCsvStructure(columns = csvLines.first())
+            csvLines.drop(1).fold(mutableMapOf()) { map, fields ->
+                val (module, ownerIds) = fields
+                map[module.trim('/')] = ownerIds.split(" ")
+                map
+            }
+        } else {
+            emptyMap()
+        }
+    }
+
+    private fun File.readCsvLines(): List<List<String>> =
+        CsvMapper().readerForListOf(String::class.java)
+            .with(CsvParser.Feature.WRAP_AS_ARRAY)
+            .readValues<List<String>>(this)
+            .readAll()
+
+    private fun validateCsvStructure(columns: List<String>) {
+        val (module, ownerIds) = columns
+        assert(module == MODULE_FIELD)
+        assert(ownerIds == OWNER_IDS_FIELD)
     }
 
     private fun findRemoteOwnerByIdRecursive(ownerId: String, owners: List<AvitoOwner>): AvitoOwner? {
@@ -288,6 +329,8 @@ internal abstract class GenerateOwnersTask : DefaultTask() {
     }
 
     companion object {
+        const val MODULE_FIELD = "module"
+        const val OWNER_IDS_FIELD = "ownerIds"
         const val OWNER_CHAT_CHANNELS = "chatChannels"
         const val OWNER_TYPE = "type"
 
