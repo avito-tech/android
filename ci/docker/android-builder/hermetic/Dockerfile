@@ -10,6 +10,7 @@ RUN \
     unzip \
     curl \
     git \
+    git-lfs \
     gcc \
     openssh-client \
     ca-certificates \
