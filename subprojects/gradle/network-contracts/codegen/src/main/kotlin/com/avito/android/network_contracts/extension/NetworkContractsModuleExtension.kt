@@ -19,6 +19,9 @@ public abstract class NetworkContractsModuleExtension(
 
     public abstract val version: Property<String>
 
+    public val failFast: Property<Boolean> = objects.property<Boolean>()
+        .convention(false)
+
     public val skipValidation: Property<Boolean> = objects.property<Boolean>()
         .convention(true)
 

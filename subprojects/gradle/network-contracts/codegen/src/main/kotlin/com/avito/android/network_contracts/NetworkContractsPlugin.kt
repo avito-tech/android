@@ -179,6 +179,13 @@ public class NetworkContractsPlugin : Plugin<Project> {
                         .convention(project.layout.projectDirectory.file(project.provider { "codegen.toml" }))
                         .toOptional()
                 )
+                this.failFast.set(project.networkContractsExtension.failFast)
+                this.verdictFile.set(
+                    project.reportFile(
+                        directory = "networkContracts",
+                        reportFileName = "codegenValidationSchemesVerdict.txt"
+                    )
+                )
 
                 resultFile.set(
                     project.reportFile(

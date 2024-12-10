@@ -50,20 +50,7 @@ public abstract class ValidateNetworkContractsRootTask : DefaultTask(), BuildVer
         var verdict = OK
 
         if (diagnosticsMap.isNotEmpty()) {
-            verdict = buildString {
-                appendLine("Validation of the network contracts plugin failed:")
-
-                diagnosticsMap.forEach { (key, diagnosticsList) ->
-                    appendLine("- $key")
-                    diagnosticsList.forEach { diagnostic ->
-                        appendLine("\t- ${diagnostic.message}")
-                    }
-                }
-
-                appendLine()
-                appendLine("You can locally run validation task:")
-                appendLine("`./gradlew $NAME`")
-            }
+            verdict = ProblemsMessageBuilder.build(diagnosticsMap)
         }
         verdictFile.get().asFile.writeText(verdict)
 

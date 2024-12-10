@@ -47,6 +47,7 @@ internal fun defaultModule(
     apiSchemesDirectory: String = DEFAULT_API_SCHEMES_DIRECTORY,
     generatedDirectory: String = DEFAULT_BUILD_DIRECTORY,
     skipValidation: Boolean = true,
+    failFast: Boolean = false,
     buildExtra: String = "",
 ): KotlinModule {
     return KotlinModule(
@@ -61,6 +62,7 @@ internal fun defaultModule(
             apiSchemesDirectory,
             generatedDirectory,
             buildExtra,
+            failFast,
         ),
         useKts = true
     )
@@ -73,6 +75,7 @@ private fun buildGradleExtra(
     apiSchemesDirectory: String = DEFAULT_API_SCHEMES_DIRECTORY,
     generatedDirectory: String = DEFAULT_BUILD_DIRECTORY,
     buildExtra: String = "",
+    failFast: Boolean = false,
 ): String {
     return """
         networkContracts {
@@ -80,6 +83,7 @@ private fun buildGradleExtra(
             projectName.set("$appName")
             packageName.set("$generatedClassesPackage")
             skipValidation.set($skipValidation)
+            failFast.set($failFast)
             apiSchemesDirectory.set(project.layout.projectDirectory.dir("$apiSchemesDirectory"))
             generatedDirectory.set(project.layout.projectDirectory.dir("$generatedDirectory"))
         }

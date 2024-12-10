@@ -1,3 +1,4 @@
+@file:Suppress("MaxLineLength")
 package com.avito.android.network_contracts.validation
 
 import com.avito.android.network_contracts.NetworkCodegenProjectGenerator
@@ -30,7 +31,7 @@ class ValidateNetworkContractsTaskTest {
     }
 
     @Test
-    fun `when run validation task and schemes is empty -  then throw validation error`(
+    fun `when module validation task is invoked and failFast is enable - then invoke module validation task with codegen - fail task with report`(
         @TempDir projectDir: File
     ) {
         val moduleName = "app"
@@ -41,13 +42,35 @@ class ValidateNetworkContractsTaskTest {
             .outputContains("Module `:$moduleName` applies plugin, but does not contain any network contracts schemes.")
     }
 
+    @Test
+    fun `when run validation task and schemes is empty -  then throw validation error`(
+        @TempDir projectDir: File
+    ) {
+        val moduleName = "app"
+        generateProjectWithGeneratedFiles(
+            projectDir,
+            generatedFiles = emptyList(),
+            schemes = emptyList(),
+            moduleName = moduleName,
+            failFast = true
+        )
+        runTask("$moduleName:${ValidateNetworkContractsSchemesTask.NAME}", projectDir, failed = true)
+            .assertThat()
+            .buildFailed()
+            .outputContains("Module `:$moduleName` applies plugin, but does not contain any network contracts schemes.")
+            .tasksShouldBeTriggered(
+                ":$moduleName:${CodegenTask.NAME}Validate",
+            )
+    }
+
     private fun generateProjectWithGeneratedFiles(
         projectDir: File,
         generatedFiles: List<File>,
         moduleName: String = "app",
         schemes: List<SchemaEntry> = listOf(
             SchemaEntry("test/path.yaml", "content")
-        )
+        ),
+        failFast: Boolean = false
     ): List<File> {
         val packageName = "com.avito.android"
 
@@ -59,7 +82,8 @@ class ValidateNetworkContractsTaskTest {
                 defaultModule(
                     name = moduleName,
                     generatedClassesPackage = packageName,
-                    buildExtra = validateTaskExtraConfiguration
+                    failFast = failFast,
+                    buildExtra = validateTaskExtraConfiguration,
                 )
             )
         )
