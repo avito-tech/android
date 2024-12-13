@@ -135,6 +135,7 @@ teamcityClient = "org.jetbrains.teamcity:teamcity-rest-client:1.6.2"
 googlePublish = "com.google.apis:google-api-services-androidpublisher:v3-rev86-1.25.0"
 googleAuthLibrary = "com.google.auth:google-auth-library-oauth2-http:0.10.0"
 jdgraphtCore = "org.jgrapht:jgrapht-core:1.5.1"
+awsS3 = "aws.sdk.kotlin:s3:1.3.91"
 
 # https://github.com/robolectric/robolectric/releases
 robolectric = "org.robolectric:robolectric:4.7.3"
