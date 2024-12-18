@@ -6,11 +6,9 @@ import java.net.URL
 
 public interface S3Client {
     /**
-     * @param s3Bucket - bucket which is accessible by [S3ClientConfig.accessKeyId]
      * @param key - relative [objekt] path in [s3Bucket]
      */
     public suspend fun putObject(
-        s3Bucket: String,
         key: String,
         objekt: File,
     ): Result<URL>
