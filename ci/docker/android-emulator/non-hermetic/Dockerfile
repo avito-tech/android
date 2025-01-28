@@ -44,7 +44,7 @@ ENV LANG=C.UTF-8 \
 # ----------------- Android SDK -----------------
 # https://developer.android.com/studio/index.html#command-tools
 # Additional info about directory structure: https://stackoverflow.com/a/61176718/981330
-ARG COMMANDLINE_TOOLS_URL=https://dl.google.com/android/repository/commandlinetools-linux-8092744_latest.zip
+ARG COMMANDLINE_TOOLS_URL=https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip
 ARG ANDROID_SDK_FILE_NAME=commandlinetools.zip
 
 RUN curl $COMMANDLINE_TOOLS_URL --progress-bar --location --output $ANDROID_SDK_FILE_NAME && \
