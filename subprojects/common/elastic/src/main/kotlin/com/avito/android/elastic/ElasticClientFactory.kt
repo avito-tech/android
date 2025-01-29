@@ -13,7 +13,13 @@ import java.util.concurrent.TimeUnit
 public object ElasticClientFactory {
 
     private val loggerFactory: LoggerFactory = LoggerFactoryBuilder()
-        .addLoggingHandlerProvider(PrintlnLoggingHandlerProvider(LogLevel.DEBUG, false))
+        .addLoggingHandlerProvider(
+            PrintlnLoggingHandlerProvider(
+                LogLevel.WARNING,
+                printStackTrace = false,
+                printMessageTime = false
+            )
+        )
         .build()
 
     private val timeProvider: TimeProvider = DefaultTimeProvider()

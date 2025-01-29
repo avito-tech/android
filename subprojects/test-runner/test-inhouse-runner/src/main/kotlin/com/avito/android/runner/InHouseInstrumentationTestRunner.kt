@@ -57,6 +57,7 @@ import com.avito.logger.LoggerFactoryBuilder
 import com.avito.logger.create
 import com.avito.logger.destination.ElasticLoggingHandlerProvider
 import com.avito.logger.handler.AndroidLogcatLoggingHandlerProvider
+import com.avito.logger.metadata.runtime.NoOpLoggerRuntimeMetadataProvider
 import com.avito.report.TestArtifactsProvider
 import com.avito.report.TestArtifactsProviderFactory
 import com.avito.report.model.Kind
@@ -155,7 +156,8 @@ public abstract class InHouseInstrumentationTestRunner(
             builder.addLoggingHandlerProvider(
                 ElasticLoggingHandlerProvider(
                     LogLevel.DEBUG,
-                    ElasticClientFactory.provide(elasticConfig)
+                    ElasticClientFactory.provide(elasticConfig),
+                    NoOpLoggerRuntimeMetadataProvider,
                 ),
             )
         }

@@ -7,6 +7,7 @@ import com.avito.logger.destination.ElasticLoggingHandlerProvider
 import com.avito.logger.handler.FileLoggingHandlerProvider
 import com.avito.logger.handler.LoggingHandlerProvider
 import com.avito.logger.handler.PrintlnLoggingHandlerProvider
+import com.avito.logger.metadata.runtime.NoOpLoggerRuntimeMetadataProvider
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.services.BuildService
@@ -41,13 +42,29 @@ public abstract class LoggerService : BuildService<LoggerService.Params> {
             }
             if (printlnHandler.isPresent) {
                 val config = printlnHandler.get()
-                providers.add(PrintlnLoggingHandlerProvider(config.level, config.printStackTrace))
+                providers.add(
+                    PrintlnLoggingHandlerProvider(
+                        config.level, config.printStackTrace, config.printMessageTime
+                    )
+                )
             } else {
-                providers.add(PrintlnLoggingHandlerProvider(LogLevel.INFO, false))
+                providers.add(
+                    PrintlnLoggingHandlerProvider(
+                        LogLevel.INFO,
+                        printStackTrace = false,
+                        printMessageTime = false
+                    )
+                )
             }
             if (elasticHandler.isPresent) {
                 val config = elasticHandler.get()
-                providers.add(ElasticLoggingHandlerProvider(config.level, ElasticClientFactory.provide(config.config)))
+                providers.add(
+                    ElasticLoggingHandlerProvider(
+                        config.level,
+                        ElasticClientFactory.provide(config.config),
+                        NoOpLoggerRuntimeMetadataProvider
+                    )
+                )
             }
         }
         providers.toList()

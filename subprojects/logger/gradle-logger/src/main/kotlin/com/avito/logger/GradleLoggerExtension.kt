@@ -9,7 +9,8 @@ public abstract class GradleLoggerExtension {
 
     public data class PrintlnMode(
         val level: LogLevel,
-        val printStackTrace: Boolean
+        val printStackTrace: Boolean,
+        val printMessageTime: Boolean = false,
     ) : Serializable
 
     public data class Elastic(
