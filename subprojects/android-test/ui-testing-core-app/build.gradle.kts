@@ -127,11 +127,11 @@ instrumentation {
     val defaultCpuLimit = "1.3"
     val defaultMemoryLimit = "4Gi"
 
-    val emulator24 = Device.CloudEmulator(
-        name = "api24",
-        api = 24,
+    val emulator27 = Device.CloudEmulator(
+        name = "api27",
+        api = 27,
         model = "Android_SDK_built_for_x86",
-        image = emulatorImage(24, "3a1f15409f37"),
+        image = emulatorImage(27, "32dcecb94ce8"),
         cpuCoresRequest = defaultCpuRequest,
         cpuCoresLimit = defaultCpuLimit,
         memoryLimit = defaultMemoryLimit
@@ -161,7 +161,7 @@ instrumentation {
         register(
             "PRCheck",
             instrumentationConfiguration(
-                targetDevices = setOf(emulator24),
+                targetDevices = setOf(emulator27),
             )
         )
     }
