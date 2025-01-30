@@ -1,0 +1,12 @@
+{
+    "sources": [
+        {
+            "configurationId": "AvitoAndroid_Build",
+            "fetchIntervalInHours": "3"
+        },
+        {
+            "configurationId": "AvitoAndroid_Checks_AvitoNightlyRegressAutotests",
+            "fetchIntervalInHours": "10"
+        }
+    ]
+}

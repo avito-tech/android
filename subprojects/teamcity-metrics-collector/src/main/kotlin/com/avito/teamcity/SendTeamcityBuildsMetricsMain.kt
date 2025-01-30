@@ -4,12 +4,17 @@ import com.avito.android.graphite.GraphiteConfig
 import com.avito.android.graphite.GraphiteSender
 import com.avito.graphite.series.SeriesName
 import com.avito.logger.PrintlnLoggerFactory
+import com.avito.teamcity.builds.PreviousMetricsSendingTimeProvider
 import com.avito.teamcity.builds.TeamcityBuildsProvider
+import com.avito.teamcity.config.TeamcityMetricsSourceConfig
 import kotlinx.cli.ArgParser
 import kotlinx.cli.ArgType
 import kotlinx.cli.ExperimentalCli
 import kotlinx.cli.Subcommand
 import kotlinx.cli.required
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
+import java.io.File
 
 @ExperimentalCli
 internal object SendTeamcityBuildsMetricsMain {
@@ -20,9 +25,10 @@ internal object SendTeamcityBuildsMetricsMain {
     ) {
 
         /**
-         * This build type is metrics source
+         * Absolute path to [TeamcityMetricsSourceConfig]
          */
-        private val metricsSourceBuildType: String by option(type = ArgType.String).required()
+        private val metricsSourcesConfigPath: String by option(type = ArgType.String)
+            .required()
 
         private val teamcityUrl: String by option(type = ArgType.String)
             .required()
@@ -57,25 +63,37 @@ internal object SendTeamcityBuildsMetricsMain {
             )
         }
 
+        private val teamcityApi by lazy {
+            TeamcityApi.create(
+                TeamcityCredentials(
+                    url = teamcityUrl,
+                    user = teamcityApiUser,
+                    password = teamcityApiPassword,
+                )
+            )
+        }
+
         private val teamcityBuildsProvider by lazy {
             TeamcityBuildsProvider.create(
-                api = TeamcityApi.create(
-                    TeamcityCredentials(
-                        url = teamcityUrl,
-                        user = teamcityApiUser,
-                        password = teamcityApiPassword
-                    )
-                ),
+                api = teamcityApi,
                 loggerFactory = PrintlnLoggerFactory,
             )
+        }
+
+        private val previousMetricsSendingTimeProvider by lazy {
+            PreviousMetricsSendingTimeProvider.create(teamcityApi)
         }
 
         override fun execute() {
             val action = SendTeamcityBuildMetricsAction(
                 graphiteSender = graphiteSender,
-                teamcityBuildsProvider = teamcityBuildsProvider
+                teamcityBuildsProvider = teamcityBuildsProvider,
+                previousMetricsSendingTimeProvider = previousMetricsSendingTimeProvider,
             )
-            action.execute(metricsSourceBuildType)
+            val config = Json.decodeFromString<TeamcityMetricsSourceConfig>(
+                string = File(metricsSourcesConfigPath).readText(),
+            )
+            action.execute(config.sources)
         }
     }
 

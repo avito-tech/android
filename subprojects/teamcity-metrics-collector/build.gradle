@@ -1,5 +1,6 @@
 plugins {
     id("convention.kotlin-jvm")
+    id("convention.kotlin-serialization")
 }
 
 dependencies {
@@ -17,7 +18,7 @@ tasks.register("sendTeamcityBuildsMetrics", JavaExec) {
         "--teamcityUrl", project.providers.gradleProperty("teamcityUrl").getOrNull(),
         "--teamcityApiUser", project.providers.gradleProperty("teamcityApiUser").getOrNull(),
         "--teamcityApiPassword", project.providers.gradleProperty("teamcityApiPassword").getOrNull(),
-        "--metricsSourceBuildType", project.providers.gradleProperty("metricsSourceBuildType").getOrNull(),
+        "--metricsSourcesConfigPath", project.providers.gradleProperty("metricsSourcesConfigPath").getOrNull(),
         "--graphiteHost", project.providers.gradleProperty("graphite.host").getOrNull(),
         "--graphitePort", project.providers.gradleProperty("graphite.port").getOrNull(),
         "--metricsPrefix", project.providers.gradleProperty("buildMetrics.prefix").getOrNull(),

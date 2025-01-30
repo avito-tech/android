@@ -4,6 +4,7 @@ import org.jetbrains.teamcity.rest.Build
 import org.jetbrains.teamcity.rest.BuildConfigurationId
 import org.jetbrains.teamcity.rest.BuildLocator
 import org.jetbrains.teamcity.rest.Project
+import org.jetbrains.teamcity.rest.ProjectId
 
 public interface TeamcityApi {
 
@@ -22,6 +23,8 @@ public interface TeamcityApi {
         buildType: String,
         builder: BuildLocator.() -> Unit
     ): Sequence<Build>
+
+    public fun getProjectById(id: ProjectId): Project
 
     public fun getProjectByBuildConfiguration(id: BuildConfigurationId): Project
 

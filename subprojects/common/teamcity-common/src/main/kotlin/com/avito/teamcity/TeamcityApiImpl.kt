@@ -5,6 +5,7 @@ import org.jetbrains.teamcity.rest.BuildConfigurationId
 import org.jetbrains.teamcity.rest.BuildId
 import org.jetbrains.teamcity.rest.BuildLocator
 import org.jetbrains.teamcity.rest.Project
+import org.jetbrains.teamcity.rest.ProjectId
 import org.jetbrains.teamcity.rest.TeamCityInstance
 import org.jetbrains.teamcity.rest.TeamCityInstanceFactory
 
@@ -19,6 +20,10 @@ internal class TeamcityApiImpl private constructor(private val teamCityInstance:
             password
         ).withLogResponses()
     )
+
+    override fun getProjectById(id: ProjectId): Project {
+        return teamCityInstance.project(id)
+    }
 
     override fun getProjectByBuildConfiguration(id: BuildConfigurationId): Project {
         val projectId = teamCityInstance.buildConfiguration(id).projectId
