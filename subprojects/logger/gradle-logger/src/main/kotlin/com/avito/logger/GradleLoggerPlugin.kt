@@ -2,6 +2,7 @@
 
 package com.avito.logger
 
+import com.avito.logger.builder.GradleLoggerFactoryBuilder
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.Task
@@ -30,16 +31,26 @@ public class GradleLoggerPlugin : Plugin<Project> {
 
         internal const val error = "com.avito.android.gradle-logger plugin must be added to the root project"
 
+        public fun provideLoggerFactoryBuilder(task: Task): Provider<GradleLoggerFactoryBuilder> {
+            val project = task.project
+            return getLoggerFactoryBuilder(project, GradleLoggerCoordinates(project.path, task.name))
+        }
+
+        public fun provideLoggerFactoryBuilder(
+            project: Project
+        ): Provider<GradleLoggerFactoryBuilder> =
+            getLoggerFactoryBuilder(project, GradleLoggerCoordinates(project.path))
+
         public fun provideLoggerFactory(
             task: Task
         ): Provider<LoggerFactory> {
-            val project = task.project
-            return getLoggerFactory(project, GradleLoggerCoordinates(project.path, task.name))
+            return provideLoggerFactoryBuilder(task).map { it.build() }
         }
 
         public fun provideLoggerFactory(
             project: Project
-        ): Provider<LoggerFactory> = getLoggerFactory(project, GradleLoggerCoordinates(project.path))
+        ): Provider<LoggerFactory> =
+            provideLoggerFactoryBuilder(project).map { it.build() }
 
         public fun getLoggerFactory(task: Task): LoggerFactory = LazyLoggerFactory(provideLoggerFactory(task))
         public fun getLoggerFactory(project: Project): LoggerFactory = LazyLoggerFactory(provideLoggerFactory(project))
@@ -65,12 +76,12 @@ public class GradleLoggerPlugin : Plugin<Project> {
          *  bean found in field `__loggerFactory__`
          */
         @Suppress("NOTHING_TO_INLINE")
-        private inline fun getLoggerFactory(
+        private inline fun getLoggerFactoryBuilder(
             project: Project,
             coordinates: GradleLoggerCoordinates
-        ): Provider<LoggerFactory> {
+        ): Provider<GradleLoggerFactoryBuilder> {
             return getLoggerService(project)
-                .map { it.createLoggerFactory(coordinates) }
+                .map { it.createLoggerFactoryBuilder(coordinates) }
         }
 
         private fun checkProjectIsRoot(target: Project) {

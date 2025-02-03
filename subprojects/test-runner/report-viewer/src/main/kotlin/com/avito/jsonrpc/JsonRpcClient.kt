@@ -28,7 +28,7 @@ internal class JsonRpcClient(
     private inline fun <reified Response : Any> internalRequest(jsonRpcRequest: Any): Response {
 
         val requestBodyJson = gson.toJson(jsonRpcRequest)
-        logger.info(">>> Sending JSON-RPC request with body: $requestBodyJson")
+        logger.debug(">>> Sending JSON-RPC request with body: $requestBodyJson")
 
         val httpRequest = Request.Builder()
             .url(host.removeSuffix("/"))
@@ -48,10 +48,10 @@ internal class JsonRpcClient(
         val responseBody = response.body?.string()
         if (responseBody != null && response.isSuccessful) {
             return try {
-                logger.info("<<< Got response: $responseBody")
+                logger.debug("<<< Got response: $responseBody")
                 gson.fromJson(responseBody)
             } catch (e: Throwable) {
-                logger.info("<<< Can't parse response body")
+                logger.warn("<<< Can't parse response body")
                 throw IllegalStateException("Can't parse response body", e)
             }
         } else {

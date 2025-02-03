@@ -41,6 +41,13 @@ public class LoggerFactoryBuilder {
         return this
     }
 
+    public fun addLoggingHandlerProviders(
+        providers: List<LoggingHandlerProvider>
+    ): LoggerFactoryBuilder {
+        handlerProviders.addAll(providers)
+        return this
+    }
+
     public fun newBuilder(): LoggerFactoryBuilder {
         return LoggerFactoryBuilder().also { newBuilder ->
             newBuilder.metadataProvider = metadataProvider
