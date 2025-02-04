@@ -11,7 +11,7 @@ import org.jgrapht.graph.DirectedWeightedMultigraph
  */
 public class ShortestPath<T : Operation>(private val operations: Set<T>) {
 
-    private val operationByKey: Map<String, Operation> = operations.map { it.id to it }.toMap()
+    private val operationByKey: Map<String, Operation> = operations.associateBy { it.id }
     private val syntheticSource = SimpleOperation("source", duration = 0.toDouble())
     private val syntheticSink = SimpleOperation("sink", duration = 0.toDouble())
     private val uniquePredecessors = operations.flatMap { it.predecessors }.toSet()
