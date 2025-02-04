@@ -16,6 +16,7 @@ internal class ExperimentsConfigurator(
         return Experiments(
             saveTestArtifactsToOutputs = getSaveTestArtifactsToOutputs(extension),
             useLegacyExtensionsV1Beta = getUseLegacyExtensionsV1Beta(extension),
+            disableLogcat = getLogcatDisabled(extension)
         )
     }
 
@@ -25,5 +26,9 @@ internal class ExperimentsConfigurator(
 
     private fun getUseLegacyExtensionsV1Beta(extension: InstrumentationTestsPluginExtension): Boolean {
         return extension.experimental.useLegacyExtensionsV1Beta.getOrElse(false)
+    }
+
+    private fun getLogcatDisabled(extension: InstrumentationTestsPluginExtension): Boolean {
+        return extension.experimental.disableLogcat.getOrElse(false)
     }
 }

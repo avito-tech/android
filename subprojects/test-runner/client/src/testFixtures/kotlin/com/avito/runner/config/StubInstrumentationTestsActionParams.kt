@@ -35,6 +35,7 @@ public fun RunnerInputParams.Companion.createStubInstance(
     statsDConfig: StatsDConfig = StatsDConfig.Disabled,
     saveTestArtifactsToOutputs: Boolean = false,
     useLegacyExtensionsV1Beta: Boolean = true,
+    disableLogcat: Boolean = false,
 ): RunnerInputParams = RunnerInputParams(
     mainApk = mainApk,
     testApk = testApk,
@@ -57,4 +58,5 @@ public fun RunnerInputParams.Companion.createStubInstance(
     useLegacyExtensionsV1Beta = useLegacyExtensionsV1Beta,
     deviceDebug = deviceDebug,
     adbPullTimeout = Duration.ofSeconds(5),
+    disableLogcat = disableLogcat,
 )

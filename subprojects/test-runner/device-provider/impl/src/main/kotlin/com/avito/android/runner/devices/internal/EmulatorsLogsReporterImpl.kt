@@ -7,7 +7,8 @@ import java.io.File
 internal class EmulatorsLogsReporterImpl(
     private val outputFolder: File,
     private val logcatDir: File,
-    private val logcatTags: Collection<String>
+    private val logcatTags: Collection<String>,
+    private val disableLogcat: Boolean,
 ) : EmulatorsLogsReporter {
 
     override fun reportEmulatorLogs(pod: KubePod, emulatorName: Serial, log: String) {
@@ -22,6 +23,11 @@ internal class EmulatorsLogsReporterImpl(
             dir = logcatDir,
             emulatorName = emulatorName.value
         )
+
+        if (disableLogcat) {
+            logcatFile.writeText("Logcat is disabled by Experiments")
+            return
+        }
 
         device.redirectLogcatToFile(
             file = logcatFile,

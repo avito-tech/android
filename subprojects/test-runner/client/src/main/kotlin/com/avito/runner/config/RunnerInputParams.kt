@@ -29,6 +29,7 @@ public data class RunnerInputParams(
     val proguardMappings: List<File>,
     val saveTestArtifactsToOutputs: Boolean,
     val useLegacyExtensionsV1Beta: Boolean,
+    val disableLogcat: Boolean,
     val adbPullTimeout: Duration,
 ) : Serializable {
 

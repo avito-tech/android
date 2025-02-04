@@ -230,6 +230,7 @@ public abstract class InstrumentationTestsTask @Inject constructor(
             ).mapNotNull { it.orNull?.asFile },
             saveTestArtifactsToOutputs = experiments.saveTestArtifactsToOutputs,
             useLegacyExtensionsV1Beta = experiments.useLegacyExtensionsV1Beta,
+            disableLogcat = experiments.disableLogcat,
             adbPullTimeout = adbPullTimeout.get(),
             macrobenchmarkOutputDir = macrobenchmarkOutputDirectory.orNull?.asFile,
         )

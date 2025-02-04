@@ -82,7 +82,8 @@ public class TestSchedulerFactoryProvider(private val loggerFactory: LoggerFacto
 
         val emulatorsLogsReporterProvider = EmulatorsLogsReporterProvider(
             logcatTags = params.executionParameters.logcatTags,
-            outputDir = params.outputDir
+            outputDir = params.outputDir,
+            disableLogcat = params.disableLogcat,
         )
 
         return TestSchedulerFactoryImpl(
